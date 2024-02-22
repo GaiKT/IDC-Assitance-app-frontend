@@ -4,9 +4,9 @@ function Table() {
         <thead>
         <tr>
             <th>Name</th> 
+            <th>Card ID</th>
             <th>team</th> 
             <th>company</th> 
-            <th>location</th> 
             <th>Exp</th> 
             <th>Favorite Color</th>
         </tr>
@@ -144,10 +144,10 @@ function Table() {
         <tfoot>
         <tr>
             <th>Name</th> 
-            <th>Job</th> 
+            <th>Card ID</th>
+            <th>team</th> 
             <th>company</th> 
-            <th>location</th> 
-            <th>Last Login</th> 
+            <th>Exp</th> 
             <th>Favorite Color</th>
         </tr>
         </tfoot>
