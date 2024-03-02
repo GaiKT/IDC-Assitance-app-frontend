@@ -4,33 +4,32 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 
-function AddmembersForm() {
+function EditmembersForm(props) {
   const [company , setCompany] = useState([])
-  const [team , setTeam] = useState()
+  const [team , setTeam] = useState(props.data.team_id)
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(0)
+  const navigate = useNavigate()
 
   const { register, handleSubmit } = useForm()
 
   const onSubmit = async (data) => {
     try {
-      setIsLoading(true);
-      let result = await axios.post('http://localhost:4000/aup',data)
-      console.log(result)
+      setIsLoading(true)
+      let result = await axios.put('http://localhost:4000/aup/'+ props.data.member_id, data)
+      console.log(result.data.message)
       navigate('/members')
-      setIsLoading(false);
+      setIsLoading(false)
       Swal.fire({
         title: 'success!',
-        text: 'member added successfully!',
+        text: 'update member successfully!',
         icon: 'success',
         confirmButtonText: 'Ok'
       })
     } catch (error) {
-      console.log(error)
-      setIsLoading(false);
+      setIsLoading(false)
       Swal.fire({
         title: 'error!',
-        text: error.response.data.message,
+        text: error,
         icon: 'error',
         confirmButtonText: 'Ok'
       })
@@ -47,39 +46,38 @@ function AddmembersForm() {
   }
 
   const selectCompany = (arr) => {
-    let newCompany = arr.filter((item)=>item.team_id === Number(team))
-    return newCompany[0]?.company_info
-  }
-
-  useEffect(()=>{
-    selectCompany(company)
-  },[team])
-
-  useEffect(()=>{
-    getCompany()
-  },[])
+    let compdata = arr.filter((item) => item.team_id === Number(team));
+    console.log(compdata[0]?.company_info)
+    return compdata[0]?.company_info;
+  };
+  
+  useEffect(() => {
+    getCompany();
+  }, []);
 
   if(company){
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 w-3/4 text-center">
         <label className="flex justify-between"> Firstname :
-          <input {...register("firstName", { required: true, maxLength: 255 })} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("firstName", { required: true, maxLength: 255 })} defaultValue={props.data.first_name} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between"> Lastname :
-          <input {...register("lastName", { required: true, maxLength: 255})} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("lastName", { required: true, maxLength: 255})} defaultValue={props.data.last_name} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between"> Card ID :
-          <input {...register("cardid", { required: true, maxLength: 255})} placeholder="Enter your cardid" className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("cardid", { required: true, maxLength: 255})} defaultValue={props.data.card_id} placeholder="Enter your cardid" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between"> Date of Sign :
-          <input {...register("dateOfSign", { required: true})} type="date" className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("dateOfSign", { required: true})} defaultValue={props.data.date_of_sign.slice(0, 10)} type="date" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between"> Team :
           <select {...register("team", { required: true })} 
           onChange={(e)=>{
             setTeam(e.target.value)
           }} 
-          className="bg-gray-100 rounded w-3/5 p-2">
+          className="bg-gray-100 rounded w-3/5 p-2"
+          value={team}
+          >
             <option value="">Select...</option>
             {
               company.map((team , index)=>{
@@ -89,23 +87,25 @@ function AddmembersForm() {
           </select>
         </label>
         <label className="flex justify-between"> Company :
-        <select {...register("company", { required: true })} className="bg-gray-100 rounded w-3/5 p-2">
+        <select {...register("company", { required: true })} 
+        className="bg-gray-100 rounded w-3/5 p-2"
+        >
             <option value="">Select...</option>
             { 
-              selectCompany(company)?.map((item, index)=>{
-                return (
-                  <option key={index} value={item.comp_id}>{item.comp_name}</option>
-                );
-              })
+              selectCompany(company)?.map((item, index)=>
+                item.comp_id === props.data.comp_id ?
+                  <option key={index} value={item.comp_id} selected >{item.comp_name}</option>
+                : <option key={index} value={item.comp_id}>{item.comp_name}</option>
+              )
             }
-        </select>
+          </select>
         </label>
         <label className="flex justify-between"> Address :
-          <textarea {...register("address")} placeholder="123 dacrord .." className="bg-gray-100 rounded w-3/5 p-2" />
+          <textarea {...register("address")} placeholder="123 dacrord .." className="bg-gray-100 rounded w-3/5 p-2" defaultValue={props.data.address} />
         </label>
         <div className="w-full flex gap-2 justify-end">
-          <button type="submit" className="btn btn-success w-20 text-white" disabled={isLoading}>
-            {isLoading ? <span className="loading loading-spinner"></span> : 'Submit'}
+          <button type="submit" className="btn btn-success w-20 text-white">
+          {isLoading ? <span className="loading loading-spinner"></span> : 'Submit'}
           </button>
           <a href="/members" className="btn w-20 text-black">
             Cancel
@@ -116,4 +116,4 @@ function AddmembersForm() {
   }
 }
 
-export default AddmembersForm
+export default EditmembersForm

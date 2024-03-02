@@ -2,8 +2,26 @@ import NavBar from "../../components/navbar";
 import SideBar from "../../components/sidebar";
 import Footer from "../../components/footer";
 import Table from "../../components/table";
+import axios from "axios";
+import { useState,useEffect } from "react";
 
 function Members () {
+    const [members,setMembers] = useState([]) 
+    const [keyword,setKeyword] = useState('')
+
+    const getmembers = async () => {
+        try {
+            const result = await axios.get('http://localhost:4000/aup?keyword=' + keyword)
+            setMembers(result.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    useEffect(()=>{
+        getmembers()
+    },[keyword])
+
     return(
         <>
             <NavBar/>
@@ -17,11 +35,19 @@ function Members () {
                 <div className="flex justify-between ">
                     <span className="text-xl">Members Table</span>
                     <label> search :
-                        <input type="text" placeholder="Enter your text" className="text-center border rounded mb-5 ml-2" />
+                        <input 
+                        type="text" 
+                        placeholder="Enter your text" 
+                        className="text-center border rounded mb-5 ml-2" 
+                        onChange={(e)=>{
+                            setKeyword(e.target.value)
+                        }}
+                        value={keyword}
+                        />
                     </label>
                 </div>
             <div className="overflow-x-auto">
-                <Table/>
+                <Table data={members}/>
             </div>
             </div>
             </div>

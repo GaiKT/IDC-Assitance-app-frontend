@@ -1,8 +1,13 @@
 import NavBar from "../../components/navbar";
 import SideBar from "../../components/sidebar";
 import Footer from "../../components/footer";
+import { useAuth } from "../../contexts/authentication";
+import { useState } from "react";
 
 function Profile () {
+    const { state } = useAuth();
+    const [user , setUser] = useState(state.user)
+
     return(
         <>
             <NavBar/>
@@ -19,6 +24,7 @@ function Profile () {
                         name="fristname"
                         className="px-2 bg-gray-100 p-2 rounded"
                         type="text"
+                        value={user.firstName}
                     />
                     </label>
 
@@ -29,6 +35,7 @@ function Profile () {
                         name="lastname"
                         className="px-2 bg-gray-100 p-2 rounded"
                         type="text"
+                        value={user.lastName}
                         />
                     </label>
                     
