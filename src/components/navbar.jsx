@@ -14,7 +14,7 @@ function NavBar() {
       };
     
     return(
-        <nav className="flex h-20 bg-white justify-end pr-20 items-center shadow-lg z-0 border border-b-gray-300">
+        <nav className="flex h-20 bg-white justify-end pr-20 items-center shadow-lgborder border-b-gray-300">
             <div className="dropdown flex gap-2">
                 <div className=" h-10 w-10 rounded-full bg-gray-200 p-1">
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" className="rounded-full" />

@@ -12,6 +12,18 @@ function EditmembersForm(props) {
 
   const { register, handleSubmit } = useForm()
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+
   const onSubmit = async (data) => {
     try {
       setIsLoading(true)
@@ -19,20 +31,16 @@ function EditmembersForm(props) {
       console.log(result.data.message)
       navigate('/members')
       setIsLoading(false)
-      Swal.fire({
-        title: 'success!',
-        text: 'update member successfully!',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      })
+      Toast.fire({
+        icon: "success",
+        title: "update member successfully!"
+      });
     } catch (error) {
       setIsLoading(false)
-      Swal.fire({
-        title: 'error!',
-        text: error,
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      })
+      Toast.fire({
+        icon: "error",
+        title: error.response.data.message
+      });
     }
   }
 
@@ -71,7 +79,7 @@ function EditmembersForm(props) {
           <input {...register("dateOfSign", { required: true})} defaultValue={props.data.date_of_sign.slice(0, 10)} type="date" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between"> Team :
-          <select {...register("team", { required: true })} 
+          <select {...register("team", { required: false })} 
           onChange={(e)=>{
             setTeam(e.target.value)
           }} 
@@ -87,15 +95,15 @@ function EditmembersForm(props) {
           </select>
         </label>
         <label className="flex justify-between"> Company :
-        <select {...register("company", { required: true })} 
+        <select {...register("company", { required: false })} 
         className="bg-gray-100 rounded w-3/5 p-2"
         >
             <option value="">Select...</option>
             { 
               selectCompany(company)?.map((item, index)=>
                 item.comp_id === props.data.comp_id ?
-                  <option key={index} value={item.comp_id} selected >{item.comp_name}</option>
-                : <option key={index} value={item.comp_id}>{item.comp_name}</option>
+                  <option key={index} value={item.comp_id} selected >บริษัท {item.comp_name_thai} จำกัด - {item.comp_name_eng} </option>
+                : <option key={index} value={item.comp_id}>บริษัท {item.comp_name_thai} จำกัด - {item.comp_name_eng}</option>
               )
             }
           </select>

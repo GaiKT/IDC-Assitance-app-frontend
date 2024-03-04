@@ -8,9 +8,21 @@ function AddmembersForm() {
   const [company , setCompany] = useState([])
   const [team , setTeam] = useState()
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(0)
+  const navigate = useNavigate()
 
   const { register, handleSubmit } = useForm()
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   const onSubmit = async (data) => {
     try {
@@ -19,21 +31,17 @@ function AddmembersForm() {
       console.log(result)
       navigate('/members')
       setIsLoading(false);
-      Swal.fire({
-        title: 'success!',
-        text: 'member added successfully!',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      })
+      Toast.fire({
+        icon: "success",
+        title: "member added successfully!"
+      });
     } catch (error) {
       console.log(error)
       setIsLoading(false);
-      Swal.fire({
-        title: 'error!',
-        text: error.response.data.message,
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      })
+      Toast.fire({
+        icon: "error",
+        title: error.response.data.message
+      });
     }
   }
 
@@ -94,7 +102,7 @@ function AddmembersForm() {
             { 
               selectCompany(company)?.map((item, index)=>{
                 return (
-                  <option key={index} value={item.comp_id}>{item.comp_name}</option>
+                  <option key={index} value={item.comp_id}>บริษัท {item.comp_name_thai} จำกัด - {item.comp_name_eng}</option>
                 );
               })
             }

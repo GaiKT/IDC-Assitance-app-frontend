@@ -19,7 +19,7 @@ function LoginPage() {
     <div className="h-screen flex justify-center items-center bg-slate-200">
       <form className="w-1/2 h-1/2 p-10 flex flex-col gap-6 shadow-xl rounded-lg bg-white items-center" onSubmit={handleSubmit}>
         <h1 className="text-center font-extrabold text-4xl mb-2">IDC Assistance</h1>
-        <div className="w-3/5 h-full flex flex-col gap-10 text-xl">
+        <div className="w-2/5 h-full flex flex-col gap-10 text-xl">
           <div>
             <label className="flex justify-between">
               Username :

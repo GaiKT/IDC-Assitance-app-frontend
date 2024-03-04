@@ -28,9 +28,9 @@ function Table(props) {
         <thead>
         <tr>
             <th>Name</th> 
-            <th>Card ID</th>
             <th>team</th> 
-            <th>company</th> 
+            <th>company(thai)</th>
+            <th>company(eng)</th> 
             <th>Exp</th> 
             <th>status</th>
         </tr>
@@ -41,9 +41,9 @@ function Table(props) {
                     return(
                         <tr key={index}  className="bg-white hover hover:cursor-pointer" onClick={() => {(editmemberHandle(item))}}>
                             <td>{item.first_name} {item.last_name}</td> 
-                            <td>{item.card_id.slice(-4)}</td> 
                             <td>{item.teamname}</td> 
-                            <td>{item.comp_name}</td> 
+                            <td>บริษัท {item.comp_name_thai} จำกัด</td> 
+                            <td>{item.comp_name_eng}</td>
                             <td>{findExpDate(item.date_of_sign)}</td> 
                             <td className={findExpStatus(item.date_of_sign)==='หมดอายุ' ? 'text-red-600':'text-green-700'}>{findExpStatus(item.date_of_sign)}</td>
                         </tr>
@@ -51,7 +51,7 @@ function Table(props) {
                 })
             }
         </tbody> 
-    </table>
+        </table>
     );
 }
 
