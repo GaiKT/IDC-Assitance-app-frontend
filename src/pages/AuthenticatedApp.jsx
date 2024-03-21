@@ -16,6 +16,13 @@ import Companys from "../components/company/company";
 import EditCompany from "../components/company/Editcompany";
 import AddCompany from "../components/company/addcompany";
 
+//checklists
+import CheckRoomTemp from "../components/checklists/CheckRoomTemp";
+import CheckFDC from "../components/checklists/CheckFDC";
+import CheckTransformer from "../components/checklists/CheckTransformer";
+import CheckPhase1 from "../components/checklists/CheckPhase1";
+import CheckPhase2 from "../components/checklists/CheckPhase2";
+
 import "../App.css";
 
 function AuthenticatedApp() {
@@ -35,6 +42,11 @@ function AuthenticatedApp() {
               <Route path="/company/*" element={<Companys />} />
               <Route path="/company/addcompany" element={<AddCompany />} />
               <Route path="/company/editcompany/:id" element={<EditCompany />} />
+              <Route path="/checklists/roomtemp" element={<CheckRoomTemp />} />
+              <Route path="/checklists/fdc" element={<CheckFDC />} />
+              <Route path="/checklists/Transformer" element={<CheckTransformer />} />
+              <Route path="/checklists/phase1" element={<CheckPhase1 />} />
+              <Route path="/checklists/phase2" element={<CheckPhase2 />} />
             </Routes>
           </div>
         </div>

@@ -24,8 +24,6 @@ function AuthProvider(props) {
     }
   },[])
 
-  console.log(state)
-
   const login = async (data) => {
     try {
       const result = await axios.post("http://localhost:4000/auth/login", data);
@@ -33,17 +31,17 @@ function AuthProvider(props) {
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
       setState({ ...state, user: userDataFromToken })
+      navigate("/")
       Swal.fire({
         title: 'success!',
-        text: 'Login successfully!',
+        text: "Login successfully!",
         icon: 'success',
         confirmButtonText: 'Ok'
       })
-      navigate("/");
     } catch (error) {
       Swal.fire({
         title: 'Error!',
-        text: error,
+        text: error.response.data.message,
         icon: 'error',
         confirmButtonText: 'Ok'
       })

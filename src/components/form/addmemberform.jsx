@@ -71,7 +71,7 @@ function AddmembersForm() {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 w-3/4 text-center">
         <label className="flex justify-between"> Firstname :
-          <input {...register("firstName", { required: true, maxLength: 255 })} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("firstName", { required: true, maxLength: 255})} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between"> Lastname :
           <input {...register("lastName", { required: true, maxLength: 255})} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2"/>

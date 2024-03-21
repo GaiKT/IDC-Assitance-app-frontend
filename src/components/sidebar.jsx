@@ -37,8 +37,8 @@ function SideBar() {
                                     Every 2 Hour
                                 </summary>
                                 <ul>
-                                    <li><Link>Checklist roomteamp</Link></li>
-                                    <li><Link>Checklist FDC</Link></li>
+                                    <li><Link to="/checklists/roomtemp">Checklist roomteamp</Link></li>
+                                    <li><Link to="/checklists/fdc">Checklist FDC</Link></li>
                                 </ul>
                             </details>
                         </li>
@@ -48,9 +48,9 @@ function SideBar() {
                                     Every Days
                                 </summary>
                                 <ul>
-                                    <li><Link>Checklist transformer</Link></li>
-                                    <li><Link>Checklist Phase1</Link></li>
-                                    <li><Link>Checklist Phase2</Link></li>
+                                    <li><Link to="/checklists/Transformer">Checklist transformer</Link></li>
+                                    <li><Link to="/checklists/phase1">Checklist Phase1</Link></li>
+                                    <li><Link to="/checklists/phase2" >Checklist Phase2</Link></li>
                                 </ul>
                             </details>
                         </li>
