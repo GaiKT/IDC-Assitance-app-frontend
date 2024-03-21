@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 function jwtInterceptor() {
   axios.interceptors.request.use((req) => {
@@ -24,6 +25,12 @@ function jwtInterceptor() {
       ) {
         window.localStorage.removeItem("token");
         window.location.replace("/");
+        Swal.fire({
+          title: 'Error!',
+          text: error,
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
       }
       return Promise.reject(error);
     }

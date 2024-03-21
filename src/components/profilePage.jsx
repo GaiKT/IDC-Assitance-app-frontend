@@ -1,13 +1,13 @@
-import NavBar from "../../components/navbar";
-import SideBar from "../../components/sidebar";
-import Footer from "../../components/footer";
+import Footer from "./footer";
+import { useAuth } from "../contexts/authentication";
+import { useState } from "react";
 
 function Profile () {
+    const { state } = useAuth();
+    const [user , setUser] = useState(state.user)
+
     return(
         <>
-            <NavBar/>
-            <SideBar/>
-            <div className="ml-72 p-10 bg-gray-100"> 
             <header className="text-4xl mb-5"> My Profile </header>
             <hr />
             <div className="w-full bg-white shadow-lg p-10 rounded-lg">
@@ -19,6 +19,7 @@ function Profile () {
                         name="fristname"
                         className="px-2 bg-gray-100 p-2 rounded"
                         type="text"
+                        value={user.firstName}
                     />
                     </label>
 
@@ -29,6 +30,7 @@ function Profile () {
                         name="lastname"
                         className="px-2 bg-gray-100 p-2 rounded"
                         type="text"
+                        value={user.lastName}
                         />
                     </label>
                     
@@ -45,7 +47,6 @@ function Profile () {
                 <div className="w-full flex justify-end">
                     <button className="py-2 px-4 bg-green-700 rounded-md text-white font-bold hover:bg-green-600">Save</button>
                 </div>
-            </div>
             </div>
             <Footer/>
         </>
