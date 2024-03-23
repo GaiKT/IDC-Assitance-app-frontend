@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import Db from '../utils/Db'
+import Ups from '../utils/Ups'
 
 export default function CheckPhase2() {
     const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +28,7 @@ export default function CheckPhase2() {
 
     return (
         <div className='bg-white p-10'>
-            <h1 className='text-4xl font-bold mb-5'>Checklist Phase1</h1>
+            <h1 className='text-4xl font-bold mb-5'>Checklist Phase2</h1>
             <hr />
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
                 <div className='flex w-full flex-col items-center'>
@@ -41,44 +42,8 @@ export default function CheckPhase2() {
                             </label>
                         </div>
                         </div>
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
-                            <div className='flex flex-col items-center gap-2'>
-                                ATS Phase2
-                                <label className='flex items-center gap-2'>
-                                    <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("ats", { required: true})}/>
-                                    Status R S T(ON)
-                                </label>
-                            </div>
-                            <div className='flex gap-5 px-5'>
-                                <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                    Voltage
-                                    <input {...register("ats_l1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L1-2'/>
-                                    <input {...register("ats_l2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L2-3'/>
-                                    <input {...register("ats_l3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L3-1'/>
-                                </label>
-                                <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                    Ampere
-                                    <input {...register("ats_i1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I1'/>
-                                    <input {...register("ats_i2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I2'/>
-                                    <input {...register("ats_i3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I3'/>
-                                </label>
-                                <div className='flex flex-col gap-5 border py-5 w-80 rounded'>
-                                    <label className='flex flex-col items-center '>
-                                        Power
-                                        <input {...register("ats_power", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kw'/>
-                                    </label>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        Meter
-                                        <input {...register("ats_meter", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kwh'/>
-                                    </div>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        In
-                                        <input {...register("ats_in", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='A'/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        {/* ats2 */}
+                        <Db nameDb='atsphase2' register={register}/>
                     </div>
                 </div>
                 <hr />
@@ -86,264 +51,22 @@ export default function CheckPhase2() {
                     <h1 className='text-xl w-full text-center py-4'>Floor 10</h1>
                     <div className='flex py-4 gap-5 flex-wrap'>
                         {/* Emdb */}
-                        <Db nameDb='emdb'/>
+                        <Db nameDb='emdb' register={register}/>
                         {/* udb1 */}
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
-                            <div className='flex flex-col items-center gap-2'>
-                                UDB1
-                                <label className='flex items-center gap-2'>
-                                    <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("udb1", { required: true})}/>
-                                    Status R S T(ON)
-                                </label>
-                            </div>
-                            <div className='w-full flex gap-5 px-5'>
-                                <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                    Voltage
-                                    <input {...register("udb1_l1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L1-2'/>
-                                    <input {...register("udb1_l2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L2-3'/>
-                                    <input {...register("udb1_l3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L3-1'/>
-                                </label>
-                                <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                    Ampere
-                                    <input {...register("udb1_i1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I1'/>
-                                    <input {...register("udb1_i2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I2'/>
-                                    <input {...register("udb1_i3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I3'/>
-                                </label>
-                                <div className='flex flex-col gap-5 border py-5 w-80 rounded'>
-                                    <label className='flex flex-col items-center '>
-                                        Power
-                                        <input {...register("udb1_power", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kw'/>
-                                    </label>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        Meter
-                                        <input {...register("udb1_meter", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kwh'/>
-                                    </div>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        In
-                                        <input {...register("udb1_in", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='A'/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Db nameDb='udb1' register={register}/>
                         {/* udb2 */}
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
-                            <div className='flex flex-col items-center gap-2'>
-                                EMDB
-                                <label className='flex items-center gap-2'>
-                                    <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("udb2", { required: true})}/>
-                                    Status R S T(ON)
-                                </label>
-                            </div>
-                            <div className='w-full flex gap-5 px-5'>
-                                <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                    Voltage
-                                    <input {...register("udb2_l1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L1-2'/>
-                                    <input {...register("udb2_l2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L2-3'/>
-                                    <input {...register("udb2_l3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L3-1'/>
-                                </label>
-                                <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                    Ampere
-                                    <input {...register("udb2_i1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I1'/>
-                                    <input {...register("udb2_i2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I2'/>
-                                    <input {...register("udb2_i3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I3'/>
-                                </label>
-                                <div className='flex flex-col gap-5 border py-5 w-80 rounded'>
-                                    <label className='flex flex-col items-center '>
-                                        Power
-                                        <input {...register("udb2_power", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kw'/>
-                                    </label>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        Meter
-                                        <input {...register("udb2_meter", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kwh'/>
-                                    </div>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        In
-                                        <input {...register("udb2_in", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='A'/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                                
+                        <Db nameDb='udb2' register={register}/>                        
                         {/* Ups */}
                         <div className='flex flex-col gap-5 border py-5 w-full rounded'>
                             <div className='flex flex-col items-center gap-5 px-5'>
-                                UPSDB
-                                <div className='flex gap-5 border py-5 w-full rounded items-center justify-around flex-wrap'>
-                                    <label className='flex items-center gap-2'>
-                                        <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("ups_db1", { required: true})}/>
-                                        Status R S T OUT1(ON)
-                                    </label>
-                                    <label className='flex items-center gap-2'>
-                                        <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("ups_db2", { required: true})}/>
-                                        Status R S T OUT2(ON)
-                                    </label>
-                                    <label className='flex items-center gap-2'>
-                                        <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("ups_db3", { required: true})}/>
-                                        Status R S T OUT3(ON)
-                                    </label>
-                                </div>
-                                <div className='flex flex-col'>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        UPS1
-                                        <label className='flex items-center gap-2 mb-5'>
-                                            Alarm
-                                            <input type="checkbox" {...register("ups1")} className="toggle toggle-success" />
-                                        </label>
-                                    </div>
-                                    <div className='flex flex-wrap gap-4'>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            OutPut Voltage (V)
-                                            <input {...register("ups1_l1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L1-2'/>
-                                            <input {...register("ups1_l2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L2-3'/>
-                                            <input {...register("ups1_l3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L3-1'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Output Ampere (A)
-                                            <input {...register("ups1_i1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I1'/>
-                                            <input {...register("ups1_i2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I2'/>
-                                            <input {...register("ups1_i3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Power (Kw)
-                                            <input {...register("ups1_p1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P1'/>
-                                            <input {...register("ups1_p2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P2'/>
-                                            <input {...register("ups1_p3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Load Level (%)
-                                            <input {...register("ups1_load1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load1'/>
-                                            <input {...register("ups1_load2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load2'/>
-                                            <input {...register("ups1_load3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Battery
-                                            <input {...register("ups1_vbatt", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Vbatt'/>
-                                            <input {...register("ups1_ibatt", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Ibatt'/>
-                                            <input {...register("ups1_remaining", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Remaining time'/>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className='flex flex-col'>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        UPS2
-                                        <label className='flex items-center gap-2 mb-5'>
-                                            Alarm
-                                            <input type="checkbox" {...register("ups2")} className="toggle toggle-success" />
-                                        </label>
-                                    </div>
-                                    <div className='flex flex-wrap gap-4'>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            OutPut Voltage (V)
-                                            <input {...register("ups2_l1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L1-2'/>
-                                            <input {...register("ups2_l2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L2-3'/>
-                                            <input {...register("ups2_l3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L3-1'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Output Ampere (A)
-                                            <input {...register("ups2_i1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I1'/>
-                                            <input {...register("ups2_i2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I2'/>
-                                            <input {...register("ups2_i3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Power (Kw)
-                                            <input {...register("ups2_p1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P1'/>
-                                            <input {...register("ups2_p2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P2'/>
-                                            <input {...register("ups2_p3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Load Level (%)
-                                            <input {...register("ups2_load1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load1'/>
-                                            <input {...register("ups2_load2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load2'/>
-                                            <input {...register("ups2_load3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Battery
-                                            <input {...register("ups2_vbatt", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Vbatt'/>
-                                            <input {...register("ups2_ibatt", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Ibatt'/>
-                                            <input {...register("ups2_remaining", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Remaining time'/>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className='flex flex-col'>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        UPS3
-                                        <label className='flex items-center gap-2 mb-5'>
-                                            Alarm
-                                            <input type="checkbox" {...register("ups3")} className="toggle toggle-success" />
-                                        </label>
-                                    </div>
-                                    <div className='flex flex-wrap gap-4'>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            OutPut Voltage (V)
-                                            <input {...register("ups3_l1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L1-2'/>
-                                            <input {...register("ups3_l2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L2-3'/>
-                                            <input {...register("ups3_l3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L3-1'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Output Ampere (A)
-                                            <input {...register("ups3_i1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I1'/>
-                                            <input {...register("ups3_i2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I2'/>
-                                            <input {...register("ups3_i3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Power (Kw)
-                                            <input {...register("ups3_p1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P1'/>
-                                            <input {...register("ups3_p2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P2'/>
-                                            <input {...register("ups3_p3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='P3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Load Level (%)
-                                            <input {...register("ups3_load1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load1'/>
-                                            <input {...register("ups3_load2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load2'/>
-                                            <input {...register("ups3_load3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Load3'/>
-                                        </label>
-                                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                            Battery
-                                            <input {...register("ups3_vbatt", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Vbatt'/>
-                                            <input {...register("ups3_ibatt", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Ibatt'/>
-                                            <input {...register("ups3_remaining", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Remaining time'/>
-                                        </label>
-                                    </div>
-                                </div>
+                                {/* ups1 */}
+                                <Ups nameUps='ups1' register={register} />
+                                {/* ups2 */}
+                                <Ups nameUps='ups2' register={register} />
                             </div>
                         </div>
                         {/* Airdb */}
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
-                            <div className='flex flex-col items-center gap-2'>
-                                AIRDB
-                                <label className='flex items-center gap-2'>
-                                    <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("atsp1_rst", { required: true})} />
-                                    Status R S T(ON)
-                                </label>
-                            </div>
-                            <div className='w-full flex gap-5 px-5'>
-                                <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                    Voltage
-                                    <input {...register("airdb_l1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L1-2'/>
-                                    <input {...register("airdb_l2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L2-3'/>
-                                    <input {...register("airdb_l3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L3-1'/>
-                                </label>
-                                <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
-                                    Ampere
-                                    <input {...register("airdb_i1", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I1'/>
-                                    <input {...register("airdb_i2", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I2'/>
-                                    <input {...register("airdb_i3", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I3'/>
-                                </label>
-                                <div className='flex flex-col gap-5 border py-5 w-80 rounded'>
-                                    <label className='flex flex-col items-center '>
-                                        Power
-                                        <input {...register("airdb_power", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kw'/>
-                                    </label>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        Meter
-                                        <input {...register("airdb_meter", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kwh'/>
-                                    </div>
-                                    <div className='flex flex-col items-center gap-2'>
-                                        In
-                                        <input {...register("airdb_in", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='A'/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Db nameDb='airdb' register={register}/>
                         {/* Pac Air */}
                         <div className='flex flex-col gap-5 border py-5 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>

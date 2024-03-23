@@ -60,7 +60,7 @@ function SideBar() {
                                     Weekly
                                 </summary>
                                 <ul>
-                                    <li><Link>Checklist Generator</Link></li>
+                                    <li><Link to="/checklists/generator">Checklist Generator</Link></li>
                                 </ul>
                             </details>
                         </li>

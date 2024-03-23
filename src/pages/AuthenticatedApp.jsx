@@ -22,6 +22,7 @@ import CheckFDC from "../components/checklists/CheckFDC";
 import CheckTransformer from "../components/checklists/CheckTransformer";
 import CheckPhase1 from "../components/checklists/CheckPhase1";
 import CheckPhase2 from "../components/checklists/CheckPhase2";
+import Checkgenerator from "../components/checklists/Checkgenerator";
 
 import "../App.css";
 
@@ -47,6 +48,7 @@ function AuthenticatedApp() {
               <Route path="/checklists/Transformer" element={<CheckTransformer />} />
               <Route path="/checklists/phase1" element={<CheckPhase1 />} />
               <Route path="/checklists/phase2" element={<CheckPhase2 />} />
+              <Route path="/checklists/generator" element={<Checkgenerator />} />
             </Routes>
           </div>
         </div>
