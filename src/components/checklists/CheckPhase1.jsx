@@ -1,13 +1,16 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
-import { useState,useEffect } from "react"
+import { useState} from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import Db from '../utils/Db'
 import Ups from '../utils/Ups'
+import { useAuth } from "../../contexts/authentication";
 
 export default function CheckPhase1() {
+    const { state } = useAuth();
+    const [user , setUser] = useState(state.user)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
     const PacAir = [1,2,3,4,5,6,7,8]
@@ -20,11 +23,38 @@ export default function CheckPhase1() {
         setDisabledInputs(updatedDisabledInputs);
     };
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
 
     const onSubmit = async (data) => {
-        console.group(data)
-    }
+        try {
+            setIsLoading(true);
+            await axios.post('http://localhost:4000/checklists', { name: 'checklistphase1', formData: { ...data, user_id: user.user_id } });
+            navigate('/');
+            Toast.fire({
+                icon: 'success',
+                title: 'Checklist sent successfully!'
+            });
+        } catch (error) {
+            Toast.fire({
+                icon: 'error',
+                title: 'Failed to send checklist. Please try again later.'
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className='bg-white p-10'>
@@ -38,12 +68,13 @@ export default function CheckPhase1() {
                         <div className='flex flex-col items-center gap-2'>
                             <label className='flex flex-col items-center gap-2'>
                                 Main meter
-                                <input {...register("main_meter", { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Kwh'/>
+                                <input {...register("main_meter", { required: { value : true , message : "Main meter is required."}})} className='bg-gray-50 px-2' placeholder='Kwh'/>
+                                {errors["main_meter"] && <span className="text-red-500">{errors["main_meter"]?.message}</span>}
                             </label>
                         </div>
                         </div>
                         {/* ats1 */}
-                        <Db nameDb='atsphase1' register={register}/>
+                        <Db nameDb='atsphase1' register={register} errors={errors} />
                     </div>
                 </div>
                 <hr />
@@ -51,7 +82,7 @@ export default function CheckPhase1() {
                     <h1 className='text-xl w-full text-center py-4'>Floor 10</h1>
                     <div className='flex py-4 gap-5 flex-wrap'>
                         {/* Emdb */}
-                        <Db nameDb='emdb' register={register}/>
+                        <Db nameDb='emdb' register={register} errors={errors}/>
                         {/* Ups */}
                         <div className='flex flex-col gap-5 border py-5 w-full rounded'>
                             <div className='flex flex-col items-center gap-5 px-5'>
@@ -71,15 +102,15 @@ export default function CheckPhase1() {
                                     </label>
                                 </div>
                                 {/* ups1 */}
-                                <Ups nameUps='ups1' register={register} />
+                                <Ups nameUps='ups1' register={register} errors={errors} />
                                 {/* ups2 */}
-                                <Ups nameUps='ups2' register={register} />
+                                <Ups nameUps='ups2' register={register} errors={errors} />
                                 {/* ups3 */}
-                                <Ups nameUps='ups3' register={register} />
+                                <Ups nameUps='ups3' register={register} errors={errors} />
                             </div>
                         </div>
                         {/* Airdb */}
-                        <Db nameDb='airdb' register={register}/>
+                        <Db nameDb='airdb' register={register} errors={errors}/>
                         {/* Pac Air */}
                         <div className='flex flex-col gap-5 border py-5 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>
@@ -91,7 +122,7 @@ export default function CheckPhase1() {
                                         <div key={index} className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
                                             PAC{airpac}
                                             <label className='flex items-center'>
-                                                <input type="checkbox" onChange={() => handleCheckboxChange(index)}  className='checkbox mr-2 checkbox-success checkbox-sm'/>
+                                                <input type="checkbox" {...register(`pac${airpac}`)} onChange={() => handleCheckboxChange(index)} className='checkbox mr-2 checkbox-success checkbox-sm'/>
                                                 Status
                                             </label>
                                             <label className='flex flex-col gap-2'>
@@ -161,7 +192,7 @@ export default function CheckPhase1() {
                         </div>
                         <div className='flex gap-5 border p-5 w-full rounded'>
                             {/* Fire System */}
-                            <div className='flex flex-col items-center gap-5 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-center gap-2 border w-1/2 rounded p-5'>
                                 Fire System
                                 <label className='flex w-full justify-between'>
                                     <span className='w-1/2'>Ac Source</span> 
@@ -181,81 +212,121 @@ export default function CheckPhase1() {
                                 </label>
                             </div>
                             {/* Novac 1230 */}
-                            <div className='flex flex-col items-start pl-20 gap-5 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-start pl-20 gap-2 border w-1/2 rounded p-5'>
                                 Novac 1230
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("novac_u1")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("novac_u1")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>Unit1 (Green)</span> 
                                 </label>
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("novac_u2")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("novac_u2")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>Unit2 (Green)</span> 
                                 </label>
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("novac_u3")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("novac_u3")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>Unit3 (Green)</span> 
                                 </label>
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("novac_u4")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("novac_u4")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>Unit4 (Green)</span> 
                                 </label>
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("novac_u5")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("novac_u5")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>Unit5 (Green)</span> 
                                 </label>
                             </div>
                         </div>
                         <div className='flex gap-5 border p-5 w-full rounded'>
                             {/* TVSS */}
-                            <div className='flex flex-col items-center gap-5 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-center gap-2 border w-1/2 rounded p-5'>
                                 TVSS
                                 <label className='flex w-full justify-between'>
-                                    <span className='w-1/2'>Phase 1</span> 
+                                    <span className='w-1/2'>Phase A</span> 
                                     <div className='w-1/2 flex justify-between'>
                                         OFF
-                                        <input type="checkbox" {...register("tvss_p1")} className="toggle toggle-success" />
+                                        <input type="checkbox" {...register("tvss_pa")} className="toggle toggle-success" />
                                         ON 
                                     </div>
                                 </label>
                                 <label className='flex w-full justify-between'>
-                                    <span className='w-1/2'>Phase 2</span> 
+                                    <span className='w-1/2'>Phase B</span> 
                                     <div className='w-1/2 flex justify-between'>
                                         OFF
-                                        <input type="checkbox" {...register("tvss_p2")} className="toggle toggle-success" />
+                                        <input type="checkbox" {...register("tvss_pb")} className="toggle toggle-success" />
                                         ON 
                                     </div>
                                 </label>
                                 <label className='flex w-full justify-between'>
-                                    <span className='w-1/2'>Phase 3</span> 
+                                    <span className='w-1/2'>Phase C</span> 
                                     <div className='w-1/2 flex justify-between'>
                                         OFF
-                                        <input type="checkbox" {...register("tvss_p3")} className="toggle toggle-success" />
+                                        <input type="checkbox" {...register("tvss_pc")} className="toggle toggle-success" />
                                         ON 
                                     </div>
                                 </label>
                             </div>
                             {/* CCTV */}
-                            <div className='flex flex-col items-start pl-20 gap-5 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-start pl-20 gap-2 border w-1/2 rounded p-5'>
                                 CCTV
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("cctv_playback30day")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("cctv_playback30day")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>สามารถดูย้อนหลังได้ 90 วัน</span> 
                                 </label>
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("cctv_camera")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("cctv_camera")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>บันทึกภาพทั้ง 30 กล้อง</span> 
                                 </label>
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("cctv_status")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("cctv_status")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>สถานะไฟ</span> 
                                 </label>
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("cctv_remote")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("cctv_remote")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>remote playback ทุกวัน</span> 
                                 </label>
                                 <label className='flex justify-center gap-4'>
-                                    <input type="checkbox" {...register("cctv_check")} className="checkbox checkbox-success" />
+                                    <input type="checkbox" {...register("cctv_check")} className="checkbox checkbox-success checkbox-sm" />
                                     <span>กล้องทุกตัวทำงานปกติ</span> 
+                                </label>
+                            </div>
+                        </div>
+                        <div className='flex w-full gap-2'>
+                            <div className='flex flex-col items-start py-5 px-10 gap-2 border w-1/2 rounded'>
+                                    Overall Check
+                                    <label className='flex gap-2 justify-center items-center'>
+                                        <input type="checkbox" {...register("ems_check")} className='checkbox-success checkbox checkbox-sm' />
+                                        Ems System
+                                    </label>
+                                    <label className='flex gap-2 justify-center items-center'>
+                                        <input type="checkbox" {...register("access_control_check")} className='checkbox-success checkbox checkbox-sm' />
+                                        Access Control
+                                    </label>
+                                    <div className='flex flex-col gap-2 w-full'>
+                                        <label className='flex gap-2 justify-start items-center'>
+                                            <input type="checkbox" {...register("phase_check")} className='checkbox-success checkbox checkbox-sm' />
+                                            ความเรียบร้อยของห้องIDC
+                                        </label>                                   
+                                        <textarea rows="2" placeholder='สิ่งผิดปกติและการแก้ไข'{...register("phase_comment")} className='p-4 m-2 border rounded'>
+                                        </textarea>                                   
+                                    </div>
+                                </div>
+                            <div className='flex flex-col items-start pl-20 gap-2 border w-1/2 rounded p-5'>
+                                Switch
+                                <label className='flex gap-2 justify-center items-center'>
+                                    <input type="checkbox" {...register("sw1_jd992a_check")} className='checkbox-success checkbox checkbox-sm' />
+                                    1. HP V1905-24-PoE Switch JD992A
+                                </label>
+                                <label className='flex gap-2 justify-center items-center'>
+                                    <input type="checkbox" {...register("sw2_jd992a_check")} className='checkbox-success checkbox checkbox-sm' />
+                                    2. HP V1905-24-PoE Switch JD992A
+                                </label>
+                                <label className='flex gap-2 justify-center items-center'>
+                                    <input type="checkbox" {...register("sw3_jd9663a_check")} className='checkbox-success checkbox checkbox-sm' />
+                                    3. HP V1410-24 Switch JD9663A
+                                </label>
+                                <label className='flex gap-2 justify-center items-center'>
+                                    <input type="checkbox" {...register("sw4_jd9663a_check")} className='checkbox-success checkbox checkbox-sm' />
+                                    4. HP V1410-24 Switch JD9663A
                                 </label>
                             </div>
                         </div>
@@ -279,17 +350,17 @@ export default function CheckPhase1() {
                                         <label className='flex gap-5 w-full justify-between border rounded p-2'>
                                             Storage : C
                                             <div className='flex flex-col gap-2'>
-                                                <input type="number" {...register("ems_c_total")} step="0.01" min="0.00" className='text-center border' placeholder='total (GB)' />
-                                                <input type="number" {...register("ems_c_free")} step="0.01" min="0.00" className='text-center border' placeholder='Free (GB)'/>
-                                                <input type="number" {...register("ems_c_percent")} step="0.01" min="0.00" className='text-center border' placeholder='Usage %'/>
+                                                <input {...register("ems_c_total")} step="0.01" min="0.00" className='text-center border' placeholder='total (GB)' />
+                                                <input {...register("ems_c_free")} step="0.01" min="0.00" className='text-center border' placeholder='Free (GB)'/>
+                                                <input {...register("ems_c_percent")} step="0.01" min="0.00" className='text-center border' placeholder='Usage %'/>
                                             </div>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between border rounded p-2'>
                                             Storage : D
                                             <div className='flex flex-col gap-2'>
-                                                <input type="number" {...register("ems_d_total")} className='text-center border' placeholder='total (GB)' />
-                                                <input type="number" {...register("ems_d_free")} className='text-center border' placeholder='Free (GB)'/>
-                                                <input type="number" {...register("ems_d_percent")} className='text-center border' placeholder='Usage %'/>
+                                                <input {...register("ems_d_total")} className='text-center border' placeholder='total (GB)' />
+                                                <input {...register("ems_d_free")} className='text-center border' placeholder='Free (GB)'/>
+                                                <input {...register("ems_d_percent")} className='text-center border' placeholder='Usage %'/>
                                             </div>
                                         </label>
                                         <label className='flex gap-5 w-full justify-center items-center mt-2'>
@@ -312,17 +383,17 @@ export default function CheckPhase1() {
                                         <label className='flex gap-5 w-full justify-between border rounded p-2'>
                                             Storage : C
                                             <div className='flex flex-col gap-2'>
-                                                <input type="number" {...register("backupvm_c_total")} step="0.01" min="0.00" className='text-center border' placeholder='total (GB)' />
-                                                <input type="number" {...register("backupvm_c_free")} step="0.01" min="0.00" className='text-center border' placeholder='Free (GB)'/>
-                                                <input type="number" {...register("backupvm_c_percent")} step="0.01" min="0.00" className='text-center border' placeholder='Usage %'/>
+                                                <input {...register("backupvm_c_total")} step="0.01" min="0.00" className='text-center border' placeholder='total (GB)' />
+                                                <input {...register("backupvm_c_free")} step="0.01" min="0.00" className='text-center border' placeholder='Free (GB)'/>
+                                                <input {...register("backupvm_c_percent")} step="0.01" min="0.00" className='text-center border' placeholder='Usage %'/>
                                             </div>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between border rounded p-2'>
                                             Storage : D
                                             <div className='flex flex-col gap-2'>
-                                                <input type="number" {...register("backupvm_d_total")} step="0.01" min="0.00" className='text-center border' placeholder='total (GB)' />
-                                                <input type="number" {...register("backupvm_d_free")} step="0.01" min="0.00" className='text-center border' placeholder='Free (GB)'/>
-                                                <input type="number" {...register("backupvm_d_percent")} step="0.01" min="0.00" className='text-center border' placeholder='Usage %'/>
+                                                <input {...register("backupvm_d_total")} step="0.01" min="0.00" className='text-center border' placeholder='total (GB)' />
+                                                <input {...register("backupvm_d_free")} step="0.01" min="0.00" className='text-center border' placeholder='Free (GB)'/>
+                                                <input {...register("backupvm_d_percent")} step="0.01" min="0.00" className='text-center border' placeholder='Usage %'/>
                                             </div>
                                         </label>
                                         <label className='flex gap-5 w-full justify-center items-center mt-2'>
@@ -338,7 +409,7 @@ export default function CheckPhase1() {
                 <hr />
                 <div className="w-full flex gap-2 justify-between">
                     <label className='flex items-center gap-2 text-red-700'>
-                        <input type="checkbox" className='checkbox checkbox-sm' required/>
+                        <input type="checkbox" className='checkbox checkbox-success checkbox-sm' required/>
                         **โปรดตรวจสอบความถูกต้องก่อนกดยืนยัน
                     </label>
                     <div className='flex gap-2'>

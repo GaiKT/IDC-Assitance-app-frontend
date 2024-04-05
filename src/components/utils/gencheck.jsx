@@ -1,13 +1,22 @@
-import React from 'react'
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-export default function Gencheck(props) {
+export default function Gencheck({genName, register, errors}) {
+    const { reset } = useForm();
+    React.useEffect(() => {
+        reset();
+    }, []);
 
   return (
     <div className='p-4 border flex flex-col rounded gap-4'>
-            <p>{props.name.toUpperCase()}</p>
+            <label className='flex gap-4 w-full justify-center'>
+                {genName.toUpperCase()}
+                <input {...register("generator_name")} value={genName} className='px-2 rounded text-center hidden'/>
+            </label>
             <label className='flex flex-col items-center gap-4 w-full'>
                 Service Meter Unit (ATS)
-                <input type="number" {...props.register("ats_" + props.name)} step="0.01" min="0.00" className='text-center border' placeholder='ใส่เลขจากมิเตอร์' />
+                <input type='number' {...register("ats_meter_unit", {required:{ value : true, message : "ATS Meter is required." }})} className='text-center border' placeholder='ใส่เลขจากมิเตอร์' />
+                {errors["ats_meter_unit"] && <span className="text-red-500">{errors["ats_meter_unit"]?.message}</span>}
             </label>
             <hr />
             <p>ตรววจเช็คเครื่องก่อนสตาร์ท</p>
@@ -16,7 +25,7 @@ export default function Gencheck(props) {
                 เดินตรวจสอบรอบๆ ตัวเครื่องหาสิ่งผิดปกติ
                 <div className='flex gap-2'>
                     ABNormal
-                    <input type="checkbox" {...props.register("around_check_" + props.name)} className='toggle toggle-success toggle-sm'/>
+                    <input type="checkbox" {...register("around_check")} className='toggle toggle-success toggle-sm'/>
                     Normal
                 </div>
             </label>
@@ -26,16 +35,17 @@ export default function Gencheck(props) {
                     ระบบแบตเตอรี่ (ปริมาณน้ำกลั่น)
                     <hr />
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("batt_check_" + props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("batt_check")} className='checkbox checkbox-success checkbox-sm' />
                         ระดับน้ำกลั่นแต่ละช่อง
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("batt_connection_check_" + props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("batt_connection_check")} className='checkbox checkbox-success checkbox-sm' />
                         ขั้วแบตเตอรี่และสายแบตเตอรี่
                     </label>
                     <label className='flex flex-col gap-2 w-full justify-center items-start'>
                         Batterry VDC
-                        <input type="number" {...props.register("volt_batt_check_" + props.name)} className='w-full border rounded text-center' placeholder='ค่าแรงดันของแบตเตอรี่' />
+                        <input type='number' {...register("volt_batt_check", {required:{ value : true, message : "volt batt is required." }})} className='w-full border rounded text-center' placeholder='ค่าแรงดันของแบตเตอรี่' />
+                        {errors["volt_batt_check"] && <span className="text-red-500">{errors["volt_batt_check"]?.message}</span>}
                     </label>
                 </div>
                 {/*fuel*/}
@@ -44,10 +54,11 @@ export default function Gencheck(props) {
                     <hr />
                     <label className='flex flex-col gap-2 w-full justify-center items-start'>
                         ระดับน้ำมันในถัง (ไม่น้อยกว่า 300 ลิตร)
-                        <input type="number" {...props.register("fuel_value_check_" + props.name)} className='w-full border rounded text-center' placeholder='ระดับน้ำมันในถัง' />
+                        <input {...register("fuel_value_check", {required:{ value : true, message : "Fuel value is required." }})} className='w-full border rounded text-center' placeholder='ระดับน้ำมันในถัง' />
+                        {errors["fuel_value_check"] && <span className="text-red-500">{errors["fuel_value_check"]?.message}</span>}
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("fuel_leak_check_" + props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("fuel_leak_check")} className='checkbox checkbox-success checkbox-sm' />
                         รอยรั่วไหลของระบบน้ำมันเชื้อเพลิง
                     </label>
                 </div>
@@ -56,11 +67,11 @@ export default function Gencheck(props) {
                     ระบบหล่อลื่น
                     <hr />
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("oil_value_check_" + props.name )} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("oil_value_check")} className='checkbox checkbox-success checkbox-sm' />
                         ระดับน้ำมันหล่อลื่น
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("oil_leak_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("oil_leak_check")} className='checkbox checkbox-success checkbox-sm' />
                         รอยรั่วไหลน้ำมันหล่อลื่น
                     </label>
                 </div>
@@ -69,27 +80,27 @@ export default function Gencheck(props) {
                     ระบบหล่อเย็นระบบอากาศ
                     <hr />
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("cooler_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("cooler_check")} className='checkbox checkbox-success checkbox-sm' />
                         น้ำหล่อเย็นในหม้อ (มีรอยรั่วไหลหรือไม่)
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("filter_cooler_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("filter_cooler_check")} className='checkbox checkbox-success checkbox-sm' />
                         ความสะอาดบริเวณรังผึงหม้อน้ำ
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("fan_cooler_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("fan_cooler_check")} className='checkbox checkbox-success checkbox-sm' />
                         สายพานพัดลมหม้อน้ำ
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("cooler_leak_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("cooler_leak_check")} className='checkbox checkbox-success checkbox-sm' />
                         รอยรั่วไหลตามจุดต่อระบบหล่อเย็น
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("airduct_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("airduct_check")} className='checkbox checkbox-success checkbox-sm' />
                         Ari Duct
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("airfilter_condition_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("airfilter_condition_check")} className='checkbox checkbox-success checkbox-sm' />
                         สภาพไส้กรองอากาศ
                     </label>
                 </div>
@@ -98,19 +109,19 @@ export default function Gencheck(props) {
                     ระบบไฟฟ้า
                     <hr />
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("electic_junction_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("electic_junction_check")} className='checkbox checkbox-success checkbox-sm' />
                         จุดต่อต่างๆ ของระบบไฟฟ้า
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("electic_insulation_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("electic_insulation_check")} className='checkbox checkbox-success checkbox-sm' />
                         สภาพฉนวนสายไฟ
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("gruond_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("ground_check")} className='checkbox checkbox-success checkbox-sm' />
                         ระบบกราวด์ของเครื่อง
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("electic_panel_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("electic_panel_check")} className='checkbox checkbox-success checkbox-sm' />
                         ความสะอาดของแผงควบคุมไฟฟ้า
                     </label>
                 </div>
@@ -125,10 +136,11 @@ export default function Gencheck(props) {
                 <div className='w-80 border rounded flex flex-col gap-4 p-4'>
                     <label className='flex flex-col gap-2 w-full'>
                         เครื่องยนต์สตาร์ทเวลา
-                        <input type="datetime-local" {...props.register("time_start_"+ props.name)} className='border rounded'/>
+                        <input type="datetime-local" {...register("time_start", {required : {value : true , message : "Please specify the start date and time."}})} className='border rounded'/>
+                        {errors["time_start"] && <span className="text-red-500">{errors["time_start"]?.message}</span>}
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("engine_check_" + props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("engine_check")} className='checkbox checkbox-success checkbox-sm' />
                         เสียงผิดปกติรอบๆ เครื่องยนต์
                     </label>
                 </div>
@@ -137,11 +149,11 @@ export default function Gencheck(props) {
                     ระบบไฟฟ้า
                     <hr />
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("afterstart_junction_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("afterstart_junction_check")} className='checkbox checkbox-success checkbox-sm' />
                         จุดต่อต่างๆ ของระบบไฟฟ้า
                     </label>
                     <label className='flex gap-2 w-full justify-start items-center'>
-                        <input type="checkbox" {...props.register("afterstart_insulation_check_"+ props.name)} className='checkbox checkbox-success checkbox-sm' />
+                        <input type="checkbox" {...register("afterstart_insulation_check")} className='checkbox checkbox-success checkbox-sm' />
                         สภาพฉนวนสายไฟ
                     </label>
                 </div>                                                            
@@ -153,38 +165,49 @@ export default function Gencheck(props) {
                 {/* result test generator */}
                 <label className='flex flex-col items-start gap-2 border p-4 w-80 rounded'>
                     Voltage (400)
-                    <input {...props.register(`${props.name}_l1`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L1-2'/>
-                    <input {...props.register(`${props.name}_l2`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L2-3'/>
-                    <input {...props.register(`${props.name}_l3`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='L3-1'/>
+                    <input {...register(`l1`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='L1-2'/>
+                    {errors[`l1`] && <span className="text-red-500">{errors[`l1`]?.message}</span>}
+                    <input {...register(`l2`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='L2-3'/>
+                    {errors[`l2`] && <span className="text-red-500">{errors[`l2`]?.message}</span>}
+                    <input {...register(`l3`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='L3-1'/>
+                    {errors[`l3`] && <span className="text-red-500">{errors[`l3`]?.message}</span>}
                 </label>
                 <label className='flex flex-col items-start gap-2 border p-4 w-80 rounded'>
                     Load ที่ใช้งาน Ampere 
-                    <input {...props.register(`${props.name}_i1`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I1'/>
-                    <input {...props.register(`${props.name}_i2`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I2'/>
-                    <input {...props.register(`${props.name}_i3`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='I3'/>
+                    <input {...register(`i1`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='I1'/>
+                    {errors[`i1`] && <span className="text-red-500">{errors[`i1`]?.message}</span>}
+                    <input {...register(`i2`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='I2'/>
+                    {errors[`i2`] && <span className="text-red-500">{errors[`i2`]?.message}</span>}
+                    <input {...register(`i3`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='I3'/>
+                    {errors[`i3`] && <span className="text-red-500">{errors[`i3`]?.message}</span>}
                 </label>
                 <div className='flex flex-col items-start gap-5 border p-4 w-80 rounded'>
                     <label className='flex flex-col gap-2'>
                         ความถี่ (50Hz)
-                        <input {...props.register(`${props.name}_frequency`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='50Hz +- 1.5'/>
+                        <input {...register(`frequency`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='50Hz +- 1.5'/>
+                        {errors[`frequency`] && <span className="text-red-500">{errors[`frequency`]?.message}</span>}
                     </label>
                     <label className='flex flex-col gap-2'>
                         ความเร็วรอบ (RPM.)
-                        <input {...props.register(`${props.name}_frequency`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='50Hz +- 1.5'/>
+                        <input {...register(`rpm`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='1500 +-'/>
+                        {errors[`rpm`] && <span className="text-red-500">{errors[`rpm`]?.message}</span>}
                     </label>                        
                 </div>
                 <div className='flex flex-col items-start gap-2 border p-4 w-80 rounded'>
                     <label className='flex flex-col gap-2'>
                         Batterry Voltage (V)
-                        <input {...props.register(`${props.name}_voltbatt`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='50Hz +- 1.5'/>
+                        <input {...register(`voltbatt`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='27VDC'/>
+                        {errors[`voltbatt`] && <span className="text-red-500">{errors[`voltbatt`]?.message}</span>}
                     </label>
                     <label className='flex flex-col gap-2'>
                         Engine temp (°C)
-                        <input {...props.register(`${props.name}_enginetemp`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='50Hz +- 1.5'/>
+                        <input {...register(`enginetemp`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='70+-'/>
+                        {errors[`enginetemp`] && <span className="text-red-500">{errors[`enginetemp`]?.message}</span>}
                     </label>
                     <label className='flex flex-col gap-2'>
                         Cooldown (min)
-                        <input {...props.register(`${props.name}_cooldown`, { required: true})} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='50Hz +- 1.5'/>
+                        <input {...register(`cooldown`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='5 min +-'/>
+                        {errors[`cooldown`] && <span className="text-red-500">{errors[`cooldown`]?.message}</span>}
                     </label>                        
                 </div>
                 <div className='flex flex-col items-start gap-2 border p-4 w-80 rounded'>
@@ -192,7 +215,7 @@ export default function Gencheck(props) {
                     <hr />
                     <label className='flex flex-col items-start gap-2 w-full'>
                         Comment
-                        <textarea {...props.register(`${props.name}_comment`,)} rows={4} className='bg-gray-50 w-full' placeholder='ถ้ามีสิ่งผิดปกติเขียนลงที่นี่'/>
+                        <textarea {...register(`comment`,)} rows={4} className='bg-gray-50 w-full' placeholder='ถ้ามีสิ่งผิดปกติเขียนลงที่นี่'/>
                     </label>                        
                 </div>
                 <div className='w-80'></div>                                                            

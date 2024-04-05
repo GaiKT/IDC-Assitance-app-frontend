@@ -9,11 +9,38 @@ export default function CheckTransformer() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
   
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
 
     const onSubmit = async (data) => {
-        console.group(data)
-    }
+        try {
+            setIsLoading(true);
+            await axios.post('http://localhost:4000/checklists', { name: 'checklisttransformer', formData: { ...data, user_id: 1 } });
+            navigate('/');
+            Toast.fire({
+                icon: 'success',
+                title: 'Checklist sent successfully!'
+            });
+        } catch (error) {
+            Toast.fire({
+                icon: 'error',
+                title: 'Failed to send checklist. Please try again later.'
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
   return (
     <div className='bg-white p-10'>
@@ -174,14 +201,19 @@ export default function CheckTransformer() {
                 <div className='flex py-4 px-11 gap-5 flex-wrap'>
                     <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
                         อุณหภูมิหม้อแปลงไฟฟ้า
-                        <input {...register("tr_ch1", { required: true})} className='bg-gray-50 px-2' placeholder='Temp CH1'/>
-                        <input {...register("tr_ch2", { required: true})} className='bg-gray-50 px-2' placeholder='Temp CH2'/>
-                        <input {...register("tr_ch3", { required: true})} className='bg-gray-50 px-2' placeholder='Temp CH3'/>
+                        <input {...register("tr_ch1", { required: { value : true , message : "Temperatrue is require"} , max : {value: 100, message: "Vaule max 100"}, min : {value: 0, message: "Value min 0"} })} className='bg-gray-50 px-2' placeholder='Temp CH1'/>
+                        {errors["tr_ch1"] && <span className="text-red-500">{errors["tr_ch1"]?.message}</span>}
+                        <input {...register("tr_ch2", { required: { value : true , message : "Temperatrue is require"} , max : {value: 100, message: "Vaule max 100"}, min : {value: 0, message: "Value min 0"} })} className='bg-gray-50 px-2' placeholder='Temp CH2'/>
+                        {errors["tr_ch2"] && <span className="text-red-500">{errors["tr_ch2"]?.message}</span>}
+                        <input {...register("tr_ch3", { required: { value : true , message : "Temperatrue is require"} , max : {value: 100, message: "Vaule max 100"}, min : {value: 0, message: "Value min 0"} })} className='bg-gray-50 px-2' placeholder='Temp CH3'/>
+                        {errors["tr_ch3"] && <span className="text-red-500">{errors["tr_ch3"]?.message}</span>}
                     </label>
                     <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
                         อุณหภูมิห้องหม้อแปลง
-                        <input {...register("tr_room_temp", { required: true})} className='bg-gray-50 px-2' placeholder='Temp'/>
-                        <input {...register("tr_room_hum", { required: true})} className='bg-gray-50 px-2' placeholder='Hum'/>
+                        <input {...register("tr_room_temp", { required: { value : true , message : "Temperatrue is require"} , max : {value: 100, message: "Vaule max 100"}, min : {value: 0, message: "Value min 0"} })} className='bg-gray-50 px-2' placeholder='Temp'/>
+                        {errors["tr_room_temp"] && <span className="text-red-500">{errors["tr_room_temp"]?.message}</span>}
+                        <input {...register("tr_room_hum", { required: { value : true , message : "Humidity is require"} , max : {value: 100, message: "Vaule max 100"}, min : {value: 0, message: "Value min 0"} })} className='bg-gray-50 px-2' placeholder='Hum'/>
+                        {errors["tr_room_hum"] && <span className="text-red-500">{errors["tr_room_hum"]?.message}</span>}
                     </label>
                     <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
                         พัดลมหม้อแปลง
@@ -209,14 +241,18 @@ export default function CheckTransformer() {
                     <label className='flex flex-col items-center gap-5 border p-5 w-80 rounded'>
                         <div className='flex justify-between w-full'>
                             Meter
-                            <input {...register("meter", { required: true})} className='bg-gray-50 px-2' placeholder='kwh'/>
+                            <input {...register("meter", { required: {value: true , message : "Meter is required"}})} className='bg-gray-50 px-2' placeholder='kwh'/>
                         </div>
+                        {errors["meter"] && <span className="text-red-500">{errors["meter"]?.message}</span>}
                         <div className='flex gap-2 w-full justify-between'>
                             Voltage
                             <div className='flex flex-col gap-2'>
-                                <input {...register("l1-2", { required: true})} className='bg-gray-50 px-2' placeholder='L1-2'/>
-                                <input {...register("l2-3", { required: true})} className='bg-gray-50 px-2' placeholder='L2-3'/>
-                                <input {...register("l3-1", { required: true})} className='bg-gray-50 px-2' placeholder='L3-1'/>
+                                <input {...register("l1", { required: {value: true , message : "L1 is required"} , max : {value: 400, message : "The voltage should not exceed 400."},min: {value: 0 , message : "The value should not be less than 0."}})} className='bg-gray-50 px-2' placeholder='L1-2'/>
+                                {errors["l1"] && <span className="text-red-500">{errors["l1"]?.message}</span>}
+                                <input {...register("l2", { required: {value: true , message : "L2 is required"}, max : {value: 400, message : "The voltage should not exceed 400."},min: {value: 0 , message : "The value should not be less than 0."}})} className='bg-gray-50 px-2' placeholder='L2-3'/>
+                                {errors["l2"] && <span className="text-red-500">{errors["l2"]?.message}</span>}
+                                <input {...register("l3", { required: {value: true , message : "L3 is required"}, max : {value: 400, message : "The voltage should not exceed 400."},min: {value: 0 , message : "The value should not be less than 0."}})} className='bg-gray-50 px-2' placeholder='L3-1'/>
+                                {errors["l3"] && <span className="text-red-500">{errors["l3"]?.message}</span>}
                             </div>
                         </div>
                     </label>
@@ -224,41 +260,44 @@ export default function CheckTransformer() {
                         <div className='flex gap-2 w-full justify-between'>
                             Ampere
                             <div className='flex flex-col gap-2'>
-                                <input {...register("i1", { required: true})} className='bg-gray-50 px-2' placeholder='I1'/>
-                                <input {...register("i2", { required: true})} className='bg-gray-50 px-2' placeholder='I2'/>
-                                <input {...register("i3", { required: true})} className='bg-gray-50 px-2' placeholder='I3'/>
+                                <input {...register("i1", { required: {value : true , message : "I1 is requred"}, max : {value: 1400, message : "The currant should not exceed 1400."},min: {value: 0 , message : "The value should not be less than 0."}})} className='bg-gray-50 px-2' placeholder='I1'/>
+                                {errors["i1"] && <span className="text-red-500">{errors["i1"]?.message}</span>}
+                                <input {...register("i2", { required: {value : true , message : "I2 is requred"}, max : {value: 1400, message : "The currant should not exceed 1400."},min: {value: 0 , message : "The value should not be less than 0."}})} className='bg-gray-50 px-2' placeholder='I2'/>
+                                {errors["i2"] && <span className="text-red-500">{errors["i2"]?.message}</span>}
+                                <input {...register("i3", { required: {value : true , message : "I3 is requred"}, max : {value: 1400, message : "The currant should not exceed 1400."},min: {value: 0 , message : "The value should not be less than 0."}})} className='bg-gray-50 px-2' placeholder='I3'/>
+                                {errors["i3"] && <span className="text-red-500">{errors["i3"]?.message}</span>}
                             </div>
                         </div>                        
                         <div className='flex gap-2 w-full justify-between'>
                             Power Factor
-                            <input {...register("pf", { required: true})} className='bg-gray-50 px-2' placeholder='P.F.'/>
+                            <input {...register("pf", { required: {value : true , message : "PF. is requred"}, max : {value: 0.98 , message: "Power factor should not exceed 0.98"} , min : {value: 0.92 , message: "Power factor should not be less than 0.92"}})} className='bg-gray-50 px-2' placeholder='P.F.'/>
                         </div>
-
+                        {errors["pf"] && <span className="text-red-500">{errors["pf"]?.message}</span>}
                     </label>
                     <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
                         Circuit Breaker
                         <div className='flex flex-col w-4/6 gap-2'>
-                            <label className='flex w-full rounded justify-between gap-2 items-center'>
+                            <label className='flex w-full rounded gap-5 items-center'>
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("main_mcb", { required: true})}/>
                                 Main MCB
                             </label>
-                            <label className='flex w-full rounded justify-between gap-2 items-center'>
+                            <label className='flex w-full rounded gap-5 items-center'>
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("db1", { required: true})}/>
                                 DB1
                             </label>
-                            <label className='flex w-full rounded justify-between gap-2 items-center'>
+                            <label className='flex w-full rounded gap-5 items-center'>
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("db2", { required: true})}/>
                                 DB2
                             </label>
-                            <label className='flex w-full rounded justify-between gap-2 items-center'>
+                            <label className='flex w-full rounded gap-5 items-center'>
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("mcb1", { required: true})}/>
                                 MCB1
                             </label>
-                            <label className='flex w-full rounded justify-between gap-2 items-center'>
+                            <label className='flex w-full rounded gap-5 items-center'>
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("mcb2", { required: true})}/>
                                 MCB2
                             </label>
-                            <label className='flex w-full rounded justify-between gap-2 items-center'>
+                            <label className='flex w-full rounded gap-5 items-center'>
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("capbank", { required: true})}/>
                                 Capbank
                             </label>

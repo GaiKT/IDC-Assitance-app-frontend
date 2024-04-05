@@ -1,21 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Gencheck from '../utils/gencheck';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { useAuth } from '../../contexts/authentication';
+import axios from 'axios';
 
 export default function Checkgenerator() {
+    const { state } = useAuth();
+    const [user, setUser] = useState(state.user);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm();
     const [step, setStep] = useState(1);
 
-    const onSubmit = async (data) => {
-        console.log(data);
-        // Perform form submission logic here
-    };
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const formRef = useRef(); // Create a ref for the form
 
-    const handleNext = () => {
-        setStep(step + 1);
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        },
+    });
+
+    const onSubmit = async (data) => {
+        console.log(data)
+        try {
+            setIsLoading(true);
+            let result = await axios.post('http://localhost:4000/checklists', { name: 'checklistgenerator', formData: { ...data, user_id: user.user_id } });
+            console.log(result)
+            if (step === 3) {
+                navigate('/');
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Checklists sent successfully!',
+                });
+            } else {
+                setStep(step + 1);
+                formRef.current.reset(); // Reset form fields
+            }
+        } catch (error) {
+            Toast.fire({
+                icon: 'error',
+                title: 'Failed to send checklist. Please try again later.',
+            });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleBack = () => {
@@ -26,17 +62,17 @@ export default function Checkgenerator() {
         <div className="bg-white p-10">
             <h1 className="text-4xl font-bold mb-5">Checklist Generator</h1>
             <hr />
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
+            <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
                 <div>
                     <ul className="steps w-full">
-                        <li className="step step-primary">Generator 1</li>
-                        <li className={step === 2 || step === 3 ? "step step-primary" : "step"}>Generator 2</li>
-                        <li className={step === 3 ? "step step-primary" : "step"}>Generator 3</li>
+                        {[1, 2, 3].map((index) => (
+                            <li key={index} className={step >= index ? 'step step-primary' : 'step'}>
+                                Generator {index}
+                            </li>
+                        ))}
                     </ul>
                 </div>
-                {step === 1 && <Gencheck name="generator1" register={register} />}
-                {step === 2 && <Gencheck name="generator2" register={register} />}
-                {step === 3 && <Gencheck name="generator3" register={register} />}
+                <Gencheck genName={`generator${step}`} register={register} errors={errors} />
                 <hr />
                 <div className="w-full flex gap-2 justify-between">
                     <label className="flex items-center gap-2 text-red-700">
@@ -49,15 +85,9 @@ export default function Checkgenerator() {
                                 Back
                             </button>
                         )}
-                        {step !== 3 ? (
-                            <button type="button" className="btn btn-success w-20 text-white" onClick={handleNext} disabled={isLoading}>
-                                {isLoading ? <span className="loading loading-spinner"></span> : 'Next'}
-                            </button>
-                        ) : (
-                            <button type="submit" className="btn btn-success w-20 text-white" disabled={isLoading}>
-                                {isLoading ? <span className="loading loading-spinner"></span> : 'Submit'}
-                            </button>
-                        )}
+                        <button type="submit" className="btn btn-success w-20 text-white" disabled={isLoading}>
+                            {isLoading ? <span className="loading loading-spinner"></span> : 'Submit'}
+                        </button>
                     </div>
                 </div>
             </form>

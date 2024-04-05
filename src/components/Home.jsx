@@ -14,8 +14,6 @@ function Home() {
         getWeeklyMembers()
     },[])
 
-    console.log(weeklyMembers)
-
     if(weeklyMembers.data){
         return (
             <> 
@@ -70,7 +68,7 @@ function Home() {
                                                 bg = "bg-gray-100"
                                             }
                                             return(
-                                                <tr className={"hover " + bg}>
+                                                <tr key={index} className={"hover " + bg}>
                                                     <td>{member.first_name} {member.last_name}</td>
                                                     <td>{member.teamname}</td>
                                                     <td>บริษัท {member.comp_name_thai} จำกัด</td>

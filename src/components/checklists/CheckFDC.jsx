@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
-import { useState,useEffect } from "react"
+import { useState} from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
@@ -8,13 +8,39 @@ import Swal from "sweetalert2"
 export default function CheckFDC() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
-    const TempDetector = ["J12","I10","I3","J1","H2","G4","H10","G13","E13","F9","E3","F1","C4","A4","K2","K7","L7","M6","L3","M1","N1","O3","N8","O9"]
   
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
 
     const onSubmit = async (data) => {
-        console.group(data)
-    }
+        try {
+            setIsLoading(true);
+            await axios.post('http://localhost:4000/checklists', { name: 'checklistfdc', formData: { ...data, user_id: 1 } });
+            navigate('/');
+            Toast.fire({
+                icon: 'success',
+                title: 'Checklist sent successfully!'
+            });
+        } catch (error) {
+            Toast.fire({
+                icon: 'error',
+                title: 'Failed to send checklist. Please try again later.'
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
   return (
     <div className='bg-white p-10'>
@@ -24,12 +50,14 @@ export default function CheckFDC() {
             <div className='p-4 border flex rounded gap-4'>
                 <label className='flex flex-col items-center gap-5 border py-5 w-1/3 rounded'>
                     FDC status : OFF
-                    <input {...register("phase1", { required: true})} className='bg-gray-50 px-2' placeholder='Phase1'/>
-                    <input {...register("phase2", { required: true})} className='bg-gray-50 px-2' placeholder='Phase2'/>
+                    <input {...register("fdc_phase1", { required: { value: true, message: "FDC_Phase1 is required" } })} className='bg-gray-50 px-2' placeholder='Phase1'/>
+                    {errors["fdc_phase1"] && <span className="text-red-500">{errors["fdc_phase1"]?.message}</span>}
+                    <input {...register("fdc_phase2", { required: { value: true, message: "FDC_Phase2 is required" } })} className='bg-gray-50 px-2' placeholder='Phase2'/>
+                    {errors["fdc_phase2"] && <span className="text-red-500">{errors["fdc_phase2"]?.message}</span>}
                 </label>
                 <label className='flex gap-5 w-2/3 p-2'>
                     Commemt
-                    <textarea {...register("fdc_commemt")} rows="4" className='border rounded w-full'></textarea>
+                    <textarea {...register("fdc_comment")} rows="4" className='border rounded w-full p-4' placeholder='ถ้ามีการเปลี่ยนแปลงโปรด Comment สาเหตุ'></textarea>
                 </label>
             </div>
             <hr />
