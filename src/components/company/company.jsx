@@ -26,7 +26,7 @@ function Companys () {
     },[keyword])
 
     return (
-        <>
+    <>
         <div className="flex justify-between">
             <header className="text-4xl mb-5"> Company Management </header> 
             <a href="/company/addcompany" className="btn btn-success text-white">New Company</a>

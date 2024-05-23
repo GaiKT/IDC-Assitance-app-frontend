@@ -8,9 +8,15 @@ function SideBar() {
                 <h1 className="text-center font-extrabold text-2xl mb-2">IDC Assistance</h1>
                 </div>
                 <li>
-                    <Link to="/" className="font-bold">
+                    <details open>
+                    <summary className="font-bold">
                         Dashborad
-                    </Link>
+                    </summary>
+                    <ul>
+                        <li><Link to="/">Main Dashborad</Link></li>
+                        <li><Link to="/checklists/dasborad">Checklists Dashborad</Link></li>
+                    </ul>
+                    </details>
                 </li>
                 <li>
                     <details open>

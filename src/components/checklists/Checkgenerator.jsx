@@ -29,10 +29,11 @@ export default function Checkgenerator() {
     });
 
     const onSubmit = async (data) => {
-        console.log(data)
         try {
+            data.generator_name = `generator${step}`
+            console.log(data)
             setIsLoading(true);
-            let result = await axios.post('http://localhost:4000/checklists', { name: 'checklistgenerator', formData: { ...data, user_id: user.user_id } });
+            let result = await axios.post('http://localhost:4000/checklists', { name: 'checklistgenerator', formData: { ...data, user_id: user.id } });
             console.log(result)
             if (step === 3) {
                 navigate('/');
@@ -72,7 +73,7 @@ export default function Checkgenerator() {
                         ))}
                     </ul>
                 </div>
-                <Gencheck genName={`generator${step}`} register={register} errors={errors} />
+                <Gencheck genName={`Generator${step}`} register={register} errors={errors} />
                 <hr />
                 <div className="w-full flex gap-2 justify-between">
                     <label className="flex items-center gap-2 text-red-700">
