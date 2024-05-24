@@ -1,5 +1,3 @@
-import NavBar from "../navbar";
-import SideBar from "../sidebar";
 import Footer from "../footer";
 import AddmembersForm from "../form/addmemberform";
 

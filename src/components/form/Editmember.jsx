@@ -28,7 +28,6 @@ function EditmembersForm(props) {
     try {
       setIsLoading(true)
       let result = await axios.put('http://localhost:4000/aup/'+ props.data.member_id, data)
-      console.log(result.data.message)
       navigate('/members')
       setIsLoading(false)
       Toast.fire({

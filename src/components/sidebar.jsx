@@ -8,9 +8,15 @@ function SideBar() {
                 <h1 className="text-center font-extrabold text-2xl mb-2">IDC Assistance</h1>
                 </div>
                 <li>
-                    <Link to="/" className="font-bold">
+                    <details open>
+                    <summary className="font-bold">
                         Dashborad
-                    </Link>
+                    </summary>
+                    <ul>
+                        <li><Link to="/">Main Dashborad</Link></li>
+                        <li><Link to="/checklists/dasborad">Checklists Dashborad</Link></li>
+                    </ul>
+                    </details>
                 </li>
                 <li>
                     <details open>
@@ -20,8 +26,8 @@ function SideBar() {
                     <ul>
                         <li><Link to="/members">Members menagement</Link></li>
                         <li><Link to="/company">Companies menagement</Link></li>
-                        <li><Link>FaceRacks</Link></li>
-                        <li><Link>Lan Setup</Link></li>
+                        {/* <li><Link>FaceRacks</Link></li>
+                        <li><Link>Lan Setup</Link></li> */}
                     </ul>
                     </details>
                 </li>
@@ -37,7 +43,7 @@ function SideBar() {
                                     Every 2 Hour
                                 </summary>
                                 <ul>
-                                    <li><Link to="/checklists/roomtemp">Checklist roomteamp</Link></li>
+                                    <li><Link to="/checklists/roomtemp">Checklist Roomteamp</Link></li>
                                     <li><Link to="/checklists/fdc">Checklist FDC</Link></li>
                                 </ul>
                             </details>
@@ -48,7 +54,7 @@ function SideBar() {
                                     Every Days
                                 </summary>
                                 <ul>
-                                    <li><Link to="/checklists/Transformer">Checklist transformer</Link></li>
+                                    <li><Link to="/checklists/Transformer">Checklist Transformer</Link></li>
                                     <li><Link to="/checklists/phase1">Checklist Phase1</Link></li>
                                     <li><Link to="/checklists/phase2" >Checklist Phase2</Link></li>
                                 </ul>
@@ -60,7 +66,7 @@ function SideBar() {
                                     Weekly
                                 </summary>
                                 <ul>
-                                    <li><Link>Checklist Generator</Link></li>
+                                    <li><Link to="/checklists/generator">Checklist Generator</Link></li>
                                 </ul>
                             </details>
                         </li>
