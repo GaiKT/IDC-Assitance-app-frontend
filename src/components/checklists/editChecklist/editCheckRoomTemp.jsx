@@ -33,8 +33,6 @@ export default function EditCheckRoomTemp() {
 
     const onSubmit = async (data) => {
         try {
-            delete data.firstname
-            delete data.id
             setIsLoading(true);
             await axios.put('http://localhost:4000/checklists', { name: 'checklistroomtemp', formData: { ...data, user_id: user.id } });
             navigate('/');

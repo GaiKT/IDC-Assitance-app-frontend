@@ -43,9 +43,6 @@ export default function EditCheckPhase2() {
 
     const onSubmit = async (data) => {
         try {
-            delete data.id
-            delete data.firstname
-            console.log(data)
             setIsLoading(true);
             await axios.put('http://localhost:4000/checklists', { name: 'checklistphase2', formData: { ...data, user_id: user.id } });
             navigate('/checklists/dasborad');

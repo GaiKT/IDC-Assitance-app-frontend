@@ -32,9 +32,6 @@ export default function EditCheckTransformer() {
 
     const onSubmit = async (data) => {
         try {
-            delete data.firstname
-            delete data.id
-            console.log(data)
             setIsLoading(true);
             await axios.put('http://localhost:4000/checklists', { name: 'checklisttransformer', formData: { ...data, user_id: user.id } });
             navigate('/');

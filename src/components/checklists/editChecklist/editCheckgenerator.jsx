@@ -32,9 +32,6 @@ export default function EditCheckgenerator() {
 
     const onSubmit = async (data) => {
         try {
-            delete data.id
-            delete data.firstname
-            console.log(data)
             setIsLoading(true);
             await axios.put('http://localhost:4000/checklists', { name: 'checklistgenerator', formData: { ...data, user_id: user.id } });
             navigate('/');

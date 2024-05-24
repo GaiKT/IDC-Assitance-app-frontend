@@ -32,9 +32,6 @@ export default function EditCheckFDC() {
 
     const onSubmit = async (data) => {
         try {
-            delete data.id
-            delete data.firstname
-            console.log(data)
             setIsLoading(true);
             await axios.put('http://localhost:4000/checklists', { name: 'checklistfdc', formData: { ...data, user_id: user.id } });
             navigate('/');
@@ -43,6 +40,7 @@ export default function EditCheckFDC() {
                 title: 'Checklist updated successfully!'
             });
         } catch (error) {
+            console.log(error)
             Toast.fire({
                 icon: 'error',
                 title: 'Failed to update checklist. Please try again later.'
@@ -54,10 +52,6 @@ export default function EditCheckFDC() {
 
     const handleEditClick = () => {
         setInputStatus(!inputStatus)
-    };
-
-    const handleDownloadClick = () => {
-        // Add logic to handle downloading PDF file
     };
 
   return (
@@ -76,9 +70,9 @@ export default function EditCheckFDC() {
             <div className='p-4 border flex rounded gap-4'>
                 <label className='flex flex-col items-center gap-5 border py-5 w-1/3 rounded'>
                     FDC status
-                    <input disabled={inputStatus} {...register("fdc_phase1", { required: { value: true, message: "FDC_Phase1 is required" },})} className='bg-gray-50 px-2' placeholder='Phase1'/>
+                    <input disabled={inputStatus} type='number' {...register("fdc_phase1", { required: { value: true, message: "FDC_Phase1 is required" },})} className='bg-gray-50 px-2' placeholder='Phase1'/>
                     {errors["fdc_phase1"] && <span className="text-red-500">{errors["fdc_phase1"]?.message}</span>}
-                    <input disabled={inputStatus} {...register("fdc_phase2", { required: { value: true, message: "FDC_Phase2 is required" } })} className='bg-gray-50 px-2' placeholder='Phase2'/>
+                    <input disabled={inputStatus} type='number' {...register("fdc_phase2", { required: { value: true, message: "FDC_Phase2 is required" } })} className='bg-gray-50 px-2' placeholder='Phase2'/>
                     {errors["fdc_phase2"] && <span className="text-red-500">{errors["fdc_phase2"]?.message}</span>}
                 </label>
                 <label className='flex gap-5 w-2/3 p-2'>

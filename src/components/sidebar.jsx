@@ -26,8 +26,8 @@ function SideBar() {
                     <ul>
                         <li><Link to="/members">Members menagement</Link></li>
                         <li><Link to="/company">Companies menagement</Link></li>
-                        <li><Link>FaceRacks</Link></li>
-                        <li><Link>Lan Setup</Link></li>
+                        {/* <li><Link>FaceRacks</Link></li>
+                        <li><Link>Lan Setup</Link></li> */}
                     </ul>
                     </details>
                 </li>

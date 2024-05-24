@@ -7,19 +7,21 @@ export default function ChecklistsDashboard() {
     const tabs = ['roomtemp', 'fdc', 'transformer', 'phase1', 'phase2', 'generator',];
     const [activeTab, setActiveTab] = useState(0);
     const [data ,setData] = useState([]);
+    const [strDate , setStrDate] = useState('');
+    const [endDate , setEndDate] = useState(`${new Date()}`);
 
     const handleTabChange = (index) => {
         setActiveTab(index);
     };
 
     const getChecklist = async () => {
-        let result = await axios.get('http://localhost:4000/checklists/reccord?checklistName=' + tabs[activeTab])
-        setData(result.data.data)
+        let result = await axios.get(`http://localhost:4000/checklists/${tabs[activeTab]}?str=${strDate}&end=${endDate}`)
+        setData(result.data)
     };
 
     useEffect(()=>{
         getChecklist()
-    },[activeTab])
+    },[activeTab ,strDate ,endDate])
 
     return (
         <>
@@ -38,7 +40,7 @@ export default function ChecklistsDashboard() {
                             onChange={() => handleTabChange(index)}
                         />
                         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-                            <TapChecklist nameCheckList={tab} data={data} />
+                            <TapChecklist nameCheckList={tab} data={data} setStrDate={setStrDate} setEndDate={setEndDate}/>
                         </div>
                     </React.Fragment>
                 ))}
