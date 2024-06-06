@@ -4,6 +4,7 @@ import NavBar from "../components/navbar";
 import Home from "../components/Home";
 import Profile from "../components/profilePage";
 
+
 import Breadcrumbs from "../components/utils/Breadcrumbs";
 
 //member menagement
@@ -20,6 +21,7 @@ import AddCompany from "../components/company/addcompany";
 import ChecklistsDasborad from "../components/checklists/ChecklistsDasborad";
 import CheckRoomTemp from "../components/checklists/CheckRoomTemp";
 import EditCheckRoomTemp from "../components/checklists/editChecklist/editCheckRoomTemp";
+import ChecklistPDF from "../pdf/checklists/ChecklistPDF";
 import CheckFDC from "../components/checklists/CheckFDC";
 import EditCheckFDC from "../components/checklists/editChecklist/editCheckFDC";
 import CheckTransformer from "../components/checklists/CheckTransformer";
@@ -60,6 +62,8 @@ function AuthenticatedApp() {
                 {/* roomtemp */}
               <Route path="/checklists/roomtemp" element={<CheckRoomTemp />} />
               <Route path="/checklists/roomtemp/edit" element={<EditCheckRoomTemp />} />
+              <Route path="/checklists/roomtemp/pdf" element={<ChecklistPDF />} />
+
 
                 {/* fdc */}
               <Route path="/checklists/fdc" element={<CheckFDC />} />

@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate , useLocation } from "react-router-dom"
 import Swal from "sweetalert2"
 import { useAuth } from "../../../contexts/authentication";
+import { Link } from 'react-router-dom'
 
 export default function EditCheckTransformer() {
     const location = useLocation();
@@ -59,7 +60,9 @@ export default function EditCheckTransformer() {
             <h1 className='text-4xl font-bold mb-5'>Checklist Transformer</h1>
             <div className='flex gap-2 '>
                 <button className='btn btn-info text-white' onClick={()=>{handleEditClick()}}>Edit</button>
-                <button className='btn btn-success text-white'>Download File</button>
+                <Link to={'/checklists/roomtemp/pdf'} state={tranformer}>
+                    <button className='btn btn-success text-white'>Download File</button>            
+                </Link>
             </div>
         </div>
         <hr />
