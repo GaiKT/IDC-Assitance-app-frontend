@@ -13,15 +13,13 @@ function Home() {
         getWeeklyMembers()
     },[])
 
-    console.log(weeklyMembers)
-
     if(weeklyMembers.data){
         return (
             <> 
-                <header className="text-4xl mb-5">Main Dashboard</header>
-                <div className="mt-5 p-10">
-                    <div className="flex gap-3">
-                        <div className="border h-full w-2/4 bg-white rounded-md shadow-sm flex flex-col justify-center items-center p-5">
+                <header className="text-4xl">Main Dashboard</header>
+                <div className="mt-5">
+                    <div className="flex gap-3 h-full">
+                        <div className="border w-2/4 bg-white rounded-md shadow-sm flex flex-col justify-center items-center p-5">
                             <p className="text-lg">Tranformer Room</p>
                             <div className="grid grid-cols-3 mt-2 gap-3 mb-5">
                                 <div className="p-4 border rounded-md text-center">
@@ -65,13 +63,13 @@ function Home() {
                                     <p className="text-lg">FDC Status</p>
                                         <div className="grid grid-cols-2 mt-2 gap-3 mb-2">
                                             <div className="p-4 border rounded-md text-center">
-                                                FDC OFF P1
+                                                FDC P1
                                                 <p className="font-bold text-red-500">
                                                     {weeklyMembers.data?.newfdc[0].fdc_phase1}
                                                 </p>
                                             </div>
                                             <div className="p-4 border rounded-md text-center">
-                                                FDC OFF P2
+                                                FDC P2
                                                 <p  className="font-bold text-yellow-500">
                                                     {weeklyMembers.data?.newfdc[0].fdc_phase2}
                                                 </p>
@@ -107,19 +105,19 @@ function Home() {
                                 <div className="grid grid-cols-4 gap-3 p-4">
                                     <div className="p-3 border rounded-md">
                                         Meter Floor5
-                                        <p className="font-bold text-blue-500">{weeklyMembers.data?.avgPhase1[0]?.main_meter}</p>
+                                        <p className="font-bold text-blue-500">{weeklyMembers.data?.avgPhase2[0]?.main_meter}</p>
                                     </div>
                                     <div className="p-3 border rounded-md">
                                         ATS Phase2
-                                        <p className="font-bold text-red-500">{weeklyMembers.data?.avgPhase1[0]?.atsphase1_meter}</p>
+                                        <p className="font-bold text-red-500">{weeklyMembers.data?.avgPhase2[0]?.atsphase2_meter}</p>
                                     </div>
                                     <div className="p-3 border rounded-md">
                                         EMDB
-                                        <p className="font-bold text-yellow-500">{weeklyMembers.data?.avgPhase1[0]?.emdb_meter}</p>
+                                        <p className="font-bold text-yellow-500">{weeklyMembers.data?.avgPhase2[0]?.emdb_meter}</p>
                                     </div>
                                     <div className="p-3 border rounded-md">
                                         AirDB
-                                        <p className="font-bold text-green-500">{weeklyMembers.data?.avgPhase1[0]?.airdb_meter}</p>
+                                        <p className="font-bold text-green-500">{weeklyMembers.data?.avgPhase2[0]?.airdb_meter}</p>
                                     </div>                                                                                                
                                 </div>
                             </div>

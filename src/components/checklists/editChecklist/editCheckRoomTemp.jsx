@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate , useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useAuth } from "../../../contexts/authentication";
-
+import { Link } from 'react-router-dom';
 
 const rackNames = ['J12', 'I10', 'I3', 'J1', 'H2', 'G4', 'H10', 'G13', 'E13', 'F9', 'E3', 'F1', 'C4', 'A4', 'K2', 'K7', 'L7', 'M6', 'L3', 'M1', 'N1', 'O3', 'N8', 'O9'];
 
@@ -60,7 +60,7 @@ export default function EditCheckRoomTemp() {
                 <h1 className='text-4xl font-bold mb-5'>Checklist Room Temp</h1>
                 <div className='flex gap-2 '>
                     <button className='btn btn-info text-white' onClick={()=>{handleEditClick()}}>Edit</button>
-                    <button className='btn btn-success text-white'>Download File</button>
+                        <button className='btn btn-success text-white'>Download File</button>            
                 </div>
             </div>
             {!inputStatus && <h1 className='mb-2'>Editting...</h1>}
