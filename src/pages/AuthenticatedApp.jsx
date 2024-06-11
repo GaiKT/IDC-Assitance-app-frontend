@@ -39,10 +39,10 @@ function AuthenticatedApp() {
   return (
     <div className="App flex">
         <SideBar/>
-        <div className="bg-gray-100 w-full min-h-screen">
+        <div className="bg-gray-100 w-full min-h-screen z-0">
           <NavBar/> 
           <div className="ml-10 mb-4"><Breadcrumbs /></div>
-          <div className="px-10 pb-10">
+          <div className="md:px-10 max-md:px-5 pb-10">
             <Routes>
               {/* user */}
               <Route path="/" element={<Home />} />

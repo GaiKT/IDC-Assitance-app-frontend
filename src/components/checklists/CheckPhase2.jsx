@@ -57,14 +57,14 @@ export default function CheckPhase2() {
     };
 
     return (
-        <div className='bg-white p-10'>
+        <div className='bg-white md:p-10 max-md:p-5'>
             <h1 className='text-4xl font-bold mb-5'>Checklist Phase2</h1>
             <hr />
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
-                <div className='flex w-full flex-col items-center'>
+                <div className='flex w-full flex-col'>
                     <h1 className='text-xl w-full text-center py-4'>Floor 5B</h1>
-                    <div className='flex py-4 gap-5 flex-wrap'>
-                    <div className='flex flex-col gap-5 border py-5 w-full rounded'>
+                    <div className='flex py-4 gap-5 flex-col w-full px-2'>
+                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
                         <div className='flex flex-col items-center gap-2'>
                             <label className='flex flex-col items-center gap-2'>
                                 Main meter
@@ -78,9 +78,9 @@ export default function CheckPhase2() {
                     </div>
                 </div>
                 <hr />
-                <div className='flex w-full flex-col items-center'>
+                <div>
                     <h1 className='text-xl w-full text-center py-4'>Floor 10</h1>
-                    <div className='flex py-4 gap-5 flex-wrap'>
+                    <div className='flex py-4 gap-2 flex-wrap'>
                         {/* Emdb */}
                         <Db nameDb='emdb' register={register} errors={errors}/>
                         {/* udb1 */}
@@ -88,7 +88,7 @@ export default function CheckPhase2() {
                         {/* udb2 */}
                         <Db nameDb='udb2' register={register} errors={errors}/>                        
                         {/* facinet */}
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
+                        <div className='flex flex-col gap-2 border py-5 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>
                                 FAC INET
                                 <label className='flex items-center gap-2'>
@@ -96,8 +96,8 @@ export default function CheckPhase2() {
                                     Status R S T(ON)
                                 </label>
                             </div>
-                            <div className='w-full flex gap-5 px-5'>
-                                <div className='flex flex-col gap-5 border py-5 w-1/2 rounded'>
+                            <div className='w-full flex gap-5 px-5 max-md:flex-col'>
+                                <div className='flex flex-col gap-5 border py-5 md:w-1/2 rounded'>
                                     <label className='flex flex-col items-center'>
                                         Voltage
                                         <input {...register("fac_inet_vavg", { required: {value: true , message : "Voltage is required."}})} className='bg-gray-50 px-2' placeholder='Vavg'/>
@@ -109,7 +109,7 @@ export default function CheckPhase2() {
                                         {errors["fac_inet_iavg"] && <span className="text-red-500">{errors["fac_inet_iavg"]?.message}</span>}
                                     </label>
                                 </div>
-                                <div className='flex flex-col gap-5 border py-5 w-1/2 rounded'>
+                                <div className='flex flex-col gap-5 border py-5 md:w-1/2 rounded'>
                                     <label className='flex flex-col items-center '>
                                         Power
                                         <input {...register("fac_inet_plot", { required: {value: true , message : "Plot is required."}})} className='bg-gray-50 px-2' placeholder='Kw'/>
@@ -132,8 +132,8 @@ export default function CheckPhase2() {
                                     Status R S T(ON)
                                 </label>
                             </div>
-                            <div className='w-full flex gap-5 px-5'>
-                                <div className='flex flex-col gap-5 border py-5 w-1/2 rounded'>
+                            <div className='w-full flex gap-5 px-5 max-md:flex-col'>
+                                <div className='flex flex-col gap-5 border py-5 md:w-1/2 rounded'>
                                     <label className='flex flex-col items-center '>
                                         Voltage
                                         <input {...register("fac_thaisarn_vavg", { required: {value: true , message : "Voltage is required."}})} className='bg-gray-50 px-2' placeholder='Vavg'/>
@@ -145,7 +145,7 @@ export default function CheckPhase2() {
                                         {errors["fac_thaisarn_iavg"] && <span className="text-red-500">{errors["fac_thaisarn_iavg"]?.message}</span>}
                                     </label>
                                 </div>
-                                <div className='flex flex-col gap-5 border py-5 w-1/2 rounded'>
+                                <div className='flex flex-col gap-5 border py-5 md:w-1/2 rounded'>
                                     <label className='flex flex-col items-center '>
                                         Power
                                         <input {...register("fac_thaisarn_plot", { required: {value: true , message : "Plot is required."}})} className='bg-gray-50 px-2' placeholder='Kw'/>
@@ -160,12 +160,10 @@ export default function CheckPhase2() {
                             </div>
                         </div>                        
                         <div className='flex flex-col gap-5 border py-5 w-full rounded'>
-                            <div className='flex flex-col items-center gap-5 px-5'>
-                                {/* ups1 */}
-                                <Ups nameUps='ups1' register={register} errors={errors}/>
-                                {/* ups2 */}
-                                <Ups nameUps='ups2' register={register} errors={errors}/>
-                            </div>
+                            {/* ups1 */}
+                            <Ups nameUps='ups1' register={register} errors={errors}/>
+                            {/* ups2 */}
+                            <Ups nameUps='ups2' register={register} errors={errors}/>
                         </div>
                         {/* Airdb */}
                         <Db nameDb='airdb' register={register} errors={errors}/>
@@ -174,10 +172,10 @@ export default function CheckPhase2() {
                             <div className='flex flex-col items-center gap-2'>
                                 Precision Air
                             </div>
-                            <div className='w-full flex gap-5 px-11 flex-wrap'>
+                            <div className='grid grid-cols-3 max-md:grid-cols-1 gap-2 px-2'>
                                 {PacAir.map((airpac,index)=>{
                                     return (
-                                        <div key={index} className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+                                        <div key={index} className='flex flex-col items-center gap-5 border py-5 rounded'>
                                             PAC{airpac}
                                             <label className='flex items-center'>
                                                 <input type="checkbox" {...register(`pac${airpac}`,)} onChange={() => handleCheckboxChange(index)} className='checkbox mr-2 checkbox-success checkbox-sm'/>
@@ -199,9 +197,9 @@ export default function CheckPhase2() {
                                 })}
                             </div>
                         </div>
-                        <div className='flex gap-5 border p-5 w-full rounded'>
+                        <div className='flex gap-5 border p-2 w-full rounded max-md:flex-col'>
                             {/* Water leak */}
-                            <div className='flex flex-col items-center gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-center gap-2 border md:w-1/2 rounded p-5'>
                                 Water Leak
                                 <label className='flex w-full justify-between'>
                                     <span className='w-1/2'>Display Status Normal</span> 
@@ -229,7 +227,7 @@ export default function CheckPhase2() {
                                 </label>
                             </div>
                             {/* Vesda */}
-                            <div className='flex flex-col items-center gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-center gap-2 border md:w-1/2 rounded p-5'>
                                 Vesda
                                 <label className='flex w-full justify-between'>
                                     <span className='w-1/2'>Status</span> 
@@ -248,9 +246,9 @@ export default function CheckPhase2() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex gap-5 border p-5 w-full rounded'>
+                        <div className='flex gap-5 border p-2 w-full rounded max-md:flex-col'>
                             {/* Fire System */}
-                            <div className='flex flex-col items-center gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-center gap-2 border md:w-1/2 rounded p-5'>
                                 Fire System
                                 <label className='flex w-full justify-between'>
                                     <span className='w-1/2'>Ac Source</span> 
@@ -270,7 +268,7 @@ export default function CheckPhase2() {
                                 </label>
                             </div>
                             {/* Novac 1230 */}
-                            <div className='flex flex-col items-start py-5 px-10 gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-start py-5 px-10 gap-2 border md:w-1/2 rounded p-5'>
                                 Novac 1230
                                 <label className='flex justify-center gap-4'>
                                     <input type="checkbox" {...register("novac_u1")} className="checkbox checkbox-success" />

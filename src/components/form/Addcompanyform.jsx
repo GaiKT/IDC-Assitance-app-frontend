@@ -76,10 +76,10 @@ export default function Addcompanyform() {
             }
           </select>
         </label>
-        <label className="flex justify-between"> Company name (English) :
+        <label className="flex justify-between"> English name :
           <input {...register("companyEng", { required: true, maxLength: 255})} placeholder="Enter your company name" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Company name (ภาษาไทย) :
+        <label className="flex justify-between"> Thai name :
           <input {...register("companyThai", { required: true, maxLength: 255} )} placeholder="Enter your companyรอก name" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <p className="text-xs text-gray-400">** ชื่อบริษัทภาษาไทย ไม่ต้องมีคำว่า "บริษัท" และไม่ต้องลงท้ายด้วย "จำกัด"</p>

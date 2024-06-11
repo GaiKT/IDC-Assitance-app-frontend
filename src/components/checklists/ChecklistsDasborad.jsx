@@ -28,7 +28,7 @@ export default function ChecklistsDashboard() {
             <div>
                 <header className="text-4xl mb-5">Checklists Dashboard</header>
             </div>
-            <nav role="tablist" className="tabs tabs-lifted">
+            <nav role="tablist" className="tabs tabs-lifted max-md:tabs-xs">
                 {tabs.map((tab, index) => (
                     <React.Fragment key={index}>
                         <input

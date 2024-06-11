@@ -18,10 +18,10 @@ function Home() {
             <> 
                 <header className="text-4xl">Main Dashboard</header>
                 <div className="mt-5">
-                    <div className="flex gap-3 h-full">
-                        <div className="border w-2/4 bg-white rounded-md shadow-sm flex flex-col justify-center items-center p-5">
+                    <div className="flex gap-3 h-full max-md:flex-col">
+                        <div className="border md:w-2/4 bg-white rounded-md shadow-sm flex flex-col justify-center items-center p-2">
                             <p className="text-lg">Tranformer Room</p>
-                            <div className="grid grid-cols-3 mt-2 gap-3 mb-5">
+                            <div className="grid md:grid-cols-3 grid-cols-1 mt-2 gap-2 mb-2 w-full">
                                 <div className="p-4 border rounded-md text-center">
                                     Temp TR CH1
                                     <p className="font-bold text-red-500">
@@ -41,10 +41,10 @@ function Home() {
                                     </p>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid md:grid-cols-2 grid-cols-1 gap-2 w-full">
                                 <div className="p-4 border rounded-sm text-center">
                                     <p className="text-lg">Temp Outside</p>
-                                        <div className="grid grid-cols-2 mt-2 gap-3 mb-2">
+                                        <div className="grid grid-cols-2 mt-2 gap-2 mb-2">
                                             <div className="p-4 border rounded-md text-center">
                                                 Temp
                                                 <p className="font-bold text-green-500">
@@ -59,9 +59,9 @@ function Home() {
                                             </div>
                                         </div>
                                 </div>
-                                <div  className="p-4 border rounded-sm text-center">
+                                <div className="p-4 border rounded-sm text-center">
                                     <p className="text-lg">FDC Status</p>
-                                        <div className="grid grid-cols-2 mt-2 gap-3 mb-2">
+                                        <div className="grid grid-cols-2 mt-2 gap-2 mb-2">
                                             <div className="p-4 border rounded-md text-center">
                                                 FDC P1
                                                 <p className="font-bold text-red-500">
@@ -78,10 +78,10 @@ function Home() {
                                 </div>                                
                             </div>
                         </div>
-                        <div className="h-full w-2/4  flex flex-col justify-center items-center gap-2">
+                        <div className="h-full md:w-2/4  flex flex-col justify-center items-center gap-5">
                             <div className="bg-white rounded-md shadow-sm p-4 w-full text-center">
                                 <p className="text-lg">Phase 1</p>
-                                <div className="grid grid-cols-4 gap-3 p-4">
+                                <div className="grid md:grid-cols-4 grid-cols-1 gap-2">
                                     <div className="p-3 border rounded-md">
                                         Meter Floor5
                                         <p className="font-bold text-blue-500">{weeklyMembers.data?.avgPhase1[0]?.main_meter}</p>
@@ -102,7 +102,7 @@ function Home() {
                             </div>
                             <div className="bg-white rounded-md shadow-sm p-4 w-full text-center">
                                 <p className="text-lg">Phase 2</p>
-                                <div className="grid grid-cols-4 gap-3 p-4">
+                                <div className="grid md:grid-cols-4 gap-2">
                                     <div className="p-3 border rounded-md">
                                         Meter Floor5
                                         <p className="font-bold text-blue-500">{weeklyMembers.data?.avgPhase2[0]?.main_meter}</p>
@@ -130,7 +130,7 @@ function Home() {
                                 <a href="/members" className="text-blue-600 underline text-xs"> See All Members </a>
                             </div>
                             <div className="pl-2">
-                                <table className="table">
+                                <table className="table max-md:table-xs">
                                     {/* head */}
                                     <thead>
                                         <tr>
@@ -163,7 +163,7 @@ function Home() {
                                 <a href="/company" className="text-blue-600 underline text-xs"> See All Companies </a>
                             </div>
                             <div className="pl-2">
-                                <table className="table">
+                                <table className="table max-md:table-xs">
                                     {/* head */}
                                     <thead>
                                         <tr>

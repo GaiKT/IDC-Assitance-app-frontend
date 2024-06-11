@@ -59,37 +59,37 @@ export default function CheckPhase1() {
     };
 
     return (
-        <div className='bg-white p-10'>
+        <div className='bg-white md:p-10 max-md:p-5'>
             <h1 className='text-4xl font-bold mb-5'>Checklist Phase1</h1>
             <hr />
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
-                <div className='flex w-full flex-col items-center'>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 text-center">
+                <div className='flex w-full flex-col'>
                     <h1 className='text-xl w-full text-center py-4'>Floor 5B</h1>
                     <div className='flex py-4 gap-5 flex-wrap'>
-                    <div className='flex flex-col gap-5 border py-5 w-full rounded'>
-                        <div className='flex flex-col items-center gap-2'>
-                            <label className='flex flex-col items-center gap-2'>
-                                Main meter
-                                <input type='number' step='0.001' {...register("main_meter", { required: { value : true , message : "Main meter is required."}})} className='bg-gray-50 px-2' placeholder='Kwh'/>
-                                {errors["main_meter"] && <span className="text-red-500">{errors["main_meter"]?.message}</span>}
-                            </label>
-                        </div>
+                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
+                            <div className='flex flex-col items-center gap-2'>
+                                <label className='flex flex-col items-center gap-2'>
+                                    Main meter
+                                    <input type='number' step='0.001' {...register("main_meter", { required: { value : true , message : "Main meter is required."}})} className='bg-gray-50 px-2' placeholder='Kwh'/>
+                                    {errors["main_meter"] && <span className="text-red-500">{errors["main_meter"]?.message}</span>}
+                                </label>
+                            </div>
                         </div>
                         {/* ats1 */}
                         <Db nameDb='atsphase1' register={register} errors={errors} />
                     </div>
                 </div>
                 <hr />
-                <div className='flex w-full flex-col items-center'>
+                <div className='flex w-full flex-col'>
                     <h1 className='text-xl w-full text-center py-4'>Floor 10</h1>
-                    <div className='flex py-4 gap-5 flex-wrap'>
-                        {/* Emdb */}
-                        <Db nameDb='emdb' register={register} errors={errors}/>
+                    {/* Emdb */}
+                    <Db nameDb='emdb' register={register} errors={errors}/>
+                    <div className='flex py-5 gap-2 flex-col max-md:items-center w-full'>
                         {/* Ups */}
                         <div className='flex flex-col gap-5 border py-5 w-full rounded'>
-                            <div className='flex flex-col items-center gap-5 px-5'>
+                            <div className='flex flex-col justify-center gap-5 px-2'>
                                 UPSDB
-                                <div className='flex gap-5 border py-5 w-full rounded items-center justify-around flex-wrap'>
+                                <div className='flex gap-5 border py-5 w-full rounded items-center justify-around max-md:flex-col'>
                                     <label className='flex items-center gap-2'>
                                         <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("ups_db1", { required: true})}/>
                                         Status R S T OUT1(ON)
@@ -103,13 +103,13 @@ export default function CheckPhase1() {
                                         Status R S T OUT3(ON)
                                     </label>
                                 </div>
-                                {/* ups1 */}
-                                <Ups nameUps='ups1' register={register} errors={errors} />
-                                {/* ups2 */}
-                                <Ups nameUps='ups2' register={register} errors={errors} />
-                                {/* ups3 */}
-                                <Ups nameUps='ups3' register={register} errors={errors} />
                             </div>
+                            {/* ups1 */}
+                            <Ups nameUps='ups1' register={register} errors={errors} />
+                            {/* ups2 */}
+                            <Ups nameUps='ups2' register={register} errors={errors} />
+                            {/* ups3 */}
+                            <Ups nameUps='ups3' register={register} errors={errors} />
                         </div>
                         {/* Airdb */}
                         <Db nameDb='airdb' register={register} errors={errors}/>
@@ -118,10 +118,10 @@ export default function CheckPhase1() {
                             <div className='flex flex-col items-center gap-2'>
                                 Precision Air
                             </div>
-                            <div className='w-full flex gap-5 px-5 flex-wrap'>
+                            <div className='grid grid-cols-3 gap-2 max-md:grid-cols-1 px-2'>
                                 {PacAir.map((airpac,index)=>{
                                     return (
-                                        <div key={index} className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+                                        <div key={index} className='flex flex-col items-center gap-2 border py-5 rounded'>
                                             PAC{airpac}
                                             <label className='flex items-center'>
                                                 <input type="checkbox" {...register(`pac${airpac}`)} onChange={() => handleCheckboxChange(index)} className='checkbox mr-2 checkbox-success checkbox-sm'/>
@@ -143,9 +143,9 @@ export default function CheckPhase1() {
                                 })}
                             </div>
                         </div>
-                        <div className='flex gap-5 border p-5 w-full rounded'>
+                        <div className='flex gap-2 border max-md:flex-col p-2 w-full rounded'>
                             {/* Water leak */}
-                            <div className='flex flex-col items-center gap-5 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col justify-center gap-5 border md:w-1/2 p-2 rounded'>
                                 Water Leak
                                 <label className='flex w-full justify-between'>
                                     <span className='w-1/2'>Display Status Normal</span> 
@@ -173,7 +173,7 @@ export default function CheckPhase1() {
                                 </label>
                             </div>
                             {/* Vesda */}
-                            <div className='flex flex-col items-center gap-5 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-center gap-5 border md:w-1/2 rounded p-2'>
                                 Vesda
                                 <label className='flex w-full justify-between'>
                                     <span className='w-1/2'>Status</span> 
@@ -192,9 +192,9 @@ export default function CheckPhase1() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex gap-5 border p-5 w-full rounded'>
+                        <div className='flex gap-2 border p-2 w-full max-md:flex-col rounded'>
                             {/* Fire System */}
-                            <div className='flex flex-col items-center gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-center gap-5 border md:w-1/2 rounded p-2'>
                                 Fire System
                                 <label className='flex w-full justify-between'>
                                     <span className='w-1/2'>Ac Source</span> 
@@ -214,7 +214,7 @@ export default function CheckPhase1() {
                                 </label>
                             </div>
                             {/* Novac 1230 */}
-                            <div className='flex flex-col items-start pl-20 gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-start pl-20 gap-2 border md:w-1/2 rounded p-5'>
                                 Novac 1230
                                 <label className='flex justify-center gap-4'>
                                     <input type="checkbox" {...register("novac_u1")} className="checkbox checkbox-success checkbox-sm" />
@@ -238,9 +238,9 @@ export default function CheckPhase1() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex gap-5 border p-5 w-full rounded'>
+                        <div className='flex gap-2 border p-2 w-full max-md:flex-col rounded'>
                             {/* TVSS */}
-                            <div className='flex flex-col items-center gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-center gap-2 border md:w-1/2 rounded p-5'>
                                 TVSS
                                 <label className='flex w-full justify-between'>
                                     <span className='w-1/2'>Phase A</span> 
@@ -268,7 +268,7 @@ export default function CheckPhase1() {
                                 </label>
                             </div>
                             {/* CCTV */}
-                            <div className='flex flex-col items-start pl-20 gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-start pl-20 gap-2 border md:w-1/2 rounded p-5'>
                                 CCTV
                                 <label className='flex justify-center gap-4'>
                                     <input type="checkbox" {...register("cctv_playback30day")} className="checkbox checkbox-success checkbox-sm" />
@@ -292,8 +292,8 @@ export default function CheckPhase1() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex w-full gap-2'>
-                            <div className='flex flex-col items-start py-5 px-10 gap-2 border w-1/2 rounded'>
+                        <div className='flex w-full max-md:flex-col gap-2'>
+                            <div className='flex flex-col items-start py-5 px-10 gap-2 border md:w-1/2 rounded'>
                                     Overall Check
                                     <label className='flex gap-2 justify-center items-center'>
                                         <input type="checkbox" {...register("ems_check")} className='checkbox-success checkbox checkbox-sm' />
@@ -312,7 +312,7 @@ export default function CheckPhase1() {
                                         </textarea>                                   
                                     </div>
                                 </div>
-                            <div className='flex flex-col items-start pl-20 gap-2 border w-1/2 rounded p-5'>
+                            <div className='flex flex-col items-start md:pl-20 gap-2 border md:w-1/2 rounded p-5'>
                                 Switch
                                 <label className='flex gap-2 justify-center items-center'>
                                     <input type="checkbox" {...register("sw1_jd992a_check")} className='checkbox-success checkbox checkbox-sm' />
@@ -332,13 +332,13 @@ export default function CheckPhase1() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-5 border p-5 w-full rounded'>
+                        <div className='flex flex-col gap-2 border p-2 w-full rounded'>
                             {/* Server check */}
                             <div className='flex flex-col items-center gap-2'>
                                 SERVER
                             </div>
-                            <div className='flex gap-5'>
-                                <div className='flex flex-col items-center gap-5 border w-1/2 rounded p-5 text-start'>
+                            <div className='flex gap-2 max-md:flex-col'>
+                                <div className='flex flex-col items-center gap-5 border md:w-1/2 rounded p-5 text-start'>
                                     EMS (103)
                                     <div className='flex flex-col gap-2'>
                                         <label className='flex gap-5 w-full justify-between'>
@@ -371,7 +371,7 @@ export default function CheckPhase1() {
                                         </label>
                                     </div>
                                 </div>
-                                <div className='flex flex-col items-center gap-5 border w-1/2 rounded p-5 text-start'>
+                                <div className='flex flex-col items-center gap-5 border md:w-1/2 rounded p-5 text-start'>
                                     Backup VM (106)
                                     <div className='flex flex-col gap-2'>
                                         <label className='flex gap-5 w-full justify-between'>

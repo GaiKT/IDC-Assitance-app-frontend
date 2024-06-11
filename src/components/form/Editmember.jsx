@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 
 function EditmembersForm(props) {
-  const [member , setMember] = useState(props.data)
+  const [member , setMember] = useState({...props.data , date_of_sign : props.data.date_of_sign.split('T')[0]})
   const [company , setCompany] = useState([])
   const [team , setTeam] = useState(props.data.team_id)
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
 
-  const { register, handleSubmit } = useForm({defaultValues : {...member}})
+  const { register, handleSubmit} = useForm({defaultValues : {...member}})
 
   const Toast = Swal.mixin({
     toast: true,
@@ -26,7 +26,6 @@ function EditmembersForm(props) {
   });
 
   const onSubmit = async (data) => {
-    console.log(data)
     try {
       setIsLoading(true)
       await axios.put('http://localhost:4000/aup/'+ member.member_id, data)
@@ -56,7 +55,6 @@ function EditmembersForm(props) {
 
   const selectCompany = (arr) => {
     let compdata = arr.filter((item) => item.team_id === Number(team));
-    console.log(compdata[0]?.company_info)
     return compdata[0]?.company_info;
   };
   
@@ -66,20 +64,20 @@ function EditmembersForm(props) {
 
   if(company){
     return (
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 w-3/4 text-center">
-        <label className="flex justify-between"> Firstname :
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 md:w-3/4 text-center">
+        <label className="flex justify-between items-center"> ชื่อจริง
           <input {...register("first_name", { required: true, maxLength: 255 })} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Lastname :
+        <label className="flex justify-between items-center"> นามสกุล
           <input {...register("last_name", { required: true, maxLength: 255})} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Card ID :
+        <label className="flex justify-between items-center"> เลขบัตรประชาชน
           <input {...register("card_id", { required: true, maxLength: 255})} placeholder="Enter your cardid" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Date of Sign :
+        <label className="flex justify-between items-center"> วันที่เข้าดำเนินการ
           <input {...register("date_of_sign", { required: true})} type="date" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Team :
+        <label className="flex justify-between items-center"> ประเภททีม
           <select {...register("team_id", { required: false })} 
           onChange={(e)=>{
             setTeam(e.target.value)
@@ -93,7 +91,7 @@ function EditmembersForm(props) {
             }
           </select>
         </label>
-        <label className="flex justify-between"> Company :
+        <label className="flex justify-between"> บริษัท
         <select {...register("comp_id", { required: false })} 
         className="bg-gray-100 rounded w-3/5 p-2"
         >
@@ -104,7 +102,7 @@ function EditmembersForm(props) {
             }
           </select>
         </label>
-        <label className="flex justify-between"> Address :
+        <label className="flex justify-between"> ที่อยู่
           <textarea {...register("address")} placeholder="123 dacrord .." className="bg-gray-100 rounded w-3/5 p-2" />
         </label>
         <div className="w-full flex gap-2 justify-end">
