@@ -2,9 +2,9 @@ import React from 'react'
 
 export default function Ups({nameUps, register, errors , inputStatus}) {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col px-2'>
         {/* ups */}
-        <div className='flex flex-col items-center gap-2'>
+        <div className='flex flex-col gap-2 items-center'>
             {nameUps.toUpperCase()}
             <label className='flex items-center gap-2 mb-5'>
                 Alarm
@@ -13,8 +13,8 @@ export default function Ups({nameUps, register, errors , inputStatus}) {
                 type="checkbox" {...register(`${nameUps}`)} className="toggle toggle-success" />
             </label>
         </div>
-        <div className='flex flex-wrap gap-4 px-7'>
-            <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+        <div className='grid grid-cols-3 gap-2 max-md:grid-cols-1'>
+            <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                 OutPut Voltage (V)
                 <input 
                 type='number' 
@@ -32,7 +32,7 @@ export default function Ups({nameUps, register, errors , inputStatus}) {
                 step='0.001' {...register(`${nameUps}_l3`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='L3-1'/>
                 {errors[`${nameUps}_l3`] && <span className="text-red-500">{errors[`${nameUps}_l3`]?.message}</span>}
             </label>
-            <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+            <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                 Output Ampere (A)
                 <input  
                 type='number' 
@@ -50,7 +50,7 @@ export default function Ups({nameUps, register, errors , inputStatus}) {
                 step='0.001' {...register(`${nameUps}_i3`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='I3'/>
                 {errors[`${nameUps}_i3`] && <span className="text-red-500">{errors[`${nameUps}_i3`]?.message}</span>}
             </label>
-            <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+            <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                 Power (Kw)
                 <input 
                 type='number'
@@ -68,7 +68,7 @@ export default function Ups({nameUps, register, errors , inputStatus}) {
                 step='0.001' {...register(`${nameUps}_p3`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='P3'/>
                 {errors[`${nameUps}_p3`] && <span className="text-red-500">{errors[`${nameUps}_p3`]?.message}</span>}
             </label>
-            <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+            <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                 Load Level (%)
                 <input 
                 type='number' 
@@ -86,7 +86,7 @@ export default function Ups({nameUps, register, errors , inputStatus}) {
                 step='0.001' {...register(`${nameUps}_load3`, { required: {value : true , message : "This field is required."}})} className='bg-gray-50 px-2' placeholder='Load3'/>
                 {errors[`${nameUps}_load3`] && <span className="text-red-500">{errors[`${nameUps}_load3`]?.message}</span>}
             </label>
-            <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+            <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                 Battery
                 <input 
                 type='number' 

@@ -22,14 +22,15 @@ function Members () {
 
     return(
         <>
-            <div className="flex justify-between">
-                <header className="text-4xl mb-5"> Members Management </header> 
-                <a href="/members/addmember" className="btn btn-success text-white">New member</a>
+            <div className="flex justify-between items-center mb-4">
+                <header className="md:text-4xl"> Members Management </header> 
+                <a href="/members/addmember" className="btn max-md:btn-sm btn-success text-white">New member</a>
             </div>
-            <div className="w-full bg-white shadow-lg p-10 rounded-lg">
-                <div className="flex justify-between text-xl">
+            <div className="w-full bg-white shadow-lg p-5 rounded-lg">
+                <div className="flex justify-between md:text-xl">
                     <span>Members Table</span>
-                    <label> search :
+                    <label> 
+                        <span className="max-md:hidden">search :</span>
                         <input 
                         type="text" 
                         placeholder="Enter your text" 

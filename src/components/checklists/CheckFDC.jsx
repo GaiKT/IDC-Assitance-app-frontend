@@ -50,15 +50,15 @@ export default function CheckFDC() {
         <h1 className='text-4xl font-bold mb-5'>Checklist FDC status</h1>
         <hr />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
-            <div className='p-4 border flex rounded gap-4'>
-                <label className='flex flex-col items-center gap-5 border py-5 w-1/3 rounded'>
+            <div className='p-4 border flex max-md:flex-col rounded gap-4'>
+                <label className='flex flex-col items-center gap-5 border py-5 md:w-1/3 rounded'>
                     FDC status : OFF
                     <input {...register("fdc_phase1", { required: { value: true, message: "FDC_Phase1 is required" } })} className='bg-gray-50 px-2' placeholder='Phase1'/>
                     {errors["fdc_phase1"] && <span className="text-red-500">{errors["fdc_phase1"]?.message}</span>}
                     <input {...register("fdc_phase2", { required: { value: true, message: "FDC_Phase2 is required" } })} className='bg-gray-50 px-2' placeholder='Phase2'/>
                     {errors["fdc_phase2"] && <span className="text-red-500">{errors["fdc_phase2"]?.message}</span>}
                 </label>
-                <label className='flex gap-5 w-2/3 p-2'>
+                <label className='flex gap-5 md:w-2/3 p-2'>
                     Commemt
                     <textarea {...register("fdc_comment")} rows="4" className='border rounded w-full p-4' placeholder='ถ้ามีการเปลี่ยนแปลงโปรด Comment สาเหตุ'></textarea>
                 </label>

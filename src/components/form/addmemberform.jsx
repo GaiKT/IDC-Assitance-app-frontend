@@ -69,20 +69,20 @@ function AddmembersForm() {
 
   if(company){
     return (
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 w-3/4 text-center">
-        <label className="flex justify-between"> Firstname :
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 md:w-3/4 text-center justify-center">
+        <label className="flex justify-between items-center"> ชื่อจริง
           <input {...register("firstName", { required: true, maxLength: 255})} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Lastname :
+        <label className="flex justify-between items-center"> นามสกุล
           <input {...register("lastName", { required: true, maxLength: 255})} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Card ID :
+        <label className="flex justify-between items-center"> เลขบัตรประชาชน
           <input {...register("cardid", { required: true, maxLength: 255})} placeholder="Enter your cardid" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Date of Sign :
+        <label className="flex justify-between items-center"> วันที่เข้าใช้บริการ
           <input {...register("dateOfSign", { required: true})} type="date" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
-        <label className="flex justify-between"> Team :
+        <label className="flex justify-between items-center"> ประเภททีม
           <select {...register("team", { required: true })} 
           onChange={(e)=>{
             setTeam(e.target.value)
@@ -96,7 +96,7 @@ function AddmembersForm() {
             }
           </select>
         </label>
-        <label className="flex justify-between"> Company :
+        <label className="flex justify-between items-center"> บริษัท
         <select {...register("company", { required: true })} className="bg-gray-100 rounded w-3/5 p-2">
             <option value="">Select...</option>
             { 
@@ -108,7 +108,7 @@ function AddmembersForm() {
             }
         </select>
         </label>
-        <label className="flex justify-between"> Address :
+        <label className="flex justify-between items-center"> ที่อยู่
           <textarea {...register("address")} placeholder="123 dacrord .." className="bg-gray-100 rounded w-3/5 p-2" />
         </label>
         <div className="w-full flex gap-2 justify-end">

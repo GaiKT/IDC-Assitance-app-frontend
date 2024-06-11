@@ -27,14 +27,15 @@ function Companys () {
 
     return (
     <>
-        <div className="flex justify-between">
-            <header className="text-4xl mb-5"> Company Management </header> 
-            <a href="/company/addcompany" className="btn btn-success text-white">New Company</a>
+        <div className="flex justify-between items-center mb-4">
+            <header className="md:text-4xl"> Company Management </header> 
+            <a href="/company/addcompany" className="btn max-md:btn-sm btn-success text-white">New Company</a>
         </div>
-        <div className="w-full bg-white shadow-lg p-10 rounded-lg">
+        <div className="w-full bg-white shadow-lg p-5 rounded-lg">
             <div className="flex justify-between text-xl">
                 <span>Company Table</span>
-                <label> search :
+                <label> 
+                    <span className="max-md:hidden">search :</span>
                     <input 
                     type="text" 
                     placeholder="Enter your text" 
@@ -47,7 +48,7 @@ function Companys () {
                 </label>
             </div>
         <div className="overflow-x-auto">
-            <table className="table rounded bg-gray-300">
+            <table className="table max-md:table-xs rounded bg-gray-300">
             <thead>
             <tr>
                 <th>Name English</th> 

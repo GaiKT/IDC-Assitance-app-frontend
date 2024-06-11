@@ -48,13 +48,13 @@ export default function CheckRoomTemp() {
     };
 
     return (
-        <div className="bg-white p-10">
+        <div className="bg-white p-10 max-md:p-5">
             <h1 className="text-4xl font-bold mb-5">Checklist Room Temp</h1>
             <hr />
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 text-center">
-                <div className="p-4 border flex flex-wrap rounded gap-4 justify-center">
+                <div className="border grid grid-cols-3 gap-2 p-2 max-md:grid-cols-1">
                     {rackNames.map((rack, index) => (
-                        <label key={index} className="flex flex-col items-center gap-5 border py-5 w-80 rounded">
+                        <label key={index} className="flex flex-col items-center gap-5 border py-2 rounded">
                             Rack {rack}
                             <input type='number' step='any' {...register(`tempdetector_${index + 1}_temp`, { required: { value: true, message: "Temperature is required" }, max:{value:50 , message:"Vaule max 30"} , min:{value:5 , message:"Vaule min 5"}})} className="bg-gray-50 px-2" placeholder="Temp" />
                             {errors[`tempdetector_${index + 1}_temp`] && <span className="text-red-500">{errors[`tempdetector_${index + 1}_temp`]?.message}</span>}
@@ -86,24 +86,24 @@ export default function CheckRoomTemp() {
                     </div>
                 </div>
                 <hr />
-                <div className='flex w-full flex-col border rounded py-2 items-center'>
+                <div className='flex w-full flex-col border rounded py-2'>
                     <h1 className='text-xl font-bold ml-2 w-full text-start'>ความเรียบร้อยห้องหม้อแปลง</h1>
-                    <div className='flex p-4 gap-5 flex-wrap px-11'>
-                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+                    <div className='grid grid-cols-3 max-md:grid-cols-1 gap-2 px-2'>
+                        <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                             สภาพอากาศภายนอก
                             <input  type='number' step='any'  {...register("outside_temp", { required: { value: true, message: "outside temp check is required" }, max:{value:100 , message:"Vaule max 100"} , min:{value:5 , message:"Vaule min 5"} })} className='bg-gray-50 px-2' placeholder='Temp'/>
                             {errors["outside_temp"] && <span className="text-red-500">{errors["outside_temp"]?.message}</span>}
                             <input  type='number' step='any' {...register("outside_hum", { required: { value: true, message: "outside temp check is required"}, max:{value:100 , message:"Vaule max 100"} , min:{value:5 , message:"Vaule min 5"}})} className='bg-gray-50 px-2' placeholder='Hum'/>
                             {errors["outside_hum"] && <span className="text-red-500">{errors["outside_hum"]?.message}</span>}
                         </label>
-                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+                        <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                             อุณหภูมิห้องหม้อแปลง
                             <input type='number' step='any' {...register("tr_room_temp", { required: { value : true , message:"Temperatrue check is required"}})} className='bg-gray-50 px-2' placeholder='Temp'/>
                             {errors["tr_room_temp"] && <span className="text-red-500">{errors["tr_room_temp"]?.message}</span>}
                             <input type='number' step='any' {...register("tr_room_hum", { required: { value : true , message:"humidity check is required"}})} className='bg-gray-50 px-2' placeholder='Hum'/>
                             {errors["tr_room_hum"] && <span className="text-red-500">{errors["tr_room_hum"]?.message}</span>}
                         </label>
-                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+                        <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                             อุณหภูมิหม้อแปลงไฟฟ้า
                             <input type='number' step='any' {...register("tr_ch1", { required: { value : true , message : "Temperatrue is require"} , max : {value: 100, message: "Vaule max 100"}, min : {value: 0, message: "Value min 0"} })} className='bg-gray-50 px-2' placeholder='Temp CH1'/>
                             {errors["tr_ch1"] && <span className="text-red-500">{errors["tr_ch1"]?.message}</span>}
@@ -112,7 +112,7 @@ export default function CheckRoomTemp() {
                             <input type='number' step='any' {...register("tr_ch3", { required: { value : true , message : "Temperatrue is require"} , max : {value: 100, message: "Vaule max 100"}, min : {value: 0, message: "Value min 0"} })} className='bg-gray-50 px-2' placeholder='Temp CH3'/>
                             {errors["tr_ch3"] && <span className="text-red-500">{errors["tr_ch3"]?.message}</span>}
                         </label>
-                        <label className='flex flex-col items-center gap-5 border py-5 w-80 rounded'>
+                        <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                             การทำงานพัดลมระบายอากาศ
                             <div className='flex flex-col gap-2'>
                                 <label className='flex items-center gap-2'>

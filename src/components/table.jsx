@@ -24,14 +24,14 @@ function Table(props) {
     }
     
     return (
-        <table className="table rounded bg-gray-300">
+        <table className="table max-md:table-xs rounded bg-gray-300">
         <thead>
         <tr>
             <th>Name</th> 
             <th>team</th> 
             <th>company(thai)</th>
-            <th>company(eng)</th> 
-            <th>Exp</th> 
+            <th className="max-md:hidden">company(eng)</th> 
+            <th className="max-md:hidden">Exp</th> 
             <th>status</th>
         </tr>
         </thead> 
@@ -43,8 +43,8 @@ function Table(props) {
                             <td>{item.first_name} {item.last_name}</td> 
                             <td>{item.teamname}</td> 
                             <td>บริษัท {item.comp_name_thai} จำกัด</td> 
-                            <td>{item.comp_name_eng}</td>
-                            <td>{findExpDate(item.date_of_sign)}</td> 
+                            <td className="max-md:hidden">{item.comp_name_eng}</td>
+                            <td className="max-md:hidden">{findExpDate(item.date_of_sign)}</td> 
                             <td className={findExpStatus(item.date_of_sign)==='หมดอายุ' ? 'text-red-600':'text-green-700'}>{findExpStatus(item.date_of_sign)}</td>
                         </tr>
                     );
