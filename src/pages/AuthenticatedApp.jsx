@@ -17,6 +17,10 @@ import Companys from "../components/company/company";
 import EditCompany from "../components/company/Editcompany";
 import AddCompany from "../components/company/addcompany";
 
+//admin
+import RegisterPage from "./auth/RegisterPage";
+import Usermenagement from "../components/admin/Usermenagement";
+
 //checklists
 import ChecklistsDasborad from "../components/checklists/ChecklistsDasborad";
 import CheckRoomTemp from "../components/checklists/CheckRoomTemp";
@@ -44,26 +48,32 @@ function AuthenticatedApp() {
           <div className="ml-10 mb-4"><Breadcrumbs /></div>
           <div className="md:px-10 max-md:px-5 pb-10">
             <Routes>
-              {/* user */}
+              
+                {/* user */}
               <Route path="/" element={<Home />} />
               <Route path="/users/:userId/profile" element={<Profile />} />
-              {/* member */}
+
+                {/* admin */}
+              <Route path="/admin" element={<Usermenagement />} />
+              <Route path="/register" element={<RegisterPage />} />
+
+                {/* member */}
               <Route path="/members/*" element={<Members />} />
               <Route path="/members/addmember" element={<AddMembers />} />
               <Route path="/members/editmember/:id" element={<EditMembers />} />
-              {/* company */}
+
+                {/* company */}
               <Route path="/company/*" element={<Companys />} />
               <Route path="/company/addcompany" element={<AddCompany />} />
               <Route path="/company/editcompany/:id" element={<EditCompany />} />
 
-              {/* checklist */}
+                {/* checklist */}
               <Route path="/checklists/*" element={<ChecklistsDasborad />} />
 
                 {/* roomtemp */}
               <Route path="/checklists/roomtemp" element={<CheckRoomTemp />} />
               <Route path="/checklists/roomtemp/edit" element={<EditCheckRoomTemp />} />
               <Route path="/checklists/roomtemp/pdf" element={<ChecklistPDF />} />
-
 
                 {/* fdc */}
               <Route path="/checklists/fdc" element={<CheckFDC />} />

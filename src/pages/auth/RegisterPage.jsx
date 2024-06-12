@@ -1,35 +1,37 @@
 import { useState } from "react";
 import { useAuth } from "../../contexts/authentication";
+import { Link } from "react-router-dom";
 
 function RegisterPage() {
   const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
+  const [level, setLevel] = useState(0);
 
   const { register } = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
     const data = {
       username,
       password,
-      firstName,
-      lastName,
+      firstname,
+      lastname,
+      level
     };
     register(data);
   };
 
   return (
-    <div className="register-form-container">
-      <form className="register-form" onSubmit={handleSubmit}>
-        <h1>Register Form</h1>
-        <div className="input-container">
-          <label>
-            Username
+    <>
+      <header className="text-4xl">Register</header>
+      <div className="mt-5">
+        <form className="bg-white lg:w-1/2 rounded-lg shadow-lg p-5 flex flex-col gap-4" onSubmit={handleSubmit}>
+        <div>
+          <label className="flex justify-between">
+            ชื่อผู้ใช้ *
             <input
-              id="username"
               name="username"
               type="text"
               placeholder="Enter username here"
@@ -37,59 +39,83 @@ function RegisterPage() {
                 setUsername(event.target.value);
               }}
               value={username}
+              className="border px-2 rounded-md"
+              required
             />
           </label>
         </div>
-        <div className="input-container">
-          <label>
-            Password
+        <div>
+          <label className="flex justify-between">
+            รหัสผ่าน *
             <input
-              id="password"
               name="password"
-              type="text"
+              type="password"
               placeholder="Enter password here"
               onChange={(event) => {
                 setPassword(event.target.value);
               }}
               value={password}
+              className="border px-2 rounded-md"
+              required
             />
           </label>
         </div>
-        <div className="input-container">
-          <label>
-            First Name
+        <div>
+          <label className="flex justify-between">
+            ชื่อจริง *
             <input
-              id="firstname"
               name="firstname"
               type="text"
               placeholder="Enter first name here"
               onChange={(event) => {
-                setFirstName(event.target.value);
+                setFirstname(event.target.value);
               }}
-              value={firstName}
+              value={firstname}
+              className="border px-2 rounded-md"
+              required
             />
           </label>
         </div>
-        <div className="input-container">
-          <label>
-            Last Name
+        <div>
+          <label  className="flex justify-between">
+            นามสกุล *
             <input
-              id="lastname"
               name="lastname"
               type="text"
               placeholder="Enter last name here"
               onChange={(event) => {
-                setLastName(event.target.value);
+                setLastname(event.target.value);
               }}
-              value={lastName}
+              value={lastname}
+              className="border px-2 rounded-md"
+              required
             />
           </label>
         </div>
-        <div className="form-actions">
-          <button type="submit">Submit</button>
+        <div>
+          <label  className="flex justify-between">
+            ระดับผู้ใช้ *
+            <select name="level" 
+            className="border px-2 rounded-md text-sm"
+            onChange={(event) => {
+              setLevel(event.target.value);
+            }}
+            required>
+              <option disabled>โปรดเลือกระดับของผู้ใช้</option>
+              <option value={1}>User</option>
+              <option value={2}>Admin</option>
+            </select>
+          </label>
         </div>
-      </form>
-    </div>
+        <div className="flex w-full justify-end gap-3">
+          <button type="submit" className="btn btn-success text-white">Submit</button>
+          <Link to={'/admin'}>
+            <button>Back</button>
+          </Link>
+        </div>
+        </form>
+      </div>
+    </>
   );
 }
 

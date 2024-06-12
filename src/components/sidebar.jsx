@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDashboard , faGear , faListCheck , faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/authentication";
 
 function SideBar() {
 
-    const [isOpen , setIsOpen] = useState(false)
+    const {state} = useAuth();
 
     return(
         <div className="md:w-80 z-10">
@@ -44,6 +45,20 @@ function SideBar() {
                             <ul>
                                 <li><Link to="/members">Members menagement</Link></li>
                                 <li><Link to="/company">Companies menagement</Link></li>
+                                {
+                                    state?.user?.level === 2 &&   
+                                    <li>
+                                    <details>
+                                    <summary>
+                                    Admin Panel
+                                    </summary>
+                                    <ul>
+                                        <li><Link to="/admin">Users menagement</Link></li>
+                                        <li><Link to="/register">User register</Link></li>
+                                    </ul>
+                                    </details>
+                                    </li>
+                                }
                                 {/* <li><Link>FaceRacks</Link></li>
                                 <li><Link>Lan Setup</Link></li> */}
                             </ul>
@@ -124,11 +139,25 @@ function SideBar() {
                 <li>
                     <details open>
                     <summary className="font-bold">
-                    <FontAwesomeIcon icon={faGear}/> Systems
+                        <FontAwesomeIcon icon={faGear}/> Systems
                     </summary>
                     <ul>
                         <li><Link to="/members">Members menagement</Link></li>
                         <li><Link to="/company">Companies menagement</Link></li>
+                        {
+                            state?.user?.level === 2 &&   
+                            <li>
+                            <details>
+                            <summary>
+                               Admin Panel
+                            </summary>
+                            <ul>
+                                <li><Link to="/admin">Users menagement</Link></li>
+                                <li><Link to="/register">User register</Link></li>
+                            </ul>
+                            </details>
+                            </li>
+                        }
                         {/* <li><Link>FaceRacks</Link></li>
                         <li><Link>Lan Setup</Link></li> */}
                     </ul>
@@ -187,6 +216,7 @@ function SideBar() {
                     </details>
                 </li>
             </ul>
+
         </div>
 
     );

@@ -50,8 +50,22 @@ function AuthProvider(props) {
   };
 
   const register = async (data) => {
-    await axios.post("http://localhost:4095/auth/register", data)
-    navigate("/auth/login");
+    try {
+      await axios.post("http://localhost:4000/auth/register", data); 
+      Swal.fire({
+        title: 'success!',
+        text: "register successfully!",
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: error.response.data.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    }
   };
 
   const logout = () => {
