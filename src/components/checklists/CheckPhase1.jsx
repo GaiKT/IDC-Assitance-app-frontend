@@ -79,14 +79,13 @@ export default function CheckPhase1() {
                         <Db nameDb='atsphase1' register={register} errors={errors} />
                     </div>
                 </div>
-                <hr />
                 <div className='flex w-full flex-col'>
                     <h1 className='text-xl w-full text-center py-4'>Floor 10</h1>
                     {/* Emdb */}
                     <Db nameDb='emdb' register={register} errors={errors}/>
-                    <div className='flex py-5 gap-2 flex-col max-md:items-center w-full'>
+                    <div className='flex py-5 gap-5 flex-col max-md:items-center w-full'>
                         {/* Ups */}
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
+                        <div className='flex flex-col gap-5 border py-2 w-full rounded'>
                             <div className='flex flex-col justify-center gap-5 px-2'>
                                 UPSDB
                                 <div className='flex gap-5 border py-5 w-full rounded items-center justify-around max-md:flex-col'>
@@ -111,10 +110,94 @@ export default function CheckPhase1() {
                             {/* ups3 */}
                             <Ups nameUps='ups3' register={register} errors={errors} />
                         </div>
+                        <div className='min-h-80 border rounded-md grid grid-cols-2 max-md:grid-cols-1'>
+                            <div className='font-semibold flex flex-col items-center p-4 gap-2'>
+                                <p>1-FDC 1</p>
+                                <div className='font-light w-full flex flex-col items-center gap-2'>
+                                    <p>Panel A</p>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Status Power </span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc1a_status")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Alarm</span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc1a_alarm")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                    <p>Panel B</p>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Status Power </span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc1b_status")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Alarm</span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc1b_alarm")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                    <textarea {...register("fdc1_comment")} className='border w-1/2 rounded-md p-2'>
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div className='font-semibold flex flex-col items-center p-4 gap-2'>
+                                <p>1-FDC 2</p>
+                                <div className='font-light w-full flex flex-col items-center gap-2'>
+                                    <p>Panel A</p>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Status Power </span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc2a_status")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Alarm</span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc2a_alarm")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                    <p>Panel B</p>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Status Power </span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc2b_status")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Alarm</span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc2b_alarm")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <textarea {...register("fdc2_comment")} className='border w-1/2 rounded-md p-2'>
+                                        </textarea>
+                                </div>
+                            </div>
+                        </div>
                         {/* Airdb */}
                         <Db nameDb='airdb' register={register} errors={errors}/>
                         {/* Pac Air */}
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
+                        <div className='flex flex-col gap-5 border py-2 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>
                                 Precision Air
                             </div>

@@ -77,10 +77,10 @@ export default function CheckPhase2() {
                         <Db nameDb='atsphase2' register={register} errors={errors} />
                     </div>
                 </div>
-                <hr />
+
                 <div>
                     <h1 className='text-xl w-full text-center py-4'>Floor 10</h1>
-                    <div className='flex py-4 gap-2 flex-wrap'>
+                    <div className='flex py-4 gap-5 flex-wrap'>
                         {/* Emdb */}
                         <Db nameDb='emdb' register={register} errors={errors}/>
                         {/* udb1 */}
@@ -88,15 +88,15 @@ export default function CheckPhase2() {
                         {/* udb2 */}
                         <Db nameDb='udb2' register={register} errors={errors}/>                        
                         {/* facinet */}
-                        <div className='flex flex-col gap-2 border py-5 w-full rounded'>
-                            <div className='flex flex-col items-center gap-2'>
+                        <div className='flex flex-col gap-2 border py-2 w-full rounded'>
+                            <div className='w-full flex flex-col items-center gap-2'>
                                 FAC INET
                                 <label className='flex items-center gap-2'>
                                     <input type='checkbox' className='checkbox checkbox-success checkbox-sm' {...register("fac_inet_rst", { required: true})}/>
                                     Status R S T(ON)
                                 </label>
                             </div>
-                            <div className='w-full flex gap-5 px-5 max-md:flex-col'>
+                            <div className='w-full flex gap-2 px-2 max-md:flex-col'>
                                 <div className='flex flex-col gap-5 border py-5 md:w-1/2 rounded'>
                                     <label className='flex flex-col items-center'>
                                         Voltage
@@ -124,7 +124,7 @@ export default function CheckPhase2() {
                             </div>
                         </div>
                         {/* facthaisarn */}
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
+                        <div className='flex flex-col gap-2 border py-2 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>
                                 FAC THAISARN
                                 <label className='flex items-center gap-2'>
@@ -132,7 +132,7 @@ export default function CheckPhase2() {
                                     Status R S T(ON)
                                 </label>
                             </div>
-                            <div className='w-full flex gap-5 px-5 max-md:flex-col'>
+                            <div className='w-full flex gap-2 px-2 max-md:flex-col'>
                                 <div className='flex flex-col gap-5 border py-5 md:w-1/2 rounded'>
                                     <label className='flex flex-col items-center '>
                                         Voltage
@@ -159,14 +159,96 @@ export default function CheckPhase2() {
                                 </div>
                             </div>
                         </div>                        
-                        <div className='flex flex-col gap-5 border py-5 w-full rounded'>
+                        <div className='flex flex-col gap-5 border py-2 w-full rounded'>
                             {/* ups1 */}
                             <Ups nameUps='ups1' register={register} errors={errors}/>
                             {/* ups2 */}
                             <Ups nameUps='ups2' register={register} errors={errors}/>
                         </div>
-                        {/* Airdb */}
-                        <Db nameDb='airdb' register={register} errors={errors}/>
+                        <div className='w-full border rounded-md grid grid-cols-2 max-md:grid-cols-1'>
+                            <div className='font-semibold flex flex-col items-center p-4 gap-2'>
+                                <p>2-FDC 1</p>
+                                <div className='font-light w-full flex flex-col items-center gap-2'>
+                                    <p>Panel A</p>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Status Power </span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc1a_status")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Alarm</span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc1a_alarm")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                    <p>Panel B</p>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Status Power </span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc1b_status")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Alarm</span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc1b_alarm")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                    <textarea {...register("fdc1_comment")} className='border w-1/2 rounded-md p-2' placeholder='enter comment'>
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div className='font-semibold flex flex-col items-center p-4 gap-2'>
+                                <p>2-FDC 2</p>
+                                <div className='font-light w-full flex flex-col items-center gap-2'>
+                                    <p>Panel A</p>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Status Power </span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc2a_status")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Alarm</span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc2a_alarm")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                    <p>Panel B</p>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Status Power </span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc2b_status")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <div className='w-1/2 flex gap-4 justify-between'>
+                                            <span>Alarm</span>
+                                            <div className='flex gap-3'>
+                                                No 
+                                                <input type="checkbox" {...register("fdc2b_alarm")} className='toggle toggle-success'/>
+                                                Yes
+                                            </div>
+                                        </div>
+                                        <textarea {...register("fdc2_comment")} className='border w-1/2 rounded-md p-2' placeholder='enter comment'>
+                                        </textarea>
+                                </div>
+                            </div>
+                        </div>
                         {/* Pac Air */}
                         <div className='flex flex-col gap-5 border py-2 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>
@@ -197,7 +279,7 @@ export default function CheckPhase2() {
                                 })}
                             </div>
                         </div>
-                        <div className='flex gap-5 border p-2 w-full rounded max-md:flex-col'>
+                        <div className='flex gap-2 border p-2 w-full rounded max-md:flex-col'>
                             {/* Water leak */}
                             <div className='flex flex-col items-center gap-2 border md:w-1/2 rounded p-5'>
                                 Water Leak
@@ -246,7 +328,7 @@ export default function CheckPhase2() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex gap-5 border p-2 w-full rounded max-md:flex-col'>
+                        <div className='flex gap-2 border p-2 w-full rounded max-md:flex-col'>
                             {/* Fire System */}
                             <div className='flex flex-col items-center gap-2 border md:w-1/2 rounded p-5'>
                                 Fire System
@@ -292,7 +374,7 @@ export default function CheckPhase2() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex gap-5 border p-5 w-full rounded'>
+                        <div className='flex gap-2 border p-2 w-full rounded'>
                             {/* TVSS */}
                             <div className='flex flex-col items-center gap-2 border w-1/2 rounded py-5 px-10 text-start'>
                                 TVSS
@@ -348,7 +430,7 @@ export default function CheckPhase2() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex w-full gap-5'>
+                        <div className='flex w-full gap-2'>
                             <div className='flex flex-col items-start py-5 px-10 gap-2 border w-1/2 rounded'>
                                 Overall Check
                                 <label className='flex gap-2 justify-center items-center'>
@@ -388,12 +470,12 @@ export default function CheckPhase2() {
                                 </label>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-5 border p-5 w-full rounded'>
+                        <div className='flex flex-col gap-5 border p-2 w-full rounded'>
                             {/* Server check */}
                             <div className='flex flex-col items-center gap-2'>
                                 SERVER
                             </div>
-                            <div className='flex gap-5'>
+                            <div className='flex gap-2'>
                                 <div className='flex flex-col items-center gap-5 border w-1/2 rounded p-5 text-start'>
                                     VM CCTV (105)
                                     <div className='flex flex-col gap-2'>

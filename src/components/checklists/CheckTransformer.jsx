@@ -27,6 +27,7 @@ export default function CheckTransformer() {
     });
 
     const onSubmit = async (data) => {
+        console.log(data)
         try {
             setIsLoading(true);
             await axios.post('http://localhost:4000/checklists', { name: 'checklisttransformer', formData: { ...data, user_id: user.id } });
@@ -79,6 +80,15 @@ export default function CheckTransformer() {
                                 Normal
                             </div>
                         </label>
+                        <label className='flex w-full justify-between'>
+                            <span className='font-semibold w-1/2'>Comment</span>   
+                            <textarea 
+                            {...register("sw_in1_comment")}
+                            className='w-1/2 border p-2 rounded-md'
+                            placeholder='enter your comment'
+                            >
+                            </textarea>
+                        </label>
                     </div>
                 </div>
                 <div className='flex flex-col items-center gap-5 border py-5 md:w-1/2 rounded'>
@@ -107,6 +117,15 @@ export default function CheckTransformer() {
                                 <input type="checkbox" {...register("lamp_rmu_in2")} className="toggle toggle-success max-md:toggle-sm mx-2" />
                                 Normal
                             </div>
+                        </label>
+                        <label className='flex w-full justify-between'>
+                            <span className='font-semibold w-1/2'>Comment</span>   
+                            <textarea 
+                            {...register("sw_in2_comment")}
+                            className='w-1/2 border p-2 rounded-md'
+                            placeholder='enter your comment'
+                            >
+                            </textarea>
                         </label>
                     </div>
                 </div>
@@ -147,6 +166,15 @@ export default function CheckTransformer() {
                                 Normal
                             </div>
                         </label>
+                        <label className='flex w-full justify-between'>
+                            <span className='font-semibold w-1/2'>Comment</span>   
+                            <textarea 
+                            {...register("sw_out1_comment")}
+                            className='w-1/2 border p-2 rounded-md'
+                            placeholder='enter your comment'
+                            >
+                            </textarea>
+                        </label>
                     </div>
                 </div>
                 <div className='flex flex-col items-center gap-5 border py-5 md:w-1/2 rounded'>
@@ -184,6 +212,15 @@ export default function CheckTransformer() {
                                 Normal
                             </div>
                         </label>
+                        <label className='flex w-full justify-between'>
+                            <span className='font-semibold w-1/2'>Comment</span>   
+                            <textarea 
+                            {...register("sw_out2_comment")}
+                            className='w-1/2 border p-2 rounded-md'
+                            placeholder='enter your comment'
+                            >
+                            </textarea>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -217,6 +254,15 @@ export default function CheckTransformer() {
                         {errors["tr_room_temp"] && <span className="text-red-500">{errors["tr_room_temp"]?.message}</span>}
                         <input {...register("tr_room_hum", { required: { value : true , message : "Humidity is require"} , max : {value: 100, message: "Vaule max 100"}, min : {value: 0, message: "Value min 0"} })} className='bg-gray-50 px-2' placeholder='Hum'/>
                         {errors["tr_room_hum"] && <span className="text-red-500">{errors["tr_room_hum"]?.message}</span>}
+                        <label className='flex flex-col px-4'>
+                            <span className='font-semibold'>Comment</span>   
+                            <textarea 
+                            {...register("tr_temp_comment")}
+                            className='border p-2 rounded-md'
+                            placeholder='enter your comment'
+                            >
+                            </textarea>
+                        </label>
                     </label>
                     <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                         พัดลมหม้อแปลง
@@ -233,14 +279,22 @@ export default function CheckTransformer() {
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_trip", { required: true})}/>
                                 Temp Trip (130c)
                             </label>
+                            <label className='flex flex-col w-full px-4'>
+                                <span className='font-semibold'>Comment</span>   
+                                <textarea 
+                                {...register("fan_tr_comment")}
+                                className='border p-2 rounded-md'
+                                placeholder='enter your comment'
+                                >
+                                </textarea>
+                            </label>
                         </div>
                     </label>
                 </div>
             </div>
-            <hr />
-            <div className='flex w-full flex-col border rounded py-2 items-center'>
+            <div className='flex flex-col border rounded py-2 items-center'>
                 <h1 className='text-xl ml-2 w-full text-center py-4'>MDB</h1>
-                <div className='grid grid-cols-3 max-md:grid-cols-1 px-2 gap-2'>
+                <div className='grid grid-cols-3 max-md:grid-cols-1 px-2 gap-2 w-full'>
                     <label className='flex flex-col items-center gap-5 border p-5 rounded'>
                         <div className='flex justify-between w-full'>
                             Meter
@@ -308,7 +362,20 @@ export default function CheckTransformer() {
                     </label>
                     <label className='flex flex-col items-center gap-5 border py-5 rounded'>
                         การทำงานพัดลมระบายอากาศ
-                        <div className='flex flex-col gap-2'>
+                        <div className='flex flex-col gap-3'>
+                            <label className='flex w-full flex-col gap-2'>
+                                <span className='font-semibold'>Mode fan</span>   
+                                <div className='flex justify-between'>
+                                    Manual mode
+                                    <input type="checkbox" {...register("mode_fan")} className="toggle toggle-success max-md:toggle-sm mx-2" />
+                                    Auto mode
+                                </div>
+                            </label>
+                        </div>
+                    </label>
+                    <label className='flex flex-col items-center gap-5 border py-5 rounded'>
+                        <div className='flex flex-col gap-3'>
+                            <span className='w-full text-start'>Ventilation Fan</span>
                             <label className='flex items-center gap-2'>
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("fan1")}/>
                                 Fan1
@@ -324,8 +391,45 @@ export default function CheckTransformer() {
                             <label className='flex items-center gap-2'>
                                 <input type="checkbox" className='checkbox checkbox-sm' {...register("fan4")}/>
                                 Fan4
-                            </label>                        
+                            </label>
+                            <hr />                        
+                            <label className='flex flex-col w-full px-4'>
+                                <span className='font-semibold'>Comment</span>   
+                                <textarea 
+                                {...register("fan_ver_comment")}
+                                className='border p-2 rounded-md'
+                                placeholder='enter your comment'
+                                >
+                                </textarea>
+                            </label>
                         </div>
+                    </label>
+                    <label className='flex flex-col items-center gap-5 border p-5 rounded'>
+                        <div className='flex justify-between w-full'>
+                            Meter TOU
+                            <input {...register("meter_TOU", { required: {value: true , message : "Meter TOU is required"}})} className='bg-gray-50 px-2' placeholder='kwh'/>
+                        </div>
+                        {errors["meter_TOU"] && <span className="text-red-500">{errors["meter_TOU"]?.message}</span>}
+                        <div className='flex justify-between w-full'>
+                            On Peak
+                            <input {...register("onpeak", { required: {value: true , message : "Meter on peak is required"}})} className='bg-gray-50 px-2' placeholder='kwh'/>
+                        </div>
+                        {errors["onpeak"] && <span className="text-red-500">{errors["onpeak"]?.message}</span>}
+                        <div className='flex justify-between w-full'>
+                            Off Peak
+                            <input {...register("offpeak", { required: {value: true , message : "Meter off peak is required"}})} className='bg-gray-50 px-2' placeholder='kwh'/>
+                        </div>
+                        {errors["offpeak"] && <span className="text-red-500">{errors["offpeak"]?.message}</span>}
+                        <div className='flex justify-between w-full'>
+                            All On Peak
+                            <input {...register("all_onpeak", { required: {value: true , message : "Meter all on peak is required"}})} className='bg-gray-50 px-2' placeholder='kwh'/>
+                        </div>
+                        {errors["all_onpeak"] && <span className="text-red-500">{errors["all_onpeak"]?.message}</span>}
+                        <div className='flex justify-between w-full'>
+                            All Off Peak
+                            <input {...register("all_offpeak", { required: {value: true , message : "Meter all off peak is required"}})} className='bg-gray-50 px-2' placeholder='kwh'/>
+                        </div>
+                        {errors["all_offpeak"] && <span className="text-red-500">{errors["all_offpeak"]?.message}</span>}
                     </label>
                 </div>
             </div>

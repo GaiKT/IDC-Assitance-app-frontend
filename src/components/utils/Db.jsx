@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Db({ nameDb, register, errors , inputStatus}) {
   return (
-    <div className='flex flex-col gap-5 border py-5 w-full rounded'>
+    <div className='flex flex-col gap-5 border py-2 w-full rounded'>
         <div className='flex flex-col items-center gap-2'>
             {nameDb.toUpperCase()}
             <label className='flex items-center gap-2'>
