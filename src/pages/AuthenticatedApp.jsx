@@ -14,7 +14,7 @@ import EditMembers from "../components/aup/EditMember";
 
 //Company menagement
 import Companys from "../components/company/company";
-import EditCompany from "../components/company/Editcompany";
+import EditCompany from "../components/company/EditCompany";
 import AddCompany from "../components/company/addcompany";
 
 //admin

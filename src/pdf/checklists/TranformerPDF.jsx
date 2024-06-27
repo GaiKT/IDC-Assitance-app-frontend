@@ -1,8 +1,6 @@
 import React from 'react';
 import { Page, Text, Document, Image } from '@react-pdf/renderer';
 import TrPDF from '../../assets/PDF/TranformerCheckList.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 export default function TranformerPDF({data}) {
   const textEntries = [

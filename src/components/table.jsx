@@ -1,58 +1,57 @@
+import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { format, addYears, isAfter ,differenceInDays  } from 'date-fns';
+import { th } from 'date-fns/locale';
 
 function Table(props) {
-    const nevigate = useNavigate();
-
-    const findExpDate = (date) => {
-        let signIndate = new Date(date); 
-        signIndate.setDate(signIndate.getDate() + 365); 
-        let year = signIndate.getFullYear();
-        let month = (signIndate.getMonth() + 1).toString().padStart(2, '0'); 
-        let day = signIndate.getDate().toString().padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
+    const navigate = useNavigate();
 
     const findExpStatus = (date) => {
-        let expDate = new Date(date); 
-        expDate.setDate(expDate.getDate() + 365); 
+        const expDate = addYears(new Date(date), 1); // Expiration date is one year after the date of signing
         const currentDate = new Date();
-        return expDate > currentDate ? 'ไม่หมดอายุ' : 'หมดอายุ';
+        return isAfter(expDate, currentDate) ? `${differenceInDays(expDate, currentDate)} วัน` : 'หมดอายุ';
     };
 
-    const editmemberHandle = (data) => {
-        nevigate('/members/editmember/' + data.member_id , { state : data } )
-    }
-    
+    const formatDate = (date) => {
+        return format(new Date(date), 'dd MMMM yyyy', { locale: th });
+    };
+
+    const editMemberHandle = (data) => {
+        navigate('/members/editmember/' + data.member_id, { state: data });
+    };
+
     return (
         <table className="table max-md:table-xs rounded bg-gray-300">
-        <thead>
-        <tr>
-            <th>Name</th> 
-            <th>team</th> 
-            <th>company(thai)</th>
-            <th className="max-md:hidden">company(eng)</th> 
-            <th className="max-md:hidden">Exp</th> 
-            <th>status</th>
-        </tr>
-        </thead> 
-        <tbody>
-            {   
-                props.data.map((item , index)=>{
-                    return(
-                        <tr key={index}  className="bg-white hover hover:cursor-pointer" onClick={() => {(editmemberHandle(item))}}>
-                            <td>{item.first_name} {item.last_name}</td> 
-                            <td>{item.teamname}</td> 
-                            <td>บริษัท {item.comp_name_thai} จำกัด</td> 
-                            <td className="max-md:hidden">{item.comp_name_eng}</td>
-                            <td className="max-md:hidden">{findExpDate(item.date_of_sign)}</td> 
-                            <td className={findExpStatus(item.date_of_sign)==='หมดอายุ' ? 'text-red-600':'text-green-700'}>{findExpStatus(item.date_of_sign)}</td>
-                        </tr>
-                    );
-                })
-            }
-        </tbody> 
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Team</th>
+                    <th>Company (Thai)</th>
+                    <th className="max-md:hidden">Company (Eng)</th>
+                    <th className="max-md:hidden">Date of Sign</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    props.data.map((item, index) => {
+                        return (
+                            <tr key={index} className="bg-white hover hover:cursor-pointer" onClick={() => { editMemberHandle(item) }}>
+                                <td>{item.first_name} {item.last_name}</td>
+                                <td>{item.company.team.team_name}</td>
+                                <td>บริษัท {item.company.comp_name_thai} จำกัด</td>
+                                <td className="max-md:hidden">{item.company.comp_name_eng}</td>
+                                <td className="max-md:hidden">{formatDate(item.date_of_Sign)}</td>
+                                <td className={findExpStatus(item.date_of_Sign) === 'หมดอายุ' ? 'text-red-600' : 'text-green-700'}>
+                                    {findExpStatus(item.date_of_Sign)}
+                                </td>
+                            </tr>
+                        );
+                    })
+                }
+            </tbody>
         </table>
     );
 }
 
-export default Table
+export default Table;

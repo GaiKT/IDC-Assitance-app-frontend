@@ -6,7 +6,8 @@ import Swal from "sweetalert2"
 
 function AddmembersForm() {
   const [company , setCompany] = useState([])
-  const [team , setTeam] = useState()
+  const [team , setTeam] = useState([])
+  const [teamSelect , setTeamSelect] = useState(0)
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
 
@@ -28,15 +29,13 @@ function AddmembersForm() {
     try {
       setIsLoading(true);
       let result = await axios.post('http://localhost:4000/aup',data)
-      console.log(result)
       navigate('/members')
       setIsLoading(false);
       Toast.fire({
         icon: "success",
-        title: "member added successfully!"
+        title: result.data.message
       });
     } catch (error) {
-      console.log(error)
       setIsLoading(false);
       Toast.fire({
         icon: "error",
@@ -45,64 +44,65 @@ function AddmembersForm() {
     }
   }
 
-  const getCompany = async () => {
+  const getTeams = async () => {
     try {
       const result = await axios.get('http://localhost:4000/aup/company')
-      setCompany(result.data.data)
+      setTeam(result.data.data)
     } catch (error) {
       console.log(error)
     }
   }
 
-  const selectCompany = (arr) => {
-    let newCompany = arr.filter((item)=>item.team_id === Number(team))
-    return newCompany[0]?.company_info
+  const selectCompany = () => {
+    team.map((item)=>item.team_id === Number(teamSelect) ? setCompany(item.companies) : [])
   }
 
   useEffect(()=>{
-    selectCompany(company)
-  },[team])
+    if(teamSelect) {
+      selectCompany()
+    }
+  },[teamSelect])
 
   useEffect(()=>{
-    getCompany()
+    getTeams()
   },[])
 
-  if(company){
+
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 md:w-3/4 text-center justify-center">
         <label className="flex justify-between items-center"> ชื่อจริง
-          <input {...register("firstName", { required: true, maxLength: 255})} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("first_name", { required: true, maxLength: 255})} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between items-center"> นามสกุล
-          <input {...register("lastName", { required: true, maxLength: 255})} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("last_name", { required: true, maxLength: 255})} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between items-center"> เลขบัตรประชาชน
-          <input {...register("cardid", { required: true, maxLength: 255})} placeholder="Enter your cardid" className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("card_id", { required: true, maxLength: 255})} placeholder="Enter your cardid" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between items-center"> วันที่เข้าใช้บริการ
-          <input {...register("dateOfSign", { required: true})} type="date" className="bg-gray-100 rounded w-3/5 p-2"/>
+          <input {...register("date_of_sign", { required: true})} type="date" className="bg-gray-100 rounded w-3/5 p-2"/>
         </label>
         <label className="flex justify-between items-center"> ประเภททีม
-          <select {...register("team", { required: true })} 
+          <select {...register("team_id", { required: true })} 
           onChange={(e)=>{
-            setTeam(e.target.value)
+            setTeamSelect(e.target.value)
           }} 
           className="bg-gray-100 rounded w-3/5 p-2">
             <option value="">Select...</option>
             {
-              company.map((team , index)=>{
-                return <option key={index} value={team.team_id}>{team.teamname}</option>
+              team?.map((team , index)=>{
+                return <option key={index} value={team.team_id}>{team.team_name}</option>
               })
             }
           </select>
         </label>
         <label className="flex justify-between items-center"> บริษัท
-        <select {...register("company", { required: true })} className="bg-gray-100 rounded w-3/5 p-2">
+        <select {...register("comp_id", { required: true })} className="bg-gray-100 rounded w-3/5 p-2">
             <option value="">Select...</option>
             { 
-              selectCompany(company)?.map((item, index)=>{
+              company?.map((item, index)=>{
                 return (
-                  <option key={index} value={item.comp_id}>บริษัท {item.comp_name_thai} จำกัด - {item.comp_name_eng}</option>
+                  <option key={index} value={item?.comp_id}>บริษัท {item?.comp_name_thai} จำกัด - {item?.comp_name_eng}</option>
                 );
               })
             }
@@ -121,7 +121,7 @@ function AddmembersForm() {
         </div>
       </form>
     )
-  }
+  
 }
 
 export default AddmembersForm

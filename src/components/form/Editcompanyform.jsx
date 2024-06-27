@@ -10,7 +10,7 @@ export default function Editcompanyform(props) {
   const [teamSelect , setTeamSelect] = useState(props.data.team_id)
   const navigate = useNavigate()
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm({defaultValues : {...props}})
 
   const Toast = Swal.mixin({
     toast: true,
@@ -62,7 +62,6 @@ export default function Editcompanyform(props) {
   const getTeams = async () => {
     try {
       const result = await axios.get('http://localhost:4000/aup/company')
-      console.log(result.data.data)
       setTeams(result.data.data)
     } catch (error) {
       console.log(error)
@@ -84,7 +83,7 @@ export default function Editcompanyform(props) {
           >
             {
               teams.map((team , index)=>{
-                return <option key={index} value={team.team_id}>{team.teamname}</option>
+                return <option key={index} value={team.team_id}>{team.team_name}</option>
               })
             }
           </select>

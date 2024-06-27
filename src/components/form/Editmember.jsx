@@ -1,17 +1,34 @@
-import { useForm } from "react-hook-form"
-import { useState,useEffect } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import Swal from "sweetalert2"
+import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function EditmembersForm(props) {
-  const [member , setMember] = useState({...props.data , date_of_sign : props.data.date_of_sign.split('T')[0]})
-  const [company , setCompany] = useState([])
-  const [team , setTeam] = useState(props.data.team_id)
+  const [member, setMember] = useState({ ...props.data });
+  const [company, setCompany] = useState([]);
+  const [team, setTeam] = useState([]);
+  const [teamSelect, setTeamSelect] = useState(member.company.team.team_id);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { register, handleSubmit} = useForm({defaultValues : {...member}})
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      ...member,
+      date_of_Sign: member.date_of_Sign.split('T')[0],
+      team_id: member.company.team.team_id,
+      comp_id: member.company.comp_id,
+    },
+  });
+
+  useEffect(() => {
+    reset({
+      ...member,
+      date_of_Sign: member.date_of_Sign.split('T')[0],
+      team_id: member.company.team.team_id,
+      comp_id: member.company.comp_id,
+    });
+  }, [member, reset]);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -22,100 +39,116 @@ function EditmembersForm(props) {
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;
       toast.onmouseleave = Swal.resumeTimer;
-    }
+    },
   });
 
   const onSubmit = async (data) => {
     try {
-      setIsLoading(true)
-      await axios.put('http://localhost:4000/aup/'+ member.member_id, data)
-      navigate('/members')
-      setIsLoading(false)
+      setIsLoading(true);
+      await axios.put('http://localhost:4000/aup/' + member.member_id, {
+        comp_id: data.comp_id,
+        card_id: data.card_id,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        address: data.address,
+        date_of_Sign: data.date_of_Sign,
+        team_id: data.team_id
+    });
+      navigate('/members');
+      setIsLoading(false);
       Toast.fire({
         icon: "success",
-        title: "update member successfully!"
+        title: "Update member successfully!",
       });
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
       Toast.fire({
         icon: "error",
-        title: error.response.data.message
+        title: error.response.data.message,
       });
     }
-  }
-
-  const getCompany = async () => {
-    try {
-      const result = await axios.get('http://localhost:4000/aup/company')
-      setCompany(result.data.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const selectCompany = (arr) => {
-    let compdata = arr.filter((item) => item.team_id === Number(team));
-    return compdata[0]?.company_info;
   };
-  
+
+  const getTeams = async () => {
+    try {
+      const result = await axios.get('http://localhost:4000/aup/company');
+      setTeam(result.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const selectCompany = () => {
+    const selectedTeam = team.find((item) => item.team_id === Number(teamSelect));
+    if (selectedTeam) {
+      setCompany(selectedTeam.companies);
+    } else {
+      setCompany([]);
+    }
+  };
+
   useEffect(() => {
-    getCompany();
+    if (teamSelect) {
+      selectCompany();
+    }
+  }, [teamSelect, team]);
+
+  useEffect(() => {
+    getTeams();
   }, []);
 
-  if(company){
-    return (
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 md:w-3/4 text-center">
-        <label className="flex justify-between items-center"> ชื่อจริง
-          <input {...register("first_name", { required: true, maxLength: 255 })} placeholder="Enter your firstname"  className="bg-gray-100 rounded w-3/5 p-2"/>
-        </label>
-        <label className="flex justify-between items-center"> นามสกุล
-          <input {...register("last_name", { required: true, maxLength: 255})} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2"/>
-        </label>
-        <label className="flex justify-between items-center"> เลขบัตรประชาชน
-          <input {...register("card_id", { required: true, maxLength: 255})} placeholder="Enter your cardid" className="bg-gray-100 rounded w-3/5 p-2"/>
-        </label>
-        <label className="flex justify-between items-center"> วันที่เข้าดำเนินการ
-          <input {...register("date_of_sign", { required: true})} type="date" className="bg-gray-100 rounded w-3/5 p-2"/>
-        </label>
-        <label className="flex justify-between items-center"> ประเภททีม
-          <select {...register("team_id", { required: false })} 
-          onChange={(e)=>{
-            setTeam(e.target.value)
-          }} 
-          className="bg-gray-100 rounded w-3/5 p-2"
-          >
-            {
-              company?.map((team , index)=>{
-                return <option key={index} value={team.team_id}>{team.teamname}</option>
-              })
-            }
-          </select>
-        </label>
-        <label className="flex justify-between"> บริษัท
-        <select {...register("comp_id", { required: false })} 
-        className="bg-gray-100 rounded w-3/5 p-2"
-        >
-            { 
-              selectCompany(company)?.map((item, index)=>
-                <option key={index} value={item.comp_id}>บริษัท {item.comp_name_thai} จำกัด - {item.comp_name_eng}</option>
-              )
-            }
-          </select>
-        </label>
-        <label className="flex justify-between"> ที่อยู่
-          <textarea {...register("address")} placeholder="123 dacrord .." className="bg-gray-100 rounded w-3/5 p-2" />
-        </label>
-        <div className="w-full flex gap-2 justify-end">
-          <button type="submit" className="btn btn-success w-20 text-white">
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 md:w-3/4 text-center">
+      <label className="flex justify-between items-center">
+        ชื่อจริง
+        <input {...register("first_name", { required: true, maxLength: 255 })} placeholder="Enter your firstname" className="bg-gray-100 rounded w-3/5 p-2" />
+      </label>
+      <label className="flex justify-between items-center">
+        นามสกุล
+        <input {...register("last_name", { required: true, maxLength: 255 })} placeholder="Enter your lastname" className="bg-gray-100 rounded w-3/5 p-2" />
+      </label>
+      <label className="flex justify-between items-center">
+        เลขบัตรประชาชน
+        <input {...register("card_id", { required: true, maxLength: 255 })} placeholder="Enter your card ID" className="bg-gray-100 rounded w-3/5 p-2" />
+      </label>
+      <label className="flex justify-between items-center">
+        วันที่เข้าดำเนินการ
+        <input {...register("date_of_Sign", { required: true })} type="date" className="bg-gray-100 rounded w-3/5 p-2" />
+      </label>
+      <label className="flex justify-between items-center">
+        ประเภททีม
+        <select {...register("team_id", { required: true })} value={teamSelect} onChange={(e) => setTeamSelect(e.target.value)} className="bg-gray-100 rounded w-3/5 p-2">
+          {team.map((team, index) => (
+            <option key={index} value={team.team_id}>
+              {team.team_name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="flex justify-between items-center">
+        บริษัท
+        <select {...register("comp_id", { required: true })} className="bg-gray-100 rounded w-3/5 p-2">
+          {company.map((item, index) => (
+            <option key={index} value={item.comp_id}>
+              บริษัท {item.comp_name_thai} จำกัด - {item.comp_name_eng}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="flex justify-between items-center">
+        ที่อยู่
+        <textarea {...register("address")} placeholder="123 dacrord .." className="bg-gray-100 rounded w-3/5 p-2" />
+      </label>
+      <div className="w-full flex gap-2 justify-end">
+        <button type="submit" className="btn btn-success w-20 text-white">
           {isLoading ? <span className="loading loading-spinner"></span> : 'Submit'}
-          </button>
-          <a href="/members" className="btn w-20 text-black">
-            Cancel
-          </a>
-        </div>
-      </form>
-    )
-  }
+        </button>
+        <a href="/members" className="btn w-20 text-black">
+          Cancel
+        </a>
+      </div>
+    </form>
+  );
 }
 
-export default EditmembersForm
+export default EditmembersForm;

@@ -1,5 +1,5 @@
 import Footer from "../footer";
-import Addcompanyform from "../form/addcompanyform";
+import Addcompanyform from "../form/Addcompanyform";
 
 function AddCompany () {
     return(

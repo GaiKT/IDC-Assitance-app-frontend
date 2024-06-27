@@ -7,7 +7,7 @@ function Members () {
     const [members,setMembers] = useState([]) 
     const [keyword,setKeyword] = useState('')
 
-    const getmembers = async () => {
+    const getMembers = async () => {
         try {
             const result = await axios.get('http://localhost:4000/aup?keyword=' + keyword)
             setMembers(result.data.data)
@@ -17,7 +17,7 @@ function Members () {
     }
     
     useEffect(()=>{
-        getmembers()
+        getMembers()
     },[keyword])
 
     return(
@@ -28,12 +28,11 @@ function Members () {
             </div>
             <div className="w-full bg-white shadow-lg p-5 rounded-lg">
                 <div className="flex justify-between md:text-xl">
-                    <span>Members Table</span>
+                    <span>ตารางรายชื่อผู้เข้าดำเนินการ (Aup)</span>
                     <label> 
-                        <span className="max-md:hidden">search :</span>
                         <input 
                         type="text" 
-                        placeholder="Enter your text" 
+                        placeholder="Enter your search text" 
                         className="text-center border rounded mb-5 ml-2 text-sm p-1" 
                         onChange={(e)=>{
                             setKeyword(e.target.value)
