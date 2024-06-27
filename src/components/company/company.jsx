@@ -63,7 +63,7 @@ function Companys () {
                             <tr key={index}  className="bg-white hover hover:cursor-pointer" onClick={() => {(editmemberHandle(item))}}>
                                 <td>{item.comp_name_eng}</td> 
                                 <td>บริษัท {item.comp_name_thai} จำกัด</td> 
-                                <td>{item.teamname}</td> 
+                                <td>{item.team.team_name}</td> 
                             </tr>
                         );
                     })

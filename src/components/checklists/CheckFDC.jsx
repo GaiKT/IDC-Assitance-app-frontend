@@ -29,11 +29,12 @@ export default function CheckFDC() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.post('http://localhost:4000/checklists', { name: 'checklistfdc', formData: { ...data, user_id: user.id } });
+            let result = await axios.post('http://localhost:4000/checklists/fdc', {...data, user_id: user.id });
+            console.log(result)
             navigate('/');
             Toast.fire({
                 icon: 'success',
-                title: 'Checklist sent successfully!'
+                title: result.data.message
             });
         } catch (error) {
             Toast.fire({
@@ -53,9 +54,9 @@ export default function CheckFDC() {
             <div className='p-4 border flex max-md:flex-col rounded gap-4'>
                 <label className='flex flex-col items-center gap-5 border py-5 md:w-1/3 rounded'>
                     FDC status : OFF
-                    <input {...register("fdc_phase1", { required: { value: true, message: "FDC_Phase1 is required" } })} className='bg-gray-50 px-2' placeholder='Phase1'/>
+                    <input type='number' {...register("fdc_phase1", { required: { value: true, message: "FDC_Phase1 is required" } })} className='bg-gray-50 px-2' placeholder='Phase1'/>
                     {errors["fdc_phase1"] && <span className="text-red-500">{errors["fdc_phase1"]?.message}</span>}
-                    <input {...register("fdc_phase2", { required: { value: true, message: "FDC_Phase2 is required" } })} className='bg-gray-50 px-2' placeholder='Phase2'/>
+                    <input type='number' {...register("fdc_phase2", { required: { value: true, message: "FDC_Phase2 is required" } })} className='bg-gray-50 px-2' placeholder='Phase2'/>
                     {errors["fdc_phase2"] && <span className="text-red-500">{errors["fdc_phase2"]?.message}</span>}
                 </label>
                 <label className='flex gap-5 md:w-2/3 p-2'>

@@ -52,6 +52,7 @@ export default function Addcompanyform() {
   const getTeams = async () => {
     try {
       const result = await axios.get('http://localhost:4000/aup/company')
+      console.log(result)
       setTeams(result.data.data)
     } catch (error) {
       console.log(error)
@@ -71,7 +72,7 @@ export default function Addcompanyform() {
             <option value="" selected disabled>โปรดเลือกทีมที่เข้าดำเนินการ...</option>
             {
               teams.map((team , index)=>{
-                return <option key={index} value={team.team_id}>{team.teamname}</option>
+                return <option key={index} value={team.team_id}>{team.team_name}</option>
               })
             }
           </select>
