@@ -29,9 +29,10 @@ export default function CheckRoomTemp() {
     });
 
     const onSubmit = async (data) => {
+        console.log(data)
         try {
             setIsLoading(true);
-            await axios.post('http://localhost:4000/checklists', { name: 'checklistroomtemp', formData: { ...data, user_id: user.id } });
+            await axios.post('http://localhost:4000/checklists/roomtemp', { ...data, user_id: user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -56,10 +57,10 @@ export default function CheckRoomTemp() {
                     {rackNames.map((rack, index) => (
                         <label key={index} className="flex flex-col items-center gap-5 border py-2 rounded">
                             Rack {rack}
-                            <input type='number' step='any' {...register(`tempdetector_${index + 1}_temp`, { required: { value: true, message: "Temperature is required" }, max:{value:50 , message:"Vaule max 30"} , min:{value:5 , message:"Vaule min 5"}})} className="bg-gray-50 px-2" placeholder="Temp" />
-                            {errors[`tempdetector_${index + 1}_temp`] && <span className="text-red-500">{errors[`tempdetector_${index + 1}_temp`]?.message}</span>}
-                            <input type='number' step='any' {...register(`tempdetector_${index + 1}_hum`, { required: { value: true, message: "humidity is required" }, max:{value:100 , message:"Vaule max 100"} , min:{value:10 , message:"Vaule min 10"}})} className="bg-gray-50 px-2" placeholder="Hum" />
-                            {errors[`tempdetector_${index + 1}_hum`] && <span className="text-red-500">{errors[`tempdetector_${index + 1}_hum`]?.message}</span>}
+                            <input type='number' step='any' {...register(`TempDetector_${index + 1}_temp`, { required: { value: true, message: "Temperature is required" }, max:{value:50 , message:"Vaule max 30"} , min:{value:5 , message:"Vaule min 5"}})} className="bg-gray-50 px-2" placeholder="Temp" />
+                            {errors[`TempDetector_${index + 1}_temp`] && <span className="text-red-500">{errors[`TempDetector_${index + 1}_temp`]?.message}</span>}
+                            <input type='number' step='any' {...register(`TempDetector_${index + 1}_hum`, { required: { value: true, message: "humidity is required" }, max:{value:100 , message:"Vaule max 100"} , min:{value:10 , message:"Vaule min 10"}})} className="bg-gray-50 px-2" placeholder="Hum" />
+                            {errors[`TempDetector_${index + 1}_hum`] && <span className="text-red-500">{errors[`TempDetector_${index + 1}_hum`]?.message}</span>}
                         </label>
                     ))}
                 </div>
@@ -81,7 +82,7 @@ export default function CheckRoomTemp() {
                     <div className='p-4'>
                         <label className='flex flex-col'>
                             รายการแจ้งสิ่งผิดปกติ
-                            <textarea {...register("alart")} rows="4" className='border rounded p-2'></textarea>
+                            <textarea {...register("Alart")} rows="4" className='border rounded p-2'></textarea>
                         </label>
                     </div>
                 </div>
