@@ -33,7 +33,7 @@ export default function Checkgenerator() {
             data.generator_name = `generator${step}`
             console.log(data)
             setIsLoading(true);
-            let result = await axios.post('http://localhost:4000/checklists', { name: 'checklistgenerator', formData: { ...data, user_id: user.id } });
+            let result = await axios.post('http://localhost:4000/checklists/generator', { ...data, user_id: user.id });
             console.log(result)
             if (step === 3) {
                 navigate('/');

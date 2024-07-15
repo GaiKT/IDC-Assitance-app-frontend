@@ -1,5 +1,7 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom"
+import { th } from 'date-fns/locale'
+import { format } from 'date-fns';
 
 export default function TapChecklist({nameCheckList,data,setEndDate,setStrDate}) {
     const navigate = useNavigate()
@@ -7,6 +9,10 @@ export default function TapChecklist({nameCheckList,data,setEndDate,setStrDate})
     const editChecklistHandle = (checklistData) => {
         navigate(`/checklists/${nameCheckList}/edit`, { state : checklistData } )
     }
+
+    const formatDate = (date) => {
+        return format(new Date(date), 'dd MMMM yyyy', { locale: th });
+    };
 
   return (
     <>
@@ -43,9 +49,9 @@ export default function TapChecklist({nameCheckList,data,setEndDate,setStrDate})
                         return (        
                             <tr key={index} className='hover cursor-pointer' onClick={()=>{editChecklistHandle(checklist)}}>
                                 <td>Checklist { checklist.generator_name ? checklist.generator_name : nameCheckList}</td>
-                                <td>{checklist.user_id ? checklist.firstname : "Unknown"}</td>
-                                <td>{checklist.created_at.toString().split('T')[0]}</td>
-                                <td>{checklist.updated_at ? checklist.updated_at.toString().split('T')[0] : ''}</td>
+                                <td>{checklist.user_id ? checklist.user.first_name : "Unknown"}</td>
+                                <td>{formatDate(checklist?.created_at)}</td>
+                                <td>{formatDate(checklist?.updated_at)}</td>
                             </tr>
                         );
                     })

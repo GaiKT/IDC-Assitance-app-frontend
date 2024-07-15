@@ -33,8 +33,8 @@ export default function EditCheckgenerator() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.put('http://localhost:4000/checklists', { name: 'checklistgenerator', formData: { ...data, user_id: user.id } });
-            navigate('/');
+            await axios.put('http://localhost:4000/checklists/generator/' + data.id, {...data});
+            navigate('/checklists');
             Toast.fire({
                 icon: 'success',
                 title: 'Checklists updated successfully!',
@@ -58,8 +58,7 @@ export default function EditCheckgenerator() {
             <div className='flex w-full justify-between'>
                 <h1 className='text-4xl font-bold mb-5'>Checklist Generator</h1>
                 <div className='flex gap-2 '>
-                    <button className='btn btn-info text-white' onClick={()=>{handleEditClick()}}>Edit</button>
-                    <button className='btn btn-success text-white'>Download File</button>
+                    <button className='btn w-24 text-black' onClick={()=>{handleEditClick()}}>Edit</button>
                 </div>
             </div>
             

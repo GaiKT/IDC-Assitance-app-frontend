@@ -42,7 +42,7 @@ export default function CheckPhase1() {
         try {
             setIsLoading(true);
             console.log(data)
-            await axios.post('http://localhost:4000/checklists', { name: 'checklistphase1', formData: { ...data, user_id: user.id } });
+            await axios.post('http://localhost:4000/checklists/phase1', { ...data, user_id: user.id , vesda_barlevel : barLevel });
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -270,7 +270,7 @@ export default function CheckPhase1() {
                                     <span className='w-1/2'>Bar Level</span> 
                                     <div className='w-1/2 flex flex-col justify-between items-center gap-2 p-2'>
                                         <div className='w-10 rounded bg-gray-100 text-center'> {barLevel} </div>
-                                        <input type="range" {...register("vesda_barlevel")} min={0} max="10" onChange={(e)=>{setBarLevel(e.target.value)}} value={barLevel} className="range range-xs"/> 
+                                        <input type="range" {...register("vesda_barlevel")} min={0} max={10} onChange={(e)=>{setBarLevel(e.target.value)}} value={barLevel} className="range range-xs"/> 
                                     </div>
                                 </label>
                             </div>
@@ -459,11 +459,11 @@ export default function CheckPhase1() {
                                     <div className='flex flex-col gap-2'>
                                         <label className='flex gap-5 w-full justify-between'>
                                             CPU Usage
-                                            <input type="text" placeholder='%' className='text-center'/>
+                                            <input {...register("backupvm_cpu_usage")} type="number" step="0.01" min="0.00" placeholder='%' className='text-center'/>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between'>
                                             Memory Usage
-                                            <input type="text" placeholder='%' className='text-center'/>
+                                            <input {...register("backupvm_memory_usage")} type="number" step="0.01" min="0.00" placeholder='%' className='text-center'/>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between border rounded p-2'>
                                             Storage : C

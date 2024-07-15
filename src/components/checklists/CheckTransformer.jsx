@@ -27,10 +27,9 @@ export default function CheckTransformer() {
     });
 
     const onSubmit = async (data) => {
-        console.log(data)
         try {
             setIsLoading(true);
-            await axios.post('http://localhost:4000/checklists', { name: 'checklisttransformer', formData: { ...data, user_id: user.id } });
+            await axios.post('http://localhost:4000/checklists/transformer', { ...data, user_id: user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -268,7 +267,7 @@ export default function CheckTransformer() {
                         พัดลมหม้อแปลง
                         <div className='flex flex-col w-4/6 gap-2'>
                             <label className='flex w-full rounded justify-between gap-2 items-center'>
-                                <input type="checkbox" className='checkbox checkbox-sm' {...register("Fan_status", { required: true})}/>
+                                <input type="checkbox" className='checkbox checkbox-sm' {...register("fan_status", { required: true})}/>
                                 Fan TR Status
                             </label>
                             <label className='flex w-full rounded justify-between gap-2 items-center'>

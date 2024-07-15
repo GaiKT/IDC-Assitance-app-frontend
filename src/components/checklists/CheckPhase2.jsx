@@ -38,9 +38,10 @@ export default function CheckPhase2() {
     });
 
     const onSubmit = async (data) => {
+        console.log(data)
         try {
             setIsLoading(true);
-            await axios.post('http://localhost:4000/checklists', { name: 'checklistphase2', formData: { ...data, user_id: user.id } });
+            await axios.post('http://localhost:4000/checklists/phase2', { ...data, user_id: user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -227,7 +228,7 @@ export default function CheckPhase2() {
                                                 Yes
                                             </div>
                                         </div>
-                                    <p>Panel B</p>
+                                        <p>Panel B</p>
                                         <div className='w-1/2 flex gap-4 justify-between'>
                                             <span>Status Power </span>
                                             <div className='flex gap-3'>
@@ -249,6 +250,8 @@ export default function CheckPhase2() {
                                 </div>
                             </div>
                         </div>
+                        {/* Airdb */}
+                        <Db nameDb='airdb' register={register} errors={errors}/>
                         {/* Pac Air */}
                         <div className='flex flex-col gap-5 border py-2 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>
@@ -481,30 +484,30 @@ export default function CheckPhase2() {
                                     <div className='flex flex-col gap-2'>
                                         <label className='flex gap-5 w-full justify-between'>
                                             CPU Usage
-                                            <input type="text" {...register("cctv_cpu_usage")} step="0.01" min="0.00" placeholder='%' className='text-center'/>
+                                            <input type="number" {...register("backupvm_cpu_usage")} step="0.01" min="0.00" placeholder='%' className='text-center'/>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between'>
                                             Memory Usage
-                                            <input type="text" {...register("cctv_memory_usage")} step="0.01" min="0.00" placeholder='%' className='text-center'/>
+                                            <input type="number" {...register("backupvm_memory_usage")} step="0.01" min="0.00" placeholder='%' className='text-center'/>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between border rounded p-2'>
                                             Storage : C
                                             <div className='flex flex-col gap-2'>
-                                                <input {...register("cctv_c_total")} step="0.01" min="0.00" className='text-center border' placeholder='total (GB)' />
-                                                <input {...register("cctv_c_free")} step="0.01" min="0.00" className='text-center border' placeholder='Free (GB)'/>
-                                                <input {...register("cctv_c_percent")} step="0.01" min="0.00" className='text-center border' placeholder='Usage %'/>
+                                                <input {...register("backupvm_c_total")} step="0.01" min="0.00" className='text-center border' placeholder='total (GB)' />
+                                                <input {...register("backupvm_c_free")} step="0.01" min="0.00" className='text-center border' placeholder='Free (GB)'/>
+                                                <input {...register("backupvm_c_percent")} step="0.01" min="0.00" className='text-center border' placeholder='Usage %'/>
                                             </div>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between border rounded p-2'>
                                             Storage : D
                                             <div className='flex flex-col gap-2'>
-                                                <input {...register("cctv_d_total")} className='text-center border' placeholder='total (GB)' />
-                                                <input {...register("cctv_d_free")} className='text-center border' placeholder='Free (GB)'/>
-                                                <input {...register("cctv_d_percent")} className='text-center border' placeholder='Usage %'/>
+                                                <input {...register("backupvm_d_total")} className='text-center border' placeholder='total (GB)' />
+                                                <input {...register("backupvm_d_free")} className='text-center border' placeholder='Free (GB)'/>
+                                                <input {...register("backupvm_d_percent")} className='text-center border' placeholder='Usage %'/>
                                             </div>
                                         </label>
                                         <label className='flex gap-5 w-full justify-center items-center mt-2'>
-                                            <input type="checkbox" {...register("cctv_synctime")} className='checkbox checkbox-sm checkbox-success'/>
+                                            <input type="checkbox" {...register("backupvm_synctime")} className='checkbox checkbox-sm checkbox-success'/>
                                             Sync time
                                         </label>
                                     </div>
@@ -514,11 +517,11 @@ export default function CheckPhase2() {
                                     <div className='flex flex-col gap-2'>
                                         <label className='flex gap-5 w-full justify-between'>
                                             CPU Usage
-                                            <input type="text" placeholder='%' className='text-center' {...register("ems_c_total")}/>
+                                            <input type="number" placeholder='%' className='text-center' {...register("ems_cpu_usage")}/>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between'>
                                             Memory Usage
-                                            <input type="text" placeholder='%' className='text-center' {...register("ems_c_total")}/>
+                                            <input type="number" placeholder='%' className='text-center' {...register("ems_memory_usage")}/>
                                         </label>
                                         <label className='flex gap-5 w-full justify-between border rounded p-2'>
                                             Storage : C
