@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios"
+import { format} from 'date-fns';
+import { th } from 'date-fns/locale';
 
 function Home() {
     const [weeklyMembers,setWeeklyMember] = useState([])
@@ -8,6 +10,10 @@ function Home() {
         let result = await axios.get('http://localhost:4000/aup/new-members-weekly')
         setWeeklyMember(result.data)
     }
+
+    const formatDate = (date) => {
+        return format(new Date(date), 'dd MMMM yyyy', { locale: th });
+    };
 
     useEffect(()=>{
         getWeeklyMembers()
@@ -146,9 +152,9 @@ function Home() {
                                                 return(
                                                     <tr key={index} className="hover cursor-pointer">
                                                         <td>{member.first_name} {member.last_name}</td>
-                                                        <td>{member.comp_name_thai}</td>
-                                                        <td>{member.teamname}</td>
-                                                        <td>{member.date_of_sign.split("T")[0]}</td>
+                                                        <td>{member.company.comp_name_thai}</td>
+                                                        <td>{member.company.team.team_name}</td>
+                                                        <td>{formatDate(member?.date_of_Sign)}</td>
                                                     </tr>
                                                 );
                                             })
@@ -179,7 +185,7 @@ function Home() {
                                                     <tr key={index} className="hover cursor-pointer">
                                                         <td>บริษัท {comp.comp_name_thai} จำกัด</td>
                                                         <td>{comp.comp_name_eng}</td>
-                                                        <td>{comp.teamname}</td>
+                                                        <td>{comp.team.team_name}</td>
                                                     </tr>
                                                 );
                                             })                                            
