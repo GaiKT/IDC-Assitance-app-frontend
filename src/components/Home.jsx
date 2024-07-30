@@ -25,25 +25,25 @@ function Home() {
                 <header className="text-4xl">Main Dashboard</header>
                 <div className="mt-5">
                     <div className="flex gap-3 h-full max-md:flex-col">
-                        <div className="border md:w-2/4 bg-white rounded-md shadow-sm flex flex-col justify-center items-center p-2">
+                        <div className="border md:w-2/4 bg-white rounded-md shadow-sm flex flex-col justify-center items-center p-5">
                             <p className="text-lg">Tranformer Room</p>
                             <div className="grid md:grid-cols-3 grid-cols-1 mt-2 gap-2 mb-2 w-full">
                                 <div className="p-4 border rounded-md text-center">
                                     Temp TR CH1
                                     <p className="font-bold text-red-500">
-                                        {weeklyMembers.data?.avgTranformer[0].tr_ch1}
+                                        {weeklyMembers.data?.avgTranformer[0]?.tr_ch1}
                                     </p>
                                 </div>
                                 <div className="p-4 border rounded-md text-center">
                                     Temp TR CH2
                                     <p  className="font-bold text-blue-500">
-                                        {weeklyMembers.data?.avgTranformer[0].tr_ch2}
+                                        {weeklyMembers.data?.avgTranformer[0]?.tr_ch2}
                                     </p>
                                 </div>
                                 <div className="p-4 border rounded-md text-center">
                                     Temp TR CH3
                                     <p  className="font-bold text-green-500">
-                                        {weeklyMembers.data?.avgTranformer[0].tr_ch3}
+                                        {weeklyMembers.data?.avgTranformer[0]?.tr_ch3}
                                     </p>
                                 </div>
                             </div>
@@ -54,13 +54,13 @@ function Home() {
                                             <div className="p-4 border rounded-md text-center">
                                                 Temp
                                                 <p className="font-bold text-green-500">
-                                                    {weeklyMembers.data?.avgTranformer[0].outside_temp}
+                                                    {weeklyMembers.data?.avgTranformer[0]?.outside_temp}
                                                 </p>
                                             </div>
                                             <div className="p-4 border rounded-md text-center">
                                                 Hum
                                                 <p  className="font-bold text-blue-500">
-                                                    {weeklyMembers.data?.avgTranformer[0].outside_hum}
+                                                    {weeklyMembers.data?.avgTranformer[0]?.outside_hum}
                                                 </p>
                                             </div>
                                         </div>
@@ -71,13 +71,13 @@ function Home() {
                                             <div className="p-4 border rounded-md text-center">
                                                 FDC P1
                                                 <p className="font-bold text-red-500">
-                                                    {weeklyMembers.data?.newfdc[0].fdc_phase1}
+                                                    {weeklyMembers.data?.newfdc[0]?.fdc_phase1}
                                                 </p>
                                             </div>
                                             <div className="p-4 border rounded-md text-center">
                                                 FDC P2
                                                 <p  className="font-bold text-yellow-500">
-                                                    {weeklyMembers.data?.newfdc[0].fdc_phase2}
+                                                    {weeklyMembers.data?.newfdc[0]?.fdc_phase2}
                                                 </p>
                                             </div>
                                         </div>
@@ -132,7 +132,7 @@ function Home() {
                     <div className="flex gap-3 max-lg:flex-col">
                         <div className="border w-full bg-white rounded-md shadow-sm p-5 mt-3">
                             <div className="flex justify-between mb-2">
-                                <p>New Members Thisweek <span className="text-green-500"> +{weeklyMembers.data.newMembers.length} </span></p>
+                                <p>New Members Thisweek <span className="text-green-500"> + {weeklyMembers.data?.newMembers.length} </span></p>
                                 <a href="/members" className="text-blue-600 underline text-xs"> See All Members </a>
                             </div>
                             <div className="pl-2">
