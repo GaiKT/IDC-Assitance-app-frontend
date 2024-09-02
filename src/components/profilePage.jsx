@@ -37,7 +37,7 @@ function Profile () {
                     <label className="flex justify-between mt-5">
                     Level 
                         <p className="w-1/2">
-                            {user.level === 2 ?'admin' : 'user'}
+                            {user.level}
                         </p>
                     </label>
                 </div>

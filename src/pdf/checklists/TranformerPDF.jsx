@@ -3,6 +3,7 @@ import { Page, Text, Document, Image } from '@react-pdf/renderer';
 import TrPDF from '../../assets/PDF/TranformerCheckList.png';
 
 export default function TranformerPDF({data}) {
+  console.log(data)
   const textEntries = [
     // mru in 1
     { text: data.sw_in1 === true ? '/' : '' , x: 107, y: 196 },
@@ -16,7 +17,7 @@ export default function TranformerPDF({data}) {
     { text: data.lamp_rmu_in1 === true ? '' : '/', x: 72, y: 244 },
 
 
-    { text: data.sw_in1_comment , x: 45, y: 277 },
+    { text: data?.sw_in1_comment , x: 45, y: 277 },
 
     // mru in 2 +128
     { text: data.sw_in2 === true ? '/' : '' , x: 107 + 128, y: 196 }, 
@@ -30,7 +31,7 @@ export default function TranformerPDF({data}) {
     { text: data.lamp_rmu_in2 === true ? '' : '/', x: 72 + 128, y: 244 },
 
 
-    { text: data.sw_in2_comment, x: 45 + 128, y: 275 },
+    { text: data?.sw_in2_comment, x: 45 + 128, y: 275 },
 
     // mru out 1 +128
     { text: data.sw1_out1 === true ? '/' : '' , x: 107 + 256, y: 196 }, 
@@ -47,7 +48,7 @@ export default function TranformerPDF({data}) {
     { text: data.lamp_rmu_out1 === true ? '' : '/', x: 72 + 254, y: 244 },
 
 
-    { text: data.sw_out1_comment , x: 45 + 256, y: 274 },
+    { text: data?.sw_out1_comment , x: 45 + 256, y: 274 },
 
 
     // mru out 2 +127
@@ -65,7 +66,7 @@ export default function TranformerPDF({data}) {
     { text: data.lamp_rmu_out2 === true ? '' : '/', x: 72 + 254 + 128, y: 244 },
 
 
-    { text: data.sw_out2_comment, x: 45 + 256 + 128, y: 274 },
+    { text: data?.sw_out2_comment, x: 45 + 256 + 128, y: 274 },
 
     // Pressure Gauge
     { text: data.pressure === true ? '/' : '' , x: 51, y: 310 }, 
@@ -79,7 +80,7 @@ export default function TranformerPDF({data}) {
     // temp room TR
     { text: data.tr_room_temp , x: 73, y: 435}, 
     { text: data.tr_room_hum , x: 178, y: 435 },
-    { text: data.tr_temp_comment , x: 83, y: 446 },
+    { text: data?.tr_temp_comment , x: 83, y: 446 },
 
     // fan room TR
     { text: data.fan_status ? '/' : '' , x: 318, y: 396 },
@@ -93,7 +94,7 @@ export default function TranformerPDF({data}) {
     // trip temp
     { text: data.tr_temp_trip ? '/' : '' , x: 367, y: 428 },
     { text: data.tr_temp_trip ? '' : '/' , x: 412, y: 428 },
-    { text: data.fan_tr_comment , x: 367, y: 444 },
+    { text: data?.fan_tr_comment , x: 367, y: 444 },
 
     // mdb volttage
     { text: data.l1 , x: 140, y: 525 },
@@ -148,10 +149,10 @@ export default function TranformerPDF({data}) {
     { text: data.fan3 === true ? '/' : '' , x: 43, y: 662 + 32 },
     { text: data.fan4 === true ? '/' : '' , x: 86, y: 662 + 32},
     
-    { text: data.fan_ver_comment , x: 86, y: 712},
+    { text: data?.fan_ver_comment , x: 86, y: 712},
 
     // meter 7.00 
-    { text: data.meter_tou , x: 223, y: 662 },
+    { text: data.meter_TOU , x: 223, y: 662 },
     { text: data.onpeak , x: 233, y: 662 + 16 },
     { text: data.offpeak , x: 233, y: 662 + 33 },
     { text: data.all_onpeak , x: 247, y: 662 + 49},
@@ -161,7 +162,7 @@ export default function TranformerPDF({data}) {
     // send by
     { text: data.firstname , x: 450, y: 665 },
     { text: data.created_at.split('T', 1)[0] , x: 450, y: 664 + 17 },
-    // { text: 'Wittawatt' , x: 450, y: 664 + 33 },
+    { text: 'Wittawatt' , x: 450, y: 664 + 33 },
   ];
 
   return (

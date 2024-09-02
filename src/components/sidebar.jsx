@@ -7,6 +7,7 @@ import { useAuth } from "../contexts/authentication";
 function SideBar() {
 
     const {state} = useAuth();
+    console.log(state)
 
     return(
         <div className="md:w-80 z-10">
@@ -29,11 +30,11 @@ function SideBar() {
                         <li>
                             <details open>
                             <summary className="font-bold">
-                            <FontAwesomeIcon icon={faDashboard}/> Dashborad
+                            <FontAwesomeIcon icon={faDashboard}/> Dashboard
                             </summary>
                             <ul>
-                                <li><Link to="/">Main Dashborad</Link></li>
-                                <li><Link to="/checklists/dasborad">Checklists Dashborad</Link></li>
+                                <li><Link to="/">Main Dashboard</Link></li>
+                                <li><Link to="/checklists/dasborad">Checklists Dashboard</Link></li>
                             </ul>
                             </details>
                         </li>
@@ -43,24 +44,22 @@ function SideBar() {
                             <FontAwesomeIcon icon={faGear}/> Systems
                             </summary>
                             <ul>
-                                <li><Link to="/members">Members menagement</Link></li>
-                                <li><Link to="/company">Companies menagement</Link></li>
+                                <li><Link to="/members">Members management</Link></li>
+                                <li><Link to="/company">Companies management</Link></li>
                                 {
-                                    state?.user?.level === 2 &&   
+                                    state?.user?.level === "admin" &&
                                     <li>
                                     <details>
                                     <summary>
                                     Admin Panel
                                     </summary>
                                     <ul>
-                                        <li><Link to="/admin">Users menagement</Link></li>
+                                        <li><Link to="/admin">Users management</Link></li>
                                         <li><Link to="/register">User register</Link></li>
                                     </ul>
                                     </details>
                                     </li>
                                 }
-                                {/* <li><Link>FaceRacks</Link></li>
-                                <li><Link>Lan Setup</Link></li> */}
                             </ul>
                             </details>
                         </li>

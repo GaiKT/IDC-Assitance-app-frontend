@@ -5,8 +5,6 @@ import TranformerPDF from './TranformerPDF';
 
 export default function ChecklistPDF() {
   const location = useLocation();
-  console.log(location)
-
   return (
     <div>
         <PDFViewer style={{

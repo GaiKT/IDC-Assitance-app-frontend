@@ -58,7 +58,7 @@ export default function EditCheckRoomTemp() {
             <div className='flex w-full justify-between'>
                 <h1 className='text-4xl font-bold mb-5'>Checklist Room Temp</h1>
                 <div className='flex gap-2 '>
-                    <button className='btn text-black w-24' onClick={()=>{handleEditClick()}}>Edit</button>      
+                    <button className='btn text-black w-24' onClick={()=>{handleEditClick()}}>Edit</button>   
                 </div>
             </div>
             {!inputStatus && <h1 className='mb-2'>Editting...</h1>}

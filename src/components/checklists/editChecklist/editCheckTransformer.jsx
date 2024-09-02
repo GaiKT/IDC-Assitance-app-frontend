@@ -49,6 +49,10 @@ export default function EditCheckTransformer() {
         }
     };
 
+    const handleLoadPDF = () => {
+        navigate('/checklists/transformer/pdf' , {state : tranformer})
+    }
+
     const handleEditClick = () => {
         setInputStatus(!inputStatus)
     };
@@ -59,6 +63,7 @@ export default function EditCheckTransformer() {
             <h1 className='text-4xl font-bold mb-5'>Checklist Transformer</h1>
             <div className='flex gap-2 '>
                 <button className='btn w-24 text-black' onClick={()=>{handleEditClick()}}>Edit</button>
+                <button className='btn btn-success text-white' onClick={handleLoadPDF}>Download PDF</button>   
             </div>
         </div>
         {!inputStatus && <h1 className='mb-2'>Editting...</h1>}

@@ -82,6 +82,7 @@ function AuthenticatedApp() {
                 {/* tranformer */}
               <Route path="/checklists/Transformer" element={<CheckTransformer />} />
               <Route path="/checklists/transformer/edit" element={<EditCheckTransformer/>}/>
+              <Route path="/checklists/transformer/pdf" element={<ChecklistPDF />} />
 
                 {/* phase1 */}
               <Route path="/checklists/phase1" element={<CheckPhase1 />} />

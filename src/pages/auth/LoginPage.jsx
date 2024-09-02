@@ -22,7 +22,7 @@ function LoginPage() {
         <div className="md:w-3/5 h-full flex flex-col gap-10 text-xl px-5">
           <div>
             <label className="flex justify-between">
-              <span className="max-md:hidden">Username :</span>
+              <span className="max-md:hidden">Username</span>
               <input
                 id="username"
                 name="username"
@@ -39,7 +39,7 @@ function LoginPage() {
           </div>
           <div>
             <label className="flex justify-between">
-              <span className="max-md:hidden">Password :</span>
+              <span className="max-md:hidden">Password</span>
               <input
                 id="password"
                 name="password"
