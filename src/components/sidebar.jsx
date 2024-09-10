@@ -144,21 +144,19 @@ function SideBar() {
                         <li><Link to="/members">Members menagement</Link></li>
                         <li><Link to="/company">Companies menagement</Link></li>
                         {
-                            state?.user?.level === 2 &&   
+                            state?.user?.level === "admin" &&
                             <li>
-                            <details>
-                            <summary>
-                               Admin Panel
-                            </summary>
-                            <ul>
-                                <li><Link to="/admin">Users menagement</Link></li>
-                                <li><Link to="/register">User register</Link></li>
-                            </ul>
-                            </details>
+                                <details>
+                                <summary>
+                                    Admin Panel
+                                </summary>
+                                <ul>
+                                    <li><Link to="/admin">Users management</Link></li>
+                                    <li><Link to="/register">User register</Link></li>
+                                </ul>
+                                </details>
                             </li>
                         }
-                        {/* <li><Link>FaceRacks</Link></li>
-                        <li><Link>Lan Setup</Link></li> */}
                     </ul>
                     </details>
                 </li>

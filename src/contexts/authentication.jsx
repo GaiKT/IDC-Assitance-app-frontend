@@ -5,12 +5,12 @@ import { jwtDecode } from "jwt-decode";
 import Swal from 'sweetalert2'
 
 const AuthContext = React.createContext();
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function AuthProvider(props) {
   const navigate = useNavigate();
   const [state, setState] = useState({
     loading: null,
-    error: null,
     user: null,
   });
 
@@ -25,8 +25,9 @@ function AuthProvider(props) {
   },[])
 
   const login = async (data) => {
+
     try {
-      const result = await axios.post("http://localhost:4000/auth/login", data);
+      const result = await axios.post(`${apiUrl}/auth/login`, data);
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
@@ -49,9 +50,9 @@ function AuthProvider(props) {
 
   };
 
-  const register = async (data) => {
+  const registerAuth = async (data) => {
     try {
-      await axios.post("http://localhost:4000/auth/register", data); 
+      await axios.post(`${apiUrl}/auth/register`, data); 
       Swal.fire({
         title: 'success!',
         text: "register successfully!",
@@ -77,7 +78,7 @@ function AuthProvider(props) {
 
   return (
     <AuthContext.Provider
-      value={{ state, login, logout, register, isAuthenticated }}
+      value={{ state, login, logout, registerAuth, isAuthenticated }}
     >
       {props.children}
     </AuthContext.Provider>
