@@ -9,7 +9,7 @@ import { useAuth } from "../../contexts/authentication";
 export default function CheckTransformer() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
-    const { state } = useAuth();
+    const { state , apiUrl } = useAuth();
     const [user , setUser] = useState(state.user)
   
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -29,7 +29,7 @@ export default function CheckTransformer() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.post('http://localhost:4000/checklists/transformer', { ...data, user_id: user.id });
+            await axios.post(`${apiUrl}/checklists/transformer`, { ...data, user_id: user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -53,7 +53,7 @@ export default function CheckTransformer() {
             <h1 className='text-xl'>RMU</h1>
             <div className='p-2 border flex max-md:flex-col rounded gap-2'>
                 <div className='flex flex-col items-center gap-5 border py-5 md:w-1/2 rounded'>
-                    Main Incomming 1
+                    Main Incoming 1
                     <div className='flex flex-col gap-4 w-5/6'>
                         <label className='flex w-full justify-between'>
                             <span className='font-semibold w-1/2'>Switch RMU</span> 
@@ -267,15 +267,15 @@ export default function CheckTransformer() {
                         พัดลมหม้อแปลง
                         <div className='flex flex-col w-4/6 gap-2'>
                             <label className='flex w-full rounded justify-between gap-2 items-center'>
-                                <input type="checkbox" className='checkbox checkbox-sm' {...register("fan_status", { required: true})}/>
+                                <input type="checkbox" className='checkbox checkbox-sm' {...register("fan_status")}/>
                                 Fan TR Status
                             </label>
                             <label className='flex w-full rounded justify-between gap-2 items-center'>
-                                <input type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_alarm", { required: true})}/>
+                                <input type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_alarm")}/>
                                 Temp Alarm (110c)
                             </label>
                             <label className='flex w-full rounded justify-between gap-2 items-center'>
-                                <input type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_trip", { required: true})}/>
+                                <input type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_trip")}/>
                                 Temp Trip (130c)
                             </label>
                             <label className='flex flex-col w-full px-4'>

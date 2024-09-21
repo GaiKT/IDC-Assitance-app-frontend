@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAuth } from "../../contexts/authentication";
+
 
 function EditmembersForm(props) {
   const [member, setMember] = useState({ ...props.data });
@@ -11,6 +13,7 @@ function EditmembersForm(props) {
   const [teamSelect, setTeamSelect] = useState(member.company.team.team_id);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { apiUrl } = useAuth()
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -45,7 +48,7 @@ function EditmembersForm(props) {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      await axios.put('http://localhost:4000/aup/' + member.member_id, {
+      await axios.put(`${apiUrl}/aup/` + member.member_id, {
         comp_id: data.comp_id,
         card_id: data.card_id,
         first_name: data.first_name,
@@ -71,7 +74,7 @@ function EditmembersForm(props) {
 
   const getTeams = async () => {
     try {
-      const result = await axios.get('http://localhost:4000/aup/company');
+      const result = await axios.get(`${apiUrl}/aup/company`);
       setTeam(result.data.data);
     } catch (error) {
       console.log(error);

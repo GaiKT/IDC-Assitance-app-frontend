@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Footer from '../footer';
 import TapChecklist from '../utils/TapChecklist';
 import axios from "axios"
+import { useAuth } from '../../contexts/authentication'
 
 export default function ChecklistsDashboard() {
     const tabs = ['roomtemp', 'fdc', 'transformer', 'phase1', 'phase2', 'generator',];
@@ -9,13 +10,14 @@ export default function ChecklistsDashboard() {
     const [data ,setData] = useState([]);
     const [strDate , setStrDate] = useState('');
     const [endDate , setEndDate] = useState(`${new Date()}`);
+    const {apiUrl} = useAuth()
 
     const handleTabChange = (index) => {
         setActiveTab(index);
     };
 
     const getChecklist = async () => {
-        let result = await axios.get(`http://localhost:4000/checklists/${tabs[activeTab]}?str=${strDate}&end=${endDate}`)
+        let result = await axios.get(`${apiUrl}/checklists/${tabs[activeTab]}?str=${strDate}&end=${endDate}`)
         setData(result.data)
     };
 

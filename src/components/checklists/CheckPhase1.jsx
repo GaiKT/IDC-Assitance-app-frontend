@@ -9,7 +9,7 @@ import Ups from '../utils/Ups'
 import { useAuth } from "../../contexts/authentication";
 
 export default function CheckPhase1() {
-    const { state } = useAuth();
+    const { state , apiUrl } = useAuth();
     const [user , setUser] = useState(state.user)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
@@ -42,7 +42,7 @@ export default function CheckPhase1() {
         try {
             setIsLoading(true);
             console.log(data)
-            await axios.post('http://localhost:4000/checklists/phase1', { ...data, user_id: user.id , vesda_barlevel : barLevel });
+            await axios.post(`${apiUrl}/checklists/phase1`, { ...data, user_id: user.id , vesda_barlevel : barLevel });
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -51,7 +51,7 @@ export default function CheckPhase1() {
         } catch (error) {
             Toast.fire({
                 icon: 'error',
-                title: 'Failed to send checklist. Please try again later.'
+                title: error.message
             });
         } finally {
             setIsLoading(false);

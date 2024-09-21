@@ -3,6 +3,7 @@ import { useState,useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
+import { useAuth } from "../../contexts/authentication"
 
 function AddmembersForm() {
   const [company , setCompany] = useState([])
@@ -10,6 +11,7 @@ function AddmembersForm() {
   const [teamSelect , setTeamSelect] = useState(0)
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
+  const { apiUrl} = useAuth()
 
   const { register, handleSubmit } = useForm()
 
@@ -28,7 +30,7 @@ function AddmembersForm() {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      let result = await axios.post('http://localhost:4000/aup',data)
+      let result = await axios.post(`${apiUrl}/aup`,data)
       navigate('/members')
       setIsLoading(false);
       Toast.fire({
@@ -46,7 +48,7 @@ function AddmembersForm() {
 
   const getTeams = async () => {
     try {
-      const result = await axios.get('http://localhost:4000/aup/company')
+      const result = await axios.get(`${apiUrl}/aup/company`)
       setTeam(result.data.data)
     } catch (error) {
       console.log(error)

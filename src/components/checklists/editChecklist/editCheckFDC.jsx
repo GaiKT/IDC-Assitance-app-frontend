@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form"
 import { useState} from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import { useAuth } from "../../../contexts/authentication";
 import { useLocation } from "react-router-dom";
@@ -13,8 +13,7 @@ export default function EditCheckFDC() {
     const [inputStatus , setInputStatus] = useState(true)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
-    const { state } = useAuth();
-    const [user , setUser] = useState(state.user)
+    const { apiUrl } = useAuth();
   
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: { ...fdc } });
 
@@ -33,7 +32,7 @@ export default function EditCheckFDC() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.put('http://localhost:4000/checklists/fdc/' + data.id , { ...data });
+            await axios.put(`${apiUrl}/checklists/fdc/` + data.id , { ...data });
             navigate('/checklists');
             Toast.fire({
                 icon: 'success',
@@ -63,7 +62,7 @@ export default function EditCheckFDC() {
             </div>
         </div>
         
-        {!inputStatus && <h1 className='mb-2'>Editting...</h1>}
+        {!inputStatus && <h1 className='mb-2'>Editing...</h1>}
         <hr />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
             <div className='p-4 border flex rounded gap-4'>
@@ -75,7 +74,7 @@ export default function EditCheckFDC() {
                     {errors["fdc_phase2"] && <span className="text-red-500">{errors["fdc_phase2"]?.message}</span>}
                 </label>
                 <label className='flex gap-5 w-2/3 p-2'>
-                    Commemt
+                    Comment
                     <textarea disabled={inputStatus} {...register("fdc_comment")} rows="4" className='border rounded w-full p-4' placeholder='ถ้ามีการเปลี่ยนแปลงโปรด Comment สาเหตุ'></textarea>
                 </label>
             </div>
@@ -91,9 +90,9 @@ export default function EditCheckFDC() {
                         {isLoading ? <span className="loading loading-spinner"></span> : 'Submit'}
                 </button>
                     }
-                    <a href="/checklists/dasborad" className="btn w-20 text-black">
+                    <Link to="/checklists/dasborad" className="btn w-20 text-black">
                         Cancel
-                    </a>
+                    </Link>
                 </div>
             </div>
         </form>        

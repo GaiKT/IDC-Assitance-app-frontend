@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import axios from "axios"
-import { useNavigate , useLocation } from "react-router-dom"
+import { useNavigate , useLocation ,Link } from "react-router-dom"
 import Swal from "sweetalert2"
 import { useAuth } from "../../../contexts/authentication";
 
@@ -13,8 +13,7 @@ export default function EditCheckTransformer() {
 
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
-    const { state } = useAuth();
-    const [user , setUser] = useState(state.user)
+    const { apiUrl } = useAuth();
   
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: { ...tranformer } });
 
@@ -33,7 +32,7 @@ export default function EditCheckTransformer() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.put('http://localhost:4000/checklists/transformer/' + data.id,{...data});
+            await axios.put(`${apiUrl}/checklists/transformer/` + data.id,{...data});
             navigate('/checklists');
             Toast.fire({
                 icon: 'success',
@@ -286,15 +285,15 @@ export default function EditCheckTransformer() {
                         พัดลมหม้อแปลง
                         <div className='flex flex-col w-4/6 gap-2'>
                             <label className='flex w-full rounded justify-between gap-2 items-center'>
-                                <input disabled={inputStatus} type="checkbox" className='checkbox checkbox-sm' {...register("fan_status", { required: true})}/>
+                                <input disabled={inputStatus} type="checkbox" className='checkbox checkbox-sm' {...register("fan_status")}/>
                                 Fan TR Status
                             </label>
                             <label className='flex w-full rounded justify-between gap-2 items-center'>
-                                <input disabled={inputStatus} type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_alarm", { required: true})}/>
+                                <input disabled={inputStatus} type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_alarm")}/>
                                 Temp Alarm (110c)
                             </label>
                             <label className='flex w-full rounded justify-between gap-2 items-center'>
-                                <input disabled={inputStatus} type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_trip", { required: true})}/>
+                                <input disabled={inputStatus} type="checkbox" className='checkbox checkbox-sm' {...register("tr_temp_trip")}/>
                                 Temp Trip (130c)
                             </label>
                             <label className='flex flex-col w-full px-4'>
@@ -465,9 +464,9 @@ export default function EditCheckTransformer() {
                             {isLoading ? <span className="loading loading-spinner"></span> : 'Submit'}
                         </button>
                     }
-                    <a href="/" className="btn w-20 text-black">
+                    <Link to="/checklists" className="btn w-20 text-black">
                         Cancel
-                    </a>
+                    </Link>
                 </div>
             </div>
         </form>        

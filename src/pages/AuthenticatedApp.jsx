@@ -51,7 +51,7 @@ function AuthenticatedApp() {
               
                 {/* user */}
               <Route path="/" element={<Home />} />
-              <Route path="/users/:userId/profile" element={<Profile />} />
+              <Route path="/users/profile" element={<Profile />} />
 
                 {/* admin */}
               <Route path="/admin" element={<Usermenagement />} />

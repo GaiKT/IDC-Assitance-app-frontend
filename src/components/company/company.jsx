@@ -2,15 +2,17 @@ import Footer from "../footer";
 import axios from "axios";
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {useAuth} from '../../contexts/authentication'
 
 function Companys () {
     const [Company,setCompany] = useState([]) 
     const [keyword,setKeyword] = useState('')
     const nevigate = useNavigate();
+    const {apiUrl} = useAuth()
 
     const getCompany = async () => {
         try {
-            const result = await axios.get('http://localhost:4000/company?keyword=' + keyword)
+            const result = await axios.get(`${apiUrl}/company?keyword=` + keyword)
             setCompany(result.data.data)
         } catch (error) {
             console.log(error)
@@ -31,7 +33,7 @@ function Companys () {
             <header className="md:text-4xl"> Company Management </header> 
             <a href="/company/addcompany" className="btn max-md:btn-sm btn-success text-white">New Company</a>
         </div>
-        <div className="w-full bg-white shadow-lg p-5 rounded-lg">
+        <div className="w-full bg-white shadow-sm p-5 rounded-lg">
             <div className="flex justify-between text-xl">
                 <span>ตารางรายชื่อบริษัท</span>
                 <label> 

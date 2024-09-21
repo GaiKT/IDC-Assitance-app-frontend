@@ -28,7 +28,6 @@ function RegisterPage() {
   })
 
   const onSubmit = (data) => {
-    console.log(data)
     try {
       delete data.confirmPassword
       registerAuth(data);
