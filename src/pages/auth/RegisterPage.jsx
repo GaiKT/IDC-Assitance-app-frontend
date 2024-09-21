@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
   const [hide , setHide] = useState(true)
+  const navigate = useNavigate()
 
   const schema = yup.object({
     username: yup.string().required("Username is required"),
@@ -31,6 +33,7 @@ function RegisterPage() {
     try {
       delete data.confirmPassword
       registerAuth(data);
+      navigate('/admin')
     } catch (error) {
       console.log(error)
     }

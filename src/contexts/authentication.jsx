@@ -10,7 +10,6 @@ const apiUrl = import.meta.env.VITE_API_URL;
 function AuthProvider(props) {
   const navigate = useNavigate();
   const [state, setState] = useState({
-    loading: null,
     user: null,
   });
 
