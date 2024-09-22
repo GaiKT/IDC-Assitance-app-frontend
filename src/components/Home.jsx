@@ -25,8 +25,6 @@ function Home() {
         getWeeklyMembers()
     },[])
 
-    console.log(weeklyMembers)
-
     if(weeklyMembers.data){
         return (
             <> 
@@ -49,14 +47,14 @@ function Home() {
                                 <span>{weeklyMembers.data?.newfdc[0]?.fdc_phase2}</span>
                             </div>
                         </div>
-                        <div className="min-h-32 shadow-sm border-t-4 rounded-lg border-yellow-500 bg-white flex justify-center items-center relative">
+                        <div className="min-h-32 shadow-sm border-t-4 rounded-lg border-yellow-500 bg-white flex justify-center items-center relative opacity-45">
                             <p className="absolute top-3 left-3 text-blue-900">CHECKLISTS</p>
                             <div className="flex gap-4 items-center text-2xl">
                                 <FontAwesomeIcon icon={faPaste}/>
                                 <span>+40</span>
                             </div>
                         </div>
-                        <div className="min-h-32 shadow-sm border-t-4 rounded-lg border-green-500 bg-white flex justify-center items-center relative">
+                        <div className="min-h-32 shadow-sm border-t-4 rounded-lg border-green-500 bg-white flex justify-center items-center relative opacity-45">
                             <p className="absolute top-3 left-3 text-blue-900">LAN WIRING</p>
                             <div className="flex gap-4 items-center text-2xl">
                                 <FontAwesomeIcon icon={faNetworkWired}/>
@@ -77,6 +75,16 @@ function Home() {
                             />
                         </div>
                         <div className="lg:w-2/6 flex flex-col gap-2">
+                            <div className="bg-white shadow-sm rounded-md h-full">
+                                <UtilsChart 
+                                    topic={'TRANSFORMER'} 
+                                    typeChart={'bar'} 
+                                    xAxis={['CH1' , 'CH2' , 'CH3']} 
+                                    yAxis={[{
+                                         name : 'temp',
+                                        data : [weeklyMembers.data?.avgTranformer[0]?.tr_ch1 , weeklyMembers.data?.avgTranformer[0]?.tr_ch2 , weeklyMembers.data?.avgTranformer[0]?.tr_ch3]}]
+                                }/>
+                            </div>
                             <div className="bg-white shadow-sm rounded-md">
                                 <UtilsChart 
                                 topic={'IT LOAD'} 
@@ -88,19 +96,9 @@ function Home() {
                                 }]}
                                 />
                             </div>
-                            <div className="bg-white shadow-sm rounded-md h-full">
-                                <UtilsChart 
-                                    topic={'TRANSFORMER'} 
-                                    typeChart={'bar'} 
-                                    xAxis={['CH1' , 'CH2' , 'CH3']} 
-                                    yAxis={[{
-                                        name : 'temp',
-                                        data : [weeklyMembers.data?.avgTranformer[0]?.tr_ch1 , weeklyMembers.data?.avgTranformer[0]?.tr_ch2 , weeklyMembers.data?.avgTranformer[0]?.tr_ch3]}]
-                                }/>
-                            </div>
                         </div>
                     </div>
-                    <div className="flex gap-2 max-lg:flex-col">
+                    {/* <div className="flex gap-2 max-lg:flex-col">
                         <div className="border w-full bg-white rounded-md shadow-sm p-5">
                             <div className="flex justify-between mb-2">
                                 <p>New Members Thisweek <span className="text-green-500"> + {weeklyMembers.data?.newMembers.length} </span></p>
@@ -108,7 +106,6 @@ function Home() {
                             </div>
                             <div className="pl-2">
                                 <table className="table max-md:table-xs">
-                                    {/* head */}
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -141,7 +138,6 @@ function Home() {
                             </div>
                             <div className="pl-2">
                                 <table className="table max-md:table-xs">
-                                    {/* head */}
                                     <thead>
                                         <tr>
                                             <th>Name Company Thai</th>
@@ -165,7 +161,7 @@ function Home() {
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </>
         );

@@ -134,7 +134,7 @@ function SideBar() {
                     </ul>
                     </details>
                 </li>
-                <li>
+                {/* <li>
                     <details open>
                     <summary className="font-bold text-blue-900">
                         <FontAwesomeIcon icon={faGear}/> Systems
@@ -144,7 +144,7 @@ function SideBar() {
                         <li><Link to="/company">Companies management</Link></li>
                     </ul>
                     </details>
-                </li>
+                </li> */}
                 {
                     state?.user?.level === "admin" &&
                     <li>
