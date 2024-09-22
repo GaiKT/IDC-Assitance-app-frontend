@@ -9,7 +9,7 @@ import { useAuth } from "../../contexts/authentication";
 const rackNames = ['J12', 'I10', 'I3', 'J1', 'H2', 'G4', 'H10', 'G13', 'E13', 'F9', 'E3', 'F1', 'C4', 'A4', 'K2', 'K7', 'L7', 'M6', 'L3', 'M1', 'N1', 'O3', 'N8', 'O9'];
 
 export default function CheckRoomTemp() {
-    const { state } = useAuth();
+    const { state , apiUrl } = useAuth();
     const [user , setUser] = useState(state.user)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ export default function CheckRoomTemp() {
         console.log(data)
         try {
             setIsLoading(true);
-            await axios.post('http://localhost:4000/checklists/roomtemp', { ...data, user_id: user.id });
+            await axios.post(`${apiUrl}/checklists/roomtemp`, { ...data, user_id: user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',

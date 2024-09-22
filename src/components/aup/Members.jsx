@@ -2,14 +2,16 @@ import Footer from "../footer";
 import Table from "../table";
 import axios from "axios";
 import { useState,useEffect } from "react";
+import { useAuth } from "../../contexts/authentication";
 
 function Members () {
     const [members,setMembers] = useState([]) 
     const [keyword,setKeyword] = useState('')
+    const {apiUrl} = useAuth()
 
     const getMembers = async () => {
         try {
-            const result = await axios.get('http://localhost:4000/aup?keyword=' + keyword)
+            const result = await axios.get(`${apiUrl}/aup?keyword=` + keyword)
             setMembers(result.data.data)
         } catch (error) {
             console.log(error)
@@ -26,7 +28,7 @@ function Members () {
                 <header className="md:text-4xl"> Members Management </header> 
                 <a href="/members/addmember" className="btn max-md:btn-sm btn-success text-white">New member</a>
             </div>
-            <div className="w-full bg-white shadow-lg p-5 rounded-lg">
+            <div className="w-full bg-white shadow-sm p-5 rounded-lg">
                 <div className="flex justify-between md:text-xl">
                     <span>ตารางรายชื่อผู้เข้าดำเนินการ (Aup)</span>
                     <label> 

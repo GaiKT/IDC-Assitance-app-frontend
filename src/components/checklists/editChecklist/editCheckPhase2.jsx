@@ -13,13 +13,12 @@ export default function EditCheckPhase2() {
     const [phase2 , setPhase2] = useState(location.state)
     const [inputStatus , setInputStatus] = useState(true)
 
-    const { state } = useAuth();
-    const [user , setUser] = useState(state.user)
+    const { apiUrl } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
     const PacAir = [1,2,3,4,5,6]
     const [disabledInputs, setDisabledInputs] = useState(Array(PacAir.length).fill(true));
-    const [barLevel , setBarLevel] = useState(0)
+    const [barLevel , setBarLevel] = useState(phase2.vesda_barlevel)
 
     const handleCheckboxChange = (index) => {
         const updatedDisabledInputs = [...disabledInputs];
@@ -44,7 +43,7 @@ export default function EditCheckPhase2() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.put('http://localhost:4000/checklists/phase2/' + data.id, { ...data });
+            await axios.put(`${apiUrl}/checklists/phase2/` + data.id, { ...data });
             navigate('/checklists');
             Toast.fire({
                 icon: 'success',
@@ -73,7 +72,7 @@ export default function EditCheckPhase2() {
                 </div>
             </div>
             
-            {!inputStatus && <h1 className='mb-2'>Editting...</h1>}
+            {!inputStatus && <h1 className='mb-2'>Editing...</h1>}
             <hr />
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
                 <div className='flex w-full flex-col'>

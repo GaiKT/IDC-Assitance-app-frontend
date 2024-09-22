@@ -7,14 +7,14 @@ import { useAuth } from '../../contexts/authentication';
 import axios from 'axios';
 
 export default function Checkgenerator() {
-    const { state } = useAuth();
+    const { state , apiUrl } = useAuth();
     const [user, setUser] = useState(state.user);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const formRef = useRef(); // Create a ref for the form
+    const formRef = useRef();
 
     const Toast = Swal.mixin({
         toast: true,
@@ -33,7 +33,7 @@ export default function Checkgenerator() {
             data.generator_name = `generator${step}`
             console.log(data)
             setIsLoading(true);
-            let result = await axios.post('http://localhost:4000/checklists/generator', { ...data, user_id: user.id });
+            let result = await axios.post(`${apiUrl}/checklists/generator`, { ...data, user_id: user.id });
             console.log(result)
             if (step === 3) {
                 navigate('/');

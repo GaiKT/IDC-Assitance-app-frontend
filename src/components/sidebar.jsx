@@ -1,13 +1,11 @@
 import { Link} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDashboard , faGear , faListCheck , faBars } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { faDashboard , faGear , faListCheck , faBars , faUsersGear , faServer } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../contexts/authentication";
 
 function SideBar() {
 
     const {state} = useAuth();
-    console.log(state)
 
     return(
         <div className="md:w-80 z-10">
@@ -25,11 +23,12 @@ function SideBar() {
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 min-h-full bg-white">
                         <div className="h-20 flex justify-center items-center">
-                            <h1 className="text-center font-extrabold text-2xl mb-2">IDC Assistance</h1>
+                        
+                            <h1 className="text-center font-extrabold text-2xl mb-2"><FontAwesomeIcon icon={faServer}/> IDC Assistance</h1>
                         </div>
                         <li>
                             <details open>
-                            <summary className="font-bold">
+                            <summary  className="font-bold text-blue-900">
                             <FontAwesomeIcon icon={faDashboard}/> Dashboard
                             </summary>
                             <ul>
@@ -40,32 +39,32 @@ function SideBar() {
                         </li>
                         <li>
                             <details open>
-                            <summary className="font-bold">
+                            <summary  className="font-bold text-blue-900">
                             <FontAwesomeIcon icon={faGear}/> Systems
                             </summary>
                             <ul>
                                 <li><Link to="/members">Members management</Link></li>
                                 <li><Link to="/company">Companies management</Link></li>
-                                {
-                                    state?.user?.level === "admin" &&
-                                    <li>
-                                    <details>
-                                    <summary>
-                                    Admin Panel
+                            </ul>
+                            </details>
+                        </li>
+                        {
+                            state?.user?.level === "admin" &&
+                            <li>
+                                <details open>
+                                    <summary className="font-bold text-blue-900">
+                                    <FontAwesomeIcon icon={faUsersGear}/> Admin Panel
                                     </summary>
                                     <ul>
                                         <li><Link to="/admin">Users management</Link></li>
                                         <li><Link to="/register">User register</Link></li>
                                     </ul>
-                                    </details>
-                                    </li>
-                                }
-                            </ul>
-                            </details>
-                        </li>
+                                </details>
+                            </li>
+                        }
                         <li>
                             <details>
-                            <summary className="font-bold">
+                            <summary  className="font-bold text-blue-900">
                             <FontAwesomeIcon icon={faListCheck}/>  Checklists
                             </summary>
                             <ul>
@@ -122,11 +121,11 @@ function SideBar() {
 
             <ul className="menu bg-white max-w-72 w-full sticky top-0 left-0 max-md:hidden">
                 <div className="h-20 flex justify-center items-center">
-                <h1 className="text-center font-extrabold text-2xl mb-2">IDC Assistance</h1>
+                    <h1 className="text-center font-extrabold text-2xl mb-2"><FontAwesomeIcon icon={faServer}/> IDC Assistance</h1>
                 </div>
                 <li>
                     <details open>
-                    <summary className="font-bold">
+                    <summary className="font-bold text-blue-900">
                        <FontAwesomeIcon icon={faDashboard}/> Dashborad
                     </summary>
                     <ul>
@@ -135,36 +134,34 @@ function SideBar() {
                     </ul>
                     </details>
                 </li>
-                <li>
+                {/* <li>
                     <details open>
-                    <summary className="font-bold">
+                    <summary className="font-bold text-blue-900">
                         <FontAwesomeIcon icon={faGear}/> Systems
                     </summary>
                     <ul>
-                        <li><Link to="/members">Members menagement</Link></li>
-                        <li><Link to="/company">Companies menagement</Link></li>
-                        {
-                            state?.user?.level === 2 &&   
-                            <li>
-                            <details>
-                            <summary>
-                               Admin Panel
-                            </summary>
-                            <ul>
-                                <li><Link to="/admin">Users menagement</Link></li>
-                                <li><Link to="/register">User register</Link></li>
-                            </ul>
-                            </details>
-                            </li>
-                        }
-                        {/* <li><Link>FaceRacks</Link></li>
-                        <li><Link>Lan Setup</Link></li> */}
+                        <li><Link to="/members">Members management</Link></li>
+                        <li><Link to="/company">Companies management</Link></li>
                     </ul>
                     </details>
-                </li>
+                </li> */}
+                {
+                    state?.user?.level === "admin" &&
+                    <li>
+                        <details open>
+                            <summary className="font-bold text-blue-900">
+                            <FontAwesomeIcon icon={faUsersGear}/> Admin Panel
+                            </summary>
+                            <ul>
+                                <li><Link to="/admin">Users management</Link></li>
+                                <li><Link to="/register">User register</Link></li>
+                            </ul>
+                        </details>
+                    </li>
+                }                
                 <li>
                     <details>
-                    <summary className="font-bold">
+                    <summary  className="font-bold text-blue-900">
                     <FontAwesomeIcon icon={faListCheck}/>  Checklists
                     </summary>
                     <ul>

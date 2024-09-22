@@ -9,7 +9,7 @@ import Ups from '../utils/Ups'
 import { useAuth } from "../../contexts/authentication";
 
 export default function CheckPhase2() {
-    const { state } = useAuth();
+    const { state , apiUrl } = useAuth();
     const [user , setUser] = useState(state.user)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
@@ -38,10 +38,9 @@ export default function CheckPhase2() {
     });
 
     const onSubmit = async (data) => {
-        console.log(data)
         try {
             setIsLoading(true);
-            await axios.post('http://localhost:4000/checklists/phase2', { ...data, user_id: user.id });
+            await axios.post(`${apiUrl}/checklists/phase2`,{ ...data, user_id: user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -50,7 +49,7 @@ export default function CheckPhase2() {
         } catch (error) {
             Toast.fire({
                 icon: 'error',
-                title: 'Failed to send checklist. Please try again later.'
+                title: error.message
             });
         } finally {
             setIsLoading(false);
@@ -274,7 +273,7 @@ export default function CheckPhase2() {
                                             <label className='flex flex-col gap-2'>
                                                 Return
                                                 <input {...register(`return_pac${airpac}_temp`,)} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Temp' disabled={disabledInputs[index]} />
-                                                <input {...register(`return_pac${airpac}_temp`,)} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Hum' disabled={disabledInputs[index]} />
+                                                <input {...register(`return_pac${airpac}_hum`,)} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Hum' disabled={disabledInputs[index]} />
                                             </label>
                                         </div>
                                     );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useNavigate , useLocation } from 'react-router-dom';
+import { useNavigate , useLocation, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useAuth } from "../../../contexts/authentication";
 
@@ -10,8 +10,7 @@ const rackNames = ['J12', 'I10', 'I3', 'J1', 'H2', 'G4', 'H10', 'G13', 'E13', 'F
 export default function EditCheckRoomTemp() {
     const location = useLocation();
     const [roomtemp , setRoomtemp] = useState(location.state)
-    const { state } = useAuth();
-    const [user , setUser] = useState(state.user)
+    const { apiUrl } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();    
     const [inputStatus , setInputStatus] = useState(true)
@@ -33,7 +32,7 @@ export default function EditCheckRoomTemp() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.put('http://localhost:4000/checklists/roomtemp/'+ user.id, {...data});
+            await axios.put(`${apiUrl}/checklists/roomtemp/`+ data.id, {...data});
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -42,7 +41,7 @@ export default function EditCheckRoomTemp() {
         } catch (error) {
             Toast.fire({
                 icon: 'error',
-                title: 'Failed to update checklist. Please try again later.'
+                title: error.message
             });
         } finally {
             setIsLoading(false);
@@ -61,7 +60,7 @@ export default function EditCheckRoomTemp() {
                     <button className='btn text-black w-24' onClick={()=>{handleEditClick()}}>Edit</button>   
                 </div>
             </div>
-            {!inputStatus && <h1 className='mb-2'>Editting...</h1>}
+            {!inputStatus && <h1 className='mb-2'>Editing...</h1>}
             <hr />
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 text-center">
                 <div className="border grid grid-cols-3 gap-2 p-2 max-md:grid-cols-1">
@@ -157,9 +156,9 @@ export default function EditCheckRoomTemp() {
                         <button type="submit" className="btn btn-success w-20 text-white" disabled={isLoading}>
                             {isLoading ? <span className="loading loading-spinner"></span> : 'Submit'}
                         </button>
-                        <a href="/" className="btn w-20 text-black">
+                        <Link to="/checklists" className="btn w-20 text-black">
                             Cancel
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </form>         

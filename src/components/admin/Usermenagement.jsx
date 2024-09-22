@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { useAuth } from '../../contexts/authentication'
 
-export default function Usermenagement() {
+export default function Usermanagement() {
   const [keyword , setKeyword] = useState('')
   const [users , setUser] = useState([])
+  const { apiUrl } = useAuth()
   
   const getUser = async () => {
-    let result = await axios.get('http://localhost:4000/auth/users?keyword=' + keyword)
+    let result = await axios.get(`${apiUrl}/auth/users?keyword=` + keyword)
+    console.log(result)
     setUser(result.data.data)
   }
 
   useEffect(()=>{
     getUser()
-  })
+  },[])
 
   return (
     <>
@@ -20,7 +23,7 @@ export default function Usermenagement() {
         <header className="md:text-4xl"> User Management </header> 
         <a href="/register" className="btn max-md:btn-sm btn-success text-white">New User</a>
     </div>
-    <div className="w-full bg-white shadow-lg p-5 rounded-lg">
+    <div className="w-full bg-white shadow-sm p-5 rounded-lg">
         <div className="flex justify-between text-xl">
             <span>User Table</span>
             <label> 
@@ -40,9 +43,9 @@ export default function Usermenagement() {
         <table className="table max-md:table-xs rounded bg-gray-300">
         <thead>
         <tr>
-            <th>firstname</th>  
-            <th>lastname</th> 
-            <th>level</th>
+            <th>Firstname</th>  
+            <th>Lastname</th> 
+            <th>Level</th>
         </tr>
         </thead> 
         <tbody>
@@ -50,9 +53,9 @@ export default function Usermenagement() {
                 users.map((user , index)=>{
                     return(
                         <tr key={index}  className="bg-white hover hover:cursor-pointer">
-                            <td>{user.firstname}</td> 
-                            <td>{user.lastname}</td> 
-                            <td>{user.level === 2 ? 'admin' : 'user' }</td> 
+                            <td>{user.first_name}</td> 
+                            <td>{user.last_name}</td> 
+                            <td>{user.level.toUpperCase()}</td> 
                         </tr>
                     );
                 })

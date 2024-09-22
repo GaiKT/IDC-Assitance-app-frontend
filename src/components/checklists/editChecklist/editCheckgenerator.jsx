@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Gencheck from '../../utils/gencheck';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../../contexts/authentication';
 import axios from 'axios';
@@ -11,8 +11,7 @@ export default function EditCheckgenerator() {
     const location = useLocation();
     const [genCheck , setGenCheck] = useState(location.state)
     const [inputStatus , setInputStatus] = useState(true)
-    const { state } = useAuth();
-    const [user, setUser] = useState(state.user);
+    const { apiUrl } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -33,7 +32,7 @@ export default function EditCheckgenerator() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.put('http://localhost:4000/checklists/generator/' + data.id, {...data});
+            await axios.put(`${apiUrl}/checklists/generator/` + data.id, {...data});
             navigate('/checklists');
             Toast.fire({
                 icon: 'success',
@@ -62,7 +61,7 @@ export default function EditCheckgenerator() {
                 </div>
             </div>
             
-            {!inputStatus && <h1 className='mb-2'>Editting...</h1>}
+            {!inputStatus && <h1 className='mb-2'>Editing...</h1>}
             <hr />
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 my-5 text-center">
                 <Gencheck genName={genCheck.generator_name} register={register} errors={errors} inputStatus={inputStatus}/>
@@ -80,9 +79,9 @@ export default function EditCheckgenerator() {
                             </button>                            
                         }
 
-                        <a href="/checklists/dasborad" className="btn w-20 text-black">
+                        <Link to="/checklists/dasborad" className="btn w-20 text-black">
                             Cancel
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </form>

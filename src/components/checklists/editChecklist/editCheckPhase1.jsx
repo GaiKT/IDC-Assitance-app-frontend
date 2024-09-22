@@ -14,8 +14,7 @@ export default function EditCheckPhase1() {
     const [phase1 , setPhase1] = useState(location.state)
     const [inputStatus , setInputStatus] = useState(true)
 
-    const { state } = useAuth();
-    const [user , setUser] = useState(state.user)
+    const { apiUrl } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
     const PacAir = [1,2,3,4,5,6,7,8]
@@ -46,7 +45,7 @@ export default function EditCheckPhase1() {
 
         try {
             setIsLoading(true);
-            await axios.put('http://localhost:4000/checklists/phase1/' + data.id, { ...data });
+            await axios.put(`${apiUrl}/checklists/phase1/` + data.id, { ...data });
             navigate('/checklists/dasborad');
             Toast.fire({
                 icon: 'success',
@@ -75,7 +74,7 @@ export default function EditCheckPhase1() {
                 </div>
             </div>
             
-            {!inputStatus && <h1 className='mb-2'>Editting...</h1>}
+            {!inputStatus && <h1 className='mb-2'>Editing...</h1>}
             <hr />
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 my-5 text-center">
                 <div className='flex w-full flex-col'>

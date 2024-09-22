@@ -51,21 +51,21 @@ function AuthenticatedApp() {
               
                 {/* user */}
               <Route path="/" element={<Home />} />
-              <Route path="/users/:userId/profile" element={<Profile />} />
+              <Route path="/users/profile" element={<Profile />} />
 
                 {/* admin */}
               <Route path="/admin" element={<Usermenagement />} />
               <Route path="/register" element={<RegisterPage />} />
 
                 {/* member */}
-              <Route path="/members/*" element={<Members />} />
+              {/* <Route path="/members/*" element={<Members />} />
               <Route path="/members/addmember" element={<AddMembers />} />
-              <Route path="/members/editmember/:id" element={<EditMembers />} />
+              <Route path="/members/editmember/:id" element={<EditMembers />} /> */}
 
                 {/* company */}
-              <Route path="/company/*" element={<Companys />} />
+              {/* <Route path="/company/*" element={<Companys />} />
               <Route path="/company/addcompany" element={<AddCompany />} />
-              <Route path="/company/editcompany/:id" element={<EditCompany />} />
+              <Route path="/company/editcompany/:id" element={<EditCompany />} /> */}
 
                 {/* checklist */}
               <Route path="/checklists/*" element={<ChecklistsDasborad />} />
