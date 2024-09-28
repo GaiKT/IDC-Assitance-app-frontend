@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 const AuthContext = React.createContext();
 const apiUrl = import.meta.env.VITE_API_URL;
 
+
 function AuthProvider(props) {
   const navigate = useNavigate();
   const [state, setState] = useState({

@@ -13,6 +13,9 @@ COPY . .
 # Build the React app
 RUN npm run build
 
+# Hosts IP
+ENV VITE_API_URL=$VITE_API_URL
+
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
 
