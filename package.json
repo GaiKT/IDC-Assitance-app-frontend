@@ -30,7 +30,8 @@
     "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.9.0",
     "sweetalert2": "^11.6.13",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "yup-password": "^0.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
