@@ -2,10 +2,11 @@ import { Routes, Route } from "react-router-dom";
 import SideBar from "../components/sidebar";
 import NavBar from "../components/navbar";
 import Home from "../components/Home";
-import Profile from "../components/profilePage";
-
-
 import Breadcrumbs from "../components/utils/Breadcrumbs";
+
+// users
+import Profile from "../components/profilePage";
+import ResetPage from "./auth/ResetPassPage";
 
 //member menagement
 import Members from "../components/aup/Members";
@@ -52,6 +53,8 @@ function AuthenticatedApp() {
                 {/* user */}
               <Route path="/" element={<Home />} />
               <Route path="/users/profile" element={<Profile />} />
+              <Route path="/users/reset" element={<ResetPage />} />
+
 
                 {/* admin */}
               <Route path="/admin" element={<Usermenagement />} />

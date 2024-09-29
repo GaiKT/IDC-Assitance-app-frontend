@@ -32,7 +32,7 @@ function Home() {
                 <div className="mt-5 flex flex-col gap-2">
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 max-md:grid-cols-1 gap-2">
                         <div className="min-h-32 shadow-sm border-t-4 rounded-lg border-green-500 bg-white flex justify-center items-center relative">
-                            <p className="absolute top-3 left-3 text-blue-900">FDC STATUS</p>
+                            <p className="absolute top-3 left-3 text-blue-900">OUTSIDE TEMP</p>
                             <div className="flex gap-4 items-center text-2xl">
                                 <FontAwesomeIcon icon={faTemperatureArrowUp}/>
                                 <span>{weeklyMembers.data.avgTranformer[0]?.outside_temp} ํC</span>

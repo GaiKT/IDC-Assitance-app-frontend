@@ -13,6 +13,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 100000000, // Set a higher chunk size warning limit (in bytes)
   },
   server: {
-    port: process.env.VITE_PORT || 4000, // Accessing a VITE_ prefixed variable
+    port: process.env.VITE_PORT || 5173, // Accessing a VITE_ prefixed variable
   },
 });

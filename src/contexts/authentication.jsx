@@ -25,7 +25,6 @@ function AuthProvider(props) {
   },[])
 
   const login = async (data) => {
-
     try {
       const result = await axios.post(`${apiUrl}/auth/login`, data);
       const token = result.data.token;
@@ -69,6 +68,58 @@ function AuthProvider(props) {
     }
   };
 
+  const editProfile = async (data) => {
+
+    const editProfileData = {
+      first_name : data.firstName,
+      last_name : data.lastName
+    }
+
+    try {
+      await axios.put(`${apiUrl}/auth/edit/` + state.user.id, editProfileData); 
+      Swal.fire({
+        title: 'success!',
+        text: "update profile successfully!",
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: error.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    }
+  };
+
+  const resetPass = async (data) => {
+
+    const editProfileData = {
+      old_password : data.old_password,
+      password : data.password
+    }
+
+    try {
+      await axios.put(`${apiUrl}/auth/resetPassword/` + state.user.id, editProfileData); 
+        Swal.fire({
+          title: 'success!',
+          text: "Update Password successfully!",
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
+      logout()
+    } catch (error) {
+        console.log(error)
+        Swal.fire({
+          title: 'Error!',
+          text: error.response.data.message,
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     setState({ ...state, user: null });
@@ -78,7 +129,7 @@ function AuthProvider(props) {
 
   return (
     <AuthContext.Provider
-      value={{ state, login, logout, registerAuth, isAuthenticated, apiUrl }}
+      value={{ state, login, logout, registerAuth, editProfile , resetPass , isAuthenticated, apiUrl }}
     >
       {props.children}
     </AuthContext.Provider>

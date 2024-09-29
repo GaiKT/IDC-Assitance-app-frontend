@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useAuth } from '../../contexts/authentication'
+import { Link } from 'react-router-dom';
 
 export default function Usermanagement() {
   const [keyword , setKeyword] = useState('')
@@ -8,9 +9,12 @@ export default function Usermanagement() {
   const { apiUrl } = useAuth()
   
   const getUser = async () => {
-    let result = await axios.get(`${apiUrl}/auth/users?keyword=` + keyword)
-    console.log(result)
-    setUser(result.data.data)
+    try {
+        let result = await axios.get(`${apiUrl}/auth/users?keyword=` + keyword)
+        setUser(result.data.data)
+    } catch (error) {
+        console.log(error)
+    }
   }
 
   useEffect(()=>{
@@ -21,7 +25,7 @@ export default function Usermanagement() {
     <>
     <div className="flex justify-between items-center mb-4">
         <header className="md:text-4xl"> User Management </header> 
-        <a href="/register" className="btn max-md:btn-sm btn-success text-white">New User</a>
+        <Link to="/register" className="btn max-md:btn-sm btn-success text-white">New User</Link>
     </div>
     <div className="w-full bg-white shadow-sm p-5 rounded-lg">
         <div className="flex justify-between text-xl">

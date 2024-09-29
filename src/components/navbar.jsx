@@ -27,6 +27,7 @@ function NavBar() {
                     <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow-sm bg-white rounded w-52 absolute top-10 right-0 ">
                         <p className="p-4 md:hidden">{UpperCaseName(state.user?.firstName)} {UpperCaseName(state.user?.lastName)}</p>
                         <li><Link to={`/users/profile`}>Profile</Link></li> 
+                        <li><Link to={`/users/reset`}>Reset Password</Link></li> 
                         <li><Link className="text-red-400" onClick={()=>{logout();}} >Log Out</Link></li>
                     </ul>
             </div>
