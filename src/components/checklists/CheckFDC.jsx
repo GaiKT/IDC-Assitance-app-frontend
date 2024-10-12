@@ -10,7 +10,6 @@ export default function CheckFDC() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
     const { state , apiUrl } = useAuth();
-    const [user , setUser] = useState(state.user)
   
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -29,7 +28,7 @@ export default function CheckFDC() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            let result = await axios.post(`${apiUrl}/checklists/fdc`, {...data, user_id: user.id });
+            let result = await axios.post(`${apiUrl}/checklists/fdc`, {...data, user_id: state.user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',

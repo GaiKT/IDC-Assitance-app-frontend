@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios"
-import { format} from 'date-fns';
-import { th } from 'date-fns/locale';
 import { useAuth } from "../contexts/authentication";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTemperatureArrowUp ,faBoltLightning , faPaste ,faNetworkWired ,faTemperature0 } from '@fortawesome/free-solid-svg-icons'
@@ -16,10 +14,6 @@ function Home() {
         let result = await axios.get(`${apiUrl}/aup/new-members-weekly`)
         setWeeklyMember(result.data)
     }
-
-    const formatDate = (date) => {
-        return format(new Date(date), 'dd MMMM yyyy', { locale: th });
-    };
 
     useEffect(()=>{
         getWeeklyMembers()

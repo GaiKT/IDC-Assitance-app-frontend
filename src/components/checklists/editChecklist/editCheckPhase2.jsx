@@ -263,8 +263,6 @@ export default function EditCheckPhase2() {
                                 </div>
                             </div>
                         </div>
-                        {/* Airdb */}
-                        <Db nameDb='airdb' register={register} errors={errors}/>
                         {/* Pac Air */}
                         <div className='flex flex-col gap-5 border py-2 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>
