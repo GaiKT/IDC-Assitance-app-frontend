@@ -11,19 +11,20 @@ export default function ChecklistsDashboard() {
     const [strDate , setStrDate] = useState('');
     const [endDate , setEndDate] = useState(`${new Date()}`);
     const {apiUrl} = useAuth()
+    const [page , setPage] = useState(1)
 
     const handleTabChange = (index) => {
         setActiveTab(index);
     };
 
     const getChecklist = async () => {
-        let result = await axios.get(`${apiUrl}/checklists/${tabs[activeTab]}?str=${strDate}&end=${endDate}`)
+        let result = await axios.get(`${apiUrl}/checklists/${tabs[activeTab]}?str=${strDate}&end=${endDate}&page=${page}`)
         setData(result.data)
     };
 
     useEffect(()=>{
         getChecklist()
-    },[activeTab ,strDate ,endDate])
+    },[activeTab ,strDate ,endDate,page])
 
     return (
         <>
@@ -43,6 +44,13 @@ export default function ChecklistsDashboard() {
                         />
                         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
                             <TapChecklist nameCheckList={tab} data={data} setStrDate={setStrDate} setEndDate={setEndDate}/>
+                            <div className='flex justify-end'>
+                                <div className="join">
+                                    <button className="join-item btn bg-white max-md:btn-sm" onClick={()=>{page > 1 ? setPage(page - 1) : setPage(page)}} disabled={page === 1}>«</button>
+                                    <button className="join-item btn bg-white max-md:btn-sm" onClick={getChecklist}>Page {page}</button>
+                                    <button className="join-item btn bg-white max-md:btn-sm" onClick={()=>{setPage(page + 1)}} disabled={ data.length < 5}>»</button>
+                                </div>
+                            </div>
                         </div>
                     </React.Fragment>
                 ))}

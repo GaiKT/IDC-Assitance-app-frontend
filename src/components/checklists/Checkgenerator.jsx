@@ -8,7 +8,6 @@ import axios from 'axios';
 
 export default function Checkgenerator() {
     const { state , apiUrl } = useAuth();
-    const [user, setUser] = useState(state.user);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
@@ -33,7 +32,7 @@ export default function Checkgenerator() {
             data.generator_name = `generator${step}`
             console.log(data)
             setIsLoading(true);
-            let result = await axios.post(`${apiUrl}/checklists/generator`, { ...data, user_id: user.id });
+            let result = await axios.post(`${apiUrl}/checklists/generator`, { ...data, user_id: state.user.id });
             console.log(result)
             if (step === 3) {
                 navigate('/');
@@ -43,7 +42,7 @@ export default function Checkgenerator() {
                 });
             } else {
                 setStep(step + 1);
-                formRef.current.reset(); // Reset form fields
+                formRef.current.reset();
             }
         } catch (error) {
             Toast.fire({

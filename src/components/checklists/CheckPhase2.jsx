@@ -10,7 +10,6 @@ import { useAuth } from "../../contexts/authentication";
 
 export default function CheckPhase2() {
     const { state , apiUrl } = useAuth();
-    const [user , setUser] = useState(state.user)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
     const PacAir = [1,2,3,4,5,6]
@@ -40,7 +39,7 @@ export default function CheckPhase2() {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.post(`${apiUrl}/checklists/phase2`,{ ...data, user_id: user.id });
+            await axios.post(`${apiUrl}/checklists/phase2`,{ ...data, user_id: state.user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',
@@ -249,8 +248,6 @@ export default function CheckPhase2() {
                                 </div>
                             </div>
                         </div>
-                        {/* Airdb */}
-                        <Db nameDb='airdb' register={register} errors={errors}/>
                         {/* Pac Air */}
                         <div className='flex flex-col gap-5 border py-2 w-full rounded'>
                             <div className='flex flex-col items-center gap-2'>

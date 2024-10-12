@@ -10,7 +10,6 @@ const rackNames = ['J12', 'I10', 'I3', 'J1', 'H2', 'G4', 'H10', 'G13', 'E13', 'F
 
 export default function CheckRoomTemp() {
     const { state , apiUrl } = useAuth();
-    const [user , setUser] = useState(state.user)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -32,7 +31,7 @@ export default function CheckRoomTemp() {
         console.log(data)
         try {
             setIsLoading(true);
-            await axios.post(`${apiUrl}/checklists/roomtemp`, { ...data, user_id: user.id });
+            await axios.post(`${apiUrl}/checklists/roomtemp`, { ...data, user_id: state.user.id });
             navigate('/');
             Toast.fire({
                 icon: 'success',

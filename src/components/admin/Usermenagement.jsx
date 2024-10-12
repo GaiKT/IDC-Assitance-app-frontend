@@ -8,7 +8,7 @@ export default function Usermanagement() {
   const [users , setUser] = useState([])
   const { apiUrl } = useAuth()
   
-  const getUser = async () => {
+  const getUser = async() => {
     try {
         let result = await axios.get(`${apiUrl}/auth/users?keyword=` + keyword)
         setUser(result.data.data)
@@ -19,7 +19,7 @@ export default function Usermanagement() {
 
   useEffect(()=>{
     getUser()
-  },[])
+  },[users])
 
   return (
     <>

@@ -37,19 +37,8 @@ function SideBar() {
                             </ul>
                             </details>
                         </li>
-                        <li>
-                            <details open>
-                            <summary  className="font-bold text-blue-900">
-                            <FontAwesomeIcon icon={faGear}/> Systems
-                            </summary>
-                            <ul>
-                                <li><Link to="/members">Members management</Link></li>
-                                <li><Link to="/company">Companies management</Link></li>
-                            </ul>
-                            </details>
-                        </li>
                         {
-                            state?.user?.level === "admin" &&
+                            state?.user?.level === "Admin" &&
                             <li>
                                 <details open>
                                     <summary className="font-bold text-blue-900">
@@ -134,19 +123,8 @@ function SideBar() {
                     </ul>
                     </details>
                 </li>
-                {/* <li>
-                    <details open>
-                    <summary className="font-bold text-blue-900">
-                        <FontAwesomeIcon icon={faGear}/> Systems
-                    </summary>
-                    <ul>
-                        <li><Link to="/members">Members management</Link></li>
-                        <li><Link to="/company">Companies management</Link></li>
-                    </ul>
-                    </details>
-                </li> */}
                 {
-                    state?.user?.level === "admin" &&
+                    state?.user?.level === "Admin" &&
                     <li>
                         <details open>
                             <summary className="font-bold text-blue-900">
