@@ -30,7 +30,6 @@ export default function Checkgenerator() {
     const onSubmit = async (data) => {
         try {
             data.generator_name = `generator${step}`
-            console.log(data)
             setIsLoading(true);
             let result = await axios.post(`${apiUrl}/checklists/generator`, { ...data, user_id: state.user.id });
             console.log(result)

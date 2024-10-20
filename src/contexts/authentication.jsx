@@ -10,6 +10,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 function AuthProvider(props) {
   const navigate = useNavigate();
+
   const [state, setState] = useState({
     user: null,
   });
@@ -19,8 +20,6 @@ function AuthProvider(props) {
       let token = window.localStorage.getItem("token")
       const userDataFromToken = jwtDecode(token);
       setState({ ...state, user: userDataFromToken })
-    }else{
-      setState({ ...state, user: null });
     }
   },[])
 

@@ -123,8 +123,8 @@ function SideBar() {
                     </ul>
                     </details>
                 </li>
-                {
-                    state?.user?.level === "Admin" &&
+                {   
+                    state?.user?.level === "admin" &&
                     <li>
                         <details open>
                             <summary className="font-bold text-blue-900">

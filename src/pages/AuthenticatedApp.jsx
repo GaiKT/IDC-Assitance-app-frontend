@@ -3,6 +3,7 @@ import SideBar from "../components/sidebar";
 import NavBar from "../components/navbar";
 import Home from "../components/Home";
 import Breadcrumbs from "../components/utils/Breadcrumbs";
+import { useAuth } from "../contexts/authentication";
 
 // users
 import Profile from "../components/profilePage";
@@ -41,6 +42,7 @@ import EditCheckgenerator from "../components/checklists/editChecklist/editCheck
 import "../App.css";
 
 function AuthenticatedApp() {
+  const { state } = useAuth();
   return (
     <div className="App flex">
         <SideBar/>
@@ -57,8 +59,13 @@ function AuthenticatedApp() {
 
 
                 {/* admin */}
-              <Route path="/admin" element={<Usermenagement />} />
-              <Route path="/register" element={<RegisterPage />} />
+              {
+                state?.user?.level === "admin" &&
+              <>              
+                <Route path="/admin" element={<Usermenagement />} />
+                <Route path="/register" element={<RegisterPage />} />
+              </>
+              }
 
                 {/* member */}
               {/* <Route path="/members/*" element={<Members />} />
