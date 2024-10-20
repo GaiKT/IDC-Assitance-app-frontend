@@ -5,7 +5,6 @@ import UnauthenticatedApp from "./pages/UnauthenticatedApp";
 
 function App() {
   const { isAuthenticated , state } = useAuth();
-  console.log(isAuthenticated , state)
 
   return isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }

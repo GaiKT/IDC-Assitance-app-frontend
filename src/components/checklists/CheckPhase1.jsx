@@ -217,7 +217,7 @@ export default function CheckPhase1() {
                                             <label className='flex flex-col gap-2'>
                                                 Return
                                                 <input type='number' {...register(`return_pac${airpac}_temp`,)} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Temp' disabled={disabledInputs[index]} />
-                                                <input type='number' {...register(`return_pac${airpac}_temp`,)} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Hum' disabled={disabledInputs[index]} />
+                                                <input type='number' {...register(`return_pac${airpac}_hum`,)} step="0.01" min="0.00" className='bg-gray-50 px-2' placeholder='Hum' disabled={disabledInputs[index]} />
                                             </label>
                                         </div>
                                     );
